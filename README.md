@@ -1,1 +1,1 @@
-![Konisoft Speedruns](https://raw.githubusercontent.com/konisan111/Konisoft-Speedruns/refs/heads/main/resources/Konisoft%20Speedruns%20Github%20Readme.png)
+![Konisoft Speedruns](https://raw.githubusercontent.com/konisan111/Konisoft-Speedruns/refs/heads/main/resources/Konisoft%20Speedruns%20Github%20Readme.png?token=GHSAT0AAAAAADWXKNIFK3LKCWLAY2VPI67U2NFQ3XQ)
