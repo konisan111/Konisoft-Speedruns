@@ -1,3 +1,3 @@
-![Konisoft Speedruns](https://raw.githubusercontent.com/konisan111/Konisoft-Speedruns/refs/heads/main/resources/Konisoft%20Speedruns%20Github%20Readme.png?token=GHSAT0AAAAAADWXKNIFK3LKCWLAY2VPI67U2NFQ3XQ)
+![Konisoft Speedruns](https://i.ibb.co/jvfLwWkf/Konisoft-Speedruns-Github-Readme.png)
 
 A Konisoft Speedruns egy webes platform, amelyen a Konisoft által kiadott játékokban mérhetik fel a játékosok hogy ki volt a leggyorsabb annak kijátszásában, egy adott pályarésznek, vagy fejezetnek.
