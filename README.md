@@ -1,0 +1,1 @@
+![Konisoft Speedruns](https://raw.githubusercontent.com/konisan111/Konisoft-Speedruns/refs/heads/main/resources/Konisoft%20Speedruns%20Github%20Readme.png)
