@@ -27,6 +27,14 @@
 * **Játék Specifikus Bontás 🎮:** Külön leaderboardok minden Konisoft játékhoz.
 * **Részletes Felosztás ⏳:** Mérd az idődet pályákra, fejezetekre vagy teljes játékmenetre lebontva.
 
+---
+
+## ⚙️ Hogyan működik?
+
+A platform egy központi híd szerepét tölti be a játékok és a játékosok között. A Konisoft által kiadott játék(okban) (jelenleg Lumi Dungeon Of Dreadspire) a játékosok idejét fel lehet tölteni a Konisoft Speedruns platformjára ahol a leaderboardokon lehet versenyezni az első helyezetért. A játék kapcsolatban áll egy adatbázissal amelyből fetchelve lesznek az adatok a frontendre, azaz a Speedruns platform felületére.
+
+---
+
 ## 👥 Csapatfelépítés
 
 | Szerepkör | Felelősségi kör | Tagok |
