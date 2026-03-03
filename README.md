@@ -56,13 +56,13 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 
 | Fázis | Feladat megnevezése | Állapot | Technikai Leírás |
 | :--- | :--- | :---: | :--- |
-| **1. Tervezés** | **Adatbázis Modell (ERD)** | ⏳ | A felhasználók, játékidők, pályák és játékok közötti SQL/NoSQL kapcsolatok megtervezése. |
-| **2. Backend** | **REST API Alapok** | 🛠️ | Szerveroldali végpontok (GET/POST) kialakítása a rekordok beküldéséhez és lekéréséhez. |
-| **3. Integráció** | **Unity Engine Bridge** | 🎮 | C# alapú rendszer fejlesztése, amely a játékból közvetlenül küldi az időeredményeket a szerverre. |
-| **4. Adatbázis** | **DB Kiépítés** | 📂 | A tervezett séma megvalósítása, éles adatbázis szerver beállítása és biztonsági mentések. |
-| **5. Frontend** | **Dinamikus Adatmegjelenítés** | 🌐 | A statikus HTML/JS felület összekötése az API-val, hogy a ranglista automatikusan frissüljön. |
-| **6. Tesztelés** | **QA** | 🧪 | Unit tesztek, terheléses tesztelés és a manipulált (csalt) idők kiszűrésére szolgáló logika. |
-| **7. Launch** | **Platform Release** | 🚀 | A béta verzió publikálása. |
+| **1. Tervezés** | **Adatbázis Modell (ERD)** | ❌ | A felhasználók, játékidők, pályák és játékok közötti SQL/NoSQL kapcsolatok megtervezése. |
+| **2. Backend** | **REST API Alapok** | ❌ | Szerveroldali végpontok (GET/POST) kialakítása a rekordok beküldéséhez és lekéréséhez. |
+| **3. Integráció** | **Unity Engine Bridge** | ❌ | C# alapú rendszer fejlesztése, amely a játékból közvetlenül küldi az időeredményeket a szerverre. |
+| **4. Adatbázis** | **DB Kiépítés** | ❌ | A tervezett séma megvalósítása, éles adatbázis szerver beállítása és biztonsági mentések. |
+| **5. Frontend** | **Dinamikus Adatmegjelenítés** | ❌ | A statikus HTML/JS felület összekötése az API-val, hogy a ranglista automatikusan frissüljön. |
+| **6. Tesztelés** | **QA** | ❌ | Unit tesztek, terheléses tesztelés és a manipulált (csalt) idők kiszűrésére szolgáló logika. |
+| **7. Launch** | **Platform Release** | ❌ | A béta verzió publikálása. |
 
 ---
 
