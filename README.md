@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
   <img src="https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white" alt="Unity">
   <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code">
-  
+  <img src="https://img.shields.io/badge/REST%20API-02303A?style=for-the-badge&logo=insomnia&logoColor=white" alt="REST API">
 <br>
   <img src="https://img.shields.io/github/commit-activity/m/konisan111/Konisoft-Speedruns?label=COMMITS&style=flat-square&color=orange" alt="Commits">
 </p>
@@ -27,19 +27,6 @@
 * **Játék Specifikus Bontás 🎮:** Külön leaderboardok minden Konisoft játékhoz.
 * **Részletes Felosztás ⏳:** Mérd az idődet pályákra, fejezetekre vagy teljes játékmenetre lebontva.
 
-## 👾 Használt Technológiák
-
-* **Frontend:** 
-    * HTML5 🟠 
-    * CSS3 🔵 
-    * JavaScript 🟡
-* **Backend:** * 
-    * (Még fejlesztés alatt) (。_。)
-* **Adatbázis:**
-    * (Még fejlesztés alatt) (。_。)
-
----
-
 ## 👥 Csapatfelépítés
 
 | Szerepkör | Felelősségi kör | Tagok |
@@ -51,6 +38,31 @@
 | **QA / Tester** | Speedrun mechanikák tesztelése, bugvadászat | Orvos Tamás |
 
 ---
+
+## 👾 Technológiák & Állapot
+
+| Terület | Eszközök | Állapot |
+| :--- | :--- | :--- |
+| **Frontend** | HTML5 🟠 CSS3 🔵 JavaScript 🟡 | ❌ Tervezés fázis |
+| **Backend** | REST API ☁️ Node.js (tervezett) | ❌ Tervezés fázis |
+| **Adatbázis** | SQL / NoSQL 🌐 | ❌ Tervezés fázis |
+| **Unity Engine Build** | Lumi Dungeon Of Dreadspire (Integrálás) 🎮 | ❌ Tervezés fázis |
+
+---
+
+## 🗺️ Fejlesztési Roadmap
+
+A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táblázat foglalja össze a tervezett mérföldköveket és azok aktuális állapotát.
+
+| Fázis | Feladat megnevezése | Állapot | Technikai Leírás |
+| :--- | :--- | :---: | :--- |
+| **1. Tervezés** | **Adatbázis Modell (ERD)** | ⏳ | A felhasználók, játékidők, pályák és játékok közötti SQL/NoSQL kapcsolatok megtervezése. |
+| **2. Backend** | **REST API Alapok** | 🛠️ | Szerveroldali végpontok (GET/POST) kialakítása a rekordok beküldéséhez és lekéréséhez. |
+| **3. Integráció** | **Unity Engine Bridge** | 🎮 | C# alapú rendszer fejlesztése, amely a játékból közvetlenül küldi az időeredményeket a szerverre. |
+| **4. Adatbázis** | **DB Kiépítés** | 📂 | A tervezett séma megvalósítása, éles adatbázis szerver beállítása és biztonsági mentések. |
+| **5. Frontend** | **Dinamikus Adatmegjelenítés** | 🌐 | A statikus HTML/JS felület összekötése az API-val, hogy a ranglista automatikusan frissüljön. |
+| **6. Tesztelés** | **QA** | 🧪 | Unit tesztek, terheléses tesztelés és a manipulált (csalt) idők kiszűrésére szolgáló logika. |
+| **7. Launch** | **Platform Release** | 🚀 | A béta verzió publikálása. |
 
 ---
 
