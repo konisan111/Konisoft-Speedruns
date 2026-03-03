@@ -33,9 +33,24 @@
     * HTML5 🟠 
     * CSS3 🔵 
     * JavaScript 🟡
-* **Backend:** * *(Még fejlesztés alatt)* (。_。)
+* **Backend:** * 
+    * (Még fejlesztés alatt) (。_。)
 * **Adatbázis:**
-    * *(Még fejlesztés alatt)* (。_。)
+    * (Még fejlesztés alatt) (。_。)
+
+---
+
+## 👥 Csapatfelépítés
+
+| Szerepkör | Felelősségi kör | Tagok |
+| :--- | :--- | :--- |
+| **Project Leader** | Projektmenedzsment, koncepció és irányítás | Katona Konstantin |
+| **Frontend Developer** | UI/UX design, webes felület fejlesztése (HTML/CSS/JS) | Orvos Tamás |
+| **Game Integration** | Unity Engine kapcsolat, API adatok kezelése | Katona Konstantin |
+| **Backend & DB** | Szerveroldali logika, adatbázis és hitelesítés | Orvos Tamás, Katona Konstantin |
+| **QA / Tester** | Speedrun mechanikák tesztelése, bugvadászat | Orvos Tamás |
+
+---
 
 ---
 
