@@ -1,0 +1,16 @@
+:root {
+    --main-background:#000000;
+    --main-background-elements:#00000091;
+    --secondary-background:#0a0a0a;
+    --text-color: #ffffff;
+    --icon-color: #1b1b1b;
+    --theme-switcher-icon: url(../images/theme_switcher_icon_dark.webp);
+    --dropdown-icon: url(../images/dropdown_icon_dark.webp);
+    --dropdown-close-icon: url(../images/dropdown_close_icon_dark.webp);
+    --konisoft-logo: url(../images/konisoft_logo_dark.webp);
+    --speedruns-logo: url(../images/konisoft_speedruns_outlined_logo.png);
+    --global-border: rgb(26, 26, 26);
+    --jam-text-color: white;
+    --grid-vertical-lane: #a5a5a512;
+    --grid-horizontal-lane: #e7e7e712;
+}
