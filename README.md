@@ -29,7 +29,7 @@
 
 ---
 
-<img src="  https://i.ibb.co/s9zgPdX6/plans.png"><br>
+<img src="https://i.ibb.co/s9zgPdX6/plans.png" width="600"><br>
 
 ---
 
