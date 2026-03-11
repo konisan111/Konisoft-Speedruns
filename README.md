@@ -16,16 +16,16 @@
 <h1 align="left">Konisoft Speedruns</h1>
 
 <p align="left">
-  A <b>Konisoft Speedruns</b> egy dedikált webes platform, ahol a játékosok mérhetik fel ügyességüket és gyorsaságukat a Konisoft által kiadott játékokban. Legyen szó egy teljes végigjátszásról, vagy egy pályarészről!
+  A <b>Konisoft Speedruns</b> egy dedikált webes platform, ahol a játékosok mérhetik fel ügyességüket és gyorsaságukat a Konisoft által kiadott játékokban.
 </p>
 
 ---
 
 ## 📍 A Platform Funkciói
 
-* **Globális Ranglisták 🥇:** Kövesd nyomon, ki a leggyorsabb a különböző kategóriákban.
-* **Játék Specifikus Bontás 🎮:** Külön leaderboardok minden Konisoft játékhoz.
-* **Részletes Felosztás ⏳:** Mérd az idődet pályákra, fejezetekre vagy teljes játékmenetre lebontva.
+* **Globális Ranglisták:** Kövesd nyomon, ki a leggyorsabb a különböző kategóriákban.
+* **Játék Specifikus Bontás:** Külön leaderboardok minden Konisoft játékhoz.
+* **Felhasználói és Moderátori nézet** A felvételeket megvizsgálás után a moderátorok elfogadhatják amelyeket a játékosok látni fognak.
 
 ---
 
@@ -35,7 +35,10 @@
 
 ## ⚙️ Hogyan működik?
 
-A platform egy központi híd szerepét tölti be a játékok és a játékosok között. A Konisoft által kiadott játék(okban) (jelenleg Lumi Dungeon Of Dreadspire) a játékosok idejét fel lehet tölteni a Konisoft Speedruns platformjára ahol a leaderboardokon lehet versenyezni az első helyezetért. A játék kapcsolatban áll egy adatbázissal amelyből fetchelve lesznek az adatok a frontendre, azaz a Speedruns platform felületére.
+A platform egy központi híd szerepét tölti be a játékok és a játékosok között. A Konisoft által kiadott játék(okban) (jelenleg Lumi Dungeon Of Dreadspire) a játékosok idejét fel lehet tölteni a Konisoft Speedruns platformjára videó felvételek formályában, ahol a leaderboardokon lehet versenyezni az első helyezetért.
+
+A felhasználók egy regisztráció után feltudják tölteni a felvételt, amelyet a moderátorok fogadhatnak el, vagy utasíthanak el.
+Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rendszeben, névvel és idővel a listára.
 
 ---
 
@@ -45,8 +48,7 @@ A platform egy központi híd szerepét tölti be a játékok és a játékosok 
 | :--- | :--- | :--- |
 | **Project Leader** | Projektmenedzsment, koncepció és irányítás | Katona Konstantin |
 | **Frontend Developer** | UI/UX design, webes felület fejlesztése (HTML/CSS/JS) | Orvos Tamás |
-| **Game Integration** | Unity Engine kapcsolat, API adatok kezelése | Katona Konstantin |
-| **Backend & DB** | Szerveroldali logika, adatbázis és hitelesítés | Orvos Tamás, Katona Konstantin |
+| **Backend & DB** | Szerveroldali logika, adatbázis és hitelesítés | Katona Konstantin |
 | **QA / Tester** | Speedrun mechanikák tesztelése, bugvadászat | Orvos Tamás |
 
 ---
@@ -55,10 +57,9 @@ A platform egy központi híd szerepét tölti be a játékok és a játékosok 
 
 | Terület | Eszközök | Állapot |
 | :--- | :--- | :--- |
-| **Frontend** | HTML5 🟠 CSS3 🔵 JavaScript 🟡 | ❌ Tervezés fázis |
+| **Frontend** | HTML5 🟠 CSS3 🔵 JavaScript 🟡 | 📌 Folyamatban |
 | **Backend** | REST API ☁️ Node.js (tervezett) | ❌ Tervezés fázis |
-| **Adatbázis** | SQL / NoSQL 🌐 | ❌ Tervezés fázis |
-| **Unity Engine Build** | Lumi Dungeon Of Dreadspire (Integrálás) 🎮 | ❌ Tervezés fázis |
+| **Adatbázis** | MongoDB 🌐 Cloudflare R2 🟠 | ❌ Tervezés fázis |
 
 ---
 
@@ -66,20 +67,28 @@ A platform egy központi híd szerepét tölti be a játékok és a játékosok 
 
 A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táblázat foglalja össze a tervezett mérföldköveket és azok aktuális állapotát.
 
-| Fázis | Feladat megnevezése | Állapot | Technikai Leírás |
-| :--- | :--- | :---: | :--- |
-| **1. Tervezés** | **Adatbázis Modell (ERD)** | ❌ | A felhasználók, játékidők, pályák és játékok közötti SQL/NoSQL kapcsolatok megtervezése. |
-| **2. Backend** | **REST API Alapok** | ❌ | Szerveroldali végpontok (GET/POST) kialakítása a rekordok beküldéséhez és lekéréséhez. |
-| **3. Integráció** | **Unity Engine Bridge** | ❌ | C# alapú rendszer fejlesztése, amely a játékból közvetlenül küldi az időeredményeket a szerverre. |
-| **4. Adatbázis** | **DB Kiépítés** | ❌ | A tervezett séma megvalósítása, éles adatbázis szerver beállítása és biztonsági mentések. |
-| **5. Frontend** | **Dinamikus Adatmegjelenítés** | ❌ | A statikus HTML/JS felület összekötése az API-val, hogy a ranglista automatikusan frissüljön. |
-| **6. Tesztelés** | **QA** | ❌ | Unit tesztek, terheléses tesztelés és a manipulált (csalt) idők kiszűrésére szolgáló logika. |
-| **7. Launch** | **Platform Release** | ❌ | A béta verzió publikálása. |
+| Fázis | Feladat megnevezése | Leadandó / Kimenet (Output) | Állapot |
+| :--- | :--- | :--- | :---: |
+| **1. Tervezés** | Csapatalkotás és szerepkörök (2-3 fő) | Munkamegosztási terv | ❌ |
+| | Problémafelvetés és funkcionális terv | Szoftver céljának leírása | ❌ |
+| | Technológiai stack kiválasztása | Rendszerarchitektúra vázlat | ❌ |
+| | **Adatbázis tervezése** | **Adatbázismodell-diagram (ER)** | ❌ |
+| **2. Fejlesztés** | **RESTful szerver** (API) megvalósítása | Szerveroldali forráskód | ❌ |
+| | **Kliensoldali fejlesztés** (Web/Mobil) | Kliensoldali forráskód | ❌ |
+| | CRUD funkciók és adattárolás | Működő szoftveralkalmazás | ❌ |
+| | Clean Code felülvizsgálat | Tiszta, dokumentált kód | ❌ |
+| **3. Tesztelés** | Egység- és integrációs tesztelés | **Tesztek kódja** | ❌ |
+| | Teszteredmények kiértékelése | **Teszteredmények dokumentációja** | ❌ |
+| **4. Dokumentálás** | Műszaki és felhasználói leírás | **Szoftveralkalmazás dokumentációja** | ❌ |
+| | Adatbázis exportálása | **Adatbázis dump (.sql)** | ❌ |
+| | Telepítőkészlet generálása | Natív asztali telepítő (opcionális) | ❌ |
+| **5. Vizsga** | Magyar nyelvű szakmai bemutató | Projektbemutató / Demó | ❌ |
+| | **Angol nyelvű összefoglaló** | Angol nyelvű pitch (3-5 perc) | ❌ |
 
 ---
 
 <p align="center">
   <img src="https://i.ibb.co/gZ7HPdTS/Konisoft-Speedruns-Outlined-Logo.png" width="120"><br>
-  <sub><i>Frissítve: 2026. március 3.</i></sub><br>
+  <sub><i>Frissítve: 2026. március 11.</i></sub><br>
   <b>Konisoft 2026</b>
 </p>
