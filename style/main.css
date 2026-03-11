@@ -16,10 +16,6 @@
   to { transform: translateX(50%) skewX(-20deg); }
 }
 
-#fall-container {
-    position: absolute;
-}
-
 .fade-bg {
     transition: opacity 0.5s ease;
 }
@@ -43,30 +39,6 @@
   mask-size: cover;
   mask-repeat: no-repeat;
   pointer-events: none;
-}
-
-#gap-for-news {
-    margin-top: 2em;
-}
-
-#news-line {
-    position: sticky;
-    display: none;
-    background-color: var(--news-color);
-    color: var(--news-text);
-    font-weight: 600;
-    text-align: center;
-    align-items: center;
-    justify-content: space-between;
-    height: 2em;
-    text-decoration: none;
-    border-bottom: 1px solid var(--global-border);
-}
-
-#news-line p {
-    font-size: clamp(12px, 1.9vw, 17px);
-    margin-left: auto; 
-    margin-right: auto;
 }
 
 .fade-in {
@@ -140,77 +112,6 @@ body {
     font-family: "Oxanium", sans-serif;
     color: var(--text-color);
     min-width: 0;
-}
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 3;
-    min-width: 0;
-}
-
-nav {
-    background-color: var(--main-background);
-    width: 100%;
-    height: 4.5em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 0;
-    border-bottom: 1px solid var(--global-border);
-    padding: 0 0.25rem 0 0.25rem;
-}
-
-.dot{
-  width:35px;
-  height:35px;
-  position:absolute;
-  background-size: 100% 100%;
-}
-
-#header-logo {
-    width: 14rem;
-    aspect-ratio: 1145 / 270;
-    margin-left: 1rem;
-    background-image: var(--speedruns-logo);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-#nav-buttons {
-    display: flex;
-    gap: 1.5em;
-    padding-right: 1em;
-}
-
-#nav-split {
-    width: 1px;
-    background-color: var(--global-border);
-    height: 1em;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: -.6em;
-    margin-right: -.6em;
-}
-
-#menu-buttons {
-    display: none;
-}
-
-.menu-button {
-    color: var(--text-color);
-    font-size: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: 0.2s;
-    font-weight: 500;
-}
-
-.menu-button:hover {
-    font-size: 1.15em;
 }
 
 #theme-and-settings {
@@ -362,200 +263,109 @@ nav {
 }
 
 main {
-    display: grid;
-    gap: 1em;
-    /* width: 100%; */
-    padding: 1em;
-    min-width: 0;
-    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
 }
 
-#home-container, #home-text-container-mobile, #games-container, #about-container-mobile, #about-container, #contacts-container, #jams-text-container, #jam-card, #faq-container, #games-intro-container {
-    width: 100%;
+#container {
+    background-color: var(--main-background);
+    width: 90%;
+    height: 420px;
+    border-radius: 25px;
+    max-width: 500px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+    border: 1px solid var(--global-border);
+}  
+
+#logo {
+    width: 55%;
+    background-image: var(--speedruns-logo);
+    aspect-ratio: 1145 / 270;
+    background-position: center;
+    background-size: cover;
+    margin: 1.5rem 0 1.3rem 0;
+}
+
+input {
+    width: 90%;
+    background-color: var(--secondary-background);
+    border: none;
+    height: 65px;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    padding: 0.5rem;
+    padding-left: 1rem;
+    border-radius: 15px;
     box-sizing: border-box;
-    background-color: var(--main-background-elements);
-    border-radius: 1.25em;
-    padding: 1em;
-    min-width: 0;
     border: 1px solid var(--global-border);
 }
 
-.fade-in-section {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .5s ease-out, transform .3s ease-out;
+input:focus {
+    border: 2px solid green;
+    outline: none;
 }
 
-.fade-in-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-#about-container-mobile {
-    width: 100%;
+#google-login {
+    width: 90%;
+    height: 65px;
+    padding: 0.5rem;
+    padding-left: 16px;
+    border-radius: 15px;
     box-sizing: border-box;
-    background-color: var(--main-background);
-    border-radius: 1.25em;
-    padding: 1em;
-    min-width: 0;
-    text-align: center;
-}
-
-#covers-container-mobile {
+    background-color: var(--secondary-background);
     display: flex;
-    justify-content: center;
-    align-items: stretch; /* makes children match container height */
-    gap: 1em;
-    width: 100%;
-    height: 100%; /* or set a specific height like 15em */
-    box-sizing: border-box;
-    flex-wrap: nowrap;
-}
-
-footer {
-    background-color: var(--main-background);
-    height: 9em;
-    position: sticky;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 1.5em;
-    min-width: 0;
-    border-top: 1px solid var(--global-border);
+    gap: 1rem;
+    border: 1px solid var(--global-border);
 }
 
-#footer-logo {
-    width: 20rem;
-    aspect-ratio: 320 / 27;
-    background-image: var(--konisoft-logo);
-    background-size: contain;
-    background-repeat: no-repeat;
+#google-logo {
+    width: 32px;
+    height: 32px;
+    background-image: url(../images/google_logo.png);
     background-position: center;
+    background-size: cover;
 }
 
-#footer-text-1, #footer-text-2, #footer-text-3 {
-    text-align: center;
-    font-size: 0.9em;
+#google-text {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.2rem;
 }
 
-#footer-text-1 {
-    width: 16em;
-    height: 1.3em;
-    margin-top: 1em;
+#create-account {
+    cursor: pointer;
 }
 
-#footer-text-2 {
-    width: 11em;
-    height: 1.3em;
-    margin-top: 0.5em;
+#create-account:hover {
+    text-decoration: underline;
 }
-
-#footer-text-3 {
-    width: 12em;
-    height: 1.2em;
-    margin-top: 3em;
-}
-
-@media (max-width: 469px) {
-    #header-logo {
-        width: 16rem;   
-    }
-    #language, #theme-switcher {
-        display: none;
-    }
-}   
 
 @media (min-width: 470px) {
-    #header-logo {
-        width: 16rem;
-        margin-right: 1.5rem;
-    }
-
-    #nav-buttons { padding-right: 1.5rem; }
-    #home-text-1, #home-text-mobile-1, #about-text-1, #faq-text-1, #contacts-text-1, #jams-card-text-1, #jams-text-1, #intro-text-1 { font-size: 2em; }
-
     #theme-and-settings { gap: 1rem; }
     #language, #theme-switcher {
         display: none;
     }
-}
 
-@media (max-width: 615px) {
-    #language, #theme-switcher {
-        display: none;
-    }
+    
 }
 
 @media (min-width: 768px) {
     #language, #theme-switcher {
         display: none;
     }
-}
 
-@media (min-width: 1076px) {
-    #language, #theme-switcher {
-        display: block;
-    }
-    #nav-buttons {
-        display: flex;
-        gap: 1.5em;
-        padding-right: 1.5em;
-    }
-
-    #menu-buttons {
-        display: flex;
-        gap: 2em;
-    }
-
-    .menu-button {
-        color: var(--text-color);
-        font-size: 1em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-    }
-
-    #settings-mobile {
-        background-image: url(../images/settings-mobile.webp);
-        display: none;
-        cursor: pointer;
-        background-size: contain;
-        background-repeat: no-repeat;
-        height: 30px;
-        width: 30px;
-    }
-
-    #dropdown-menu { display: none !important; }
-
-    main {
-        grid-template-columns: 15em 1fr;
-    }
-
-    #home-container, #home-text-container-mobile, #games-container, #contacts-container, #games-intro-container, #about-container, #faq-container {
-        grid-column: 1 / 3;
-    }
-
-    #contacts-text-1 { width: 24rem; }
-    #jams-card-text-1 {width: 20rem;}
-    #jams-text-1 { width: 16rem; }
-    #intro-text-1 { width: 24rem; }
-
-    #footer-logo { width: 20em; }
-    #footer-text-1 { width: 18rem; }
-    #footer-text-2 { width: 14rem; }
-    #footer-text-3 { width: 15rem; }
-}
-
-@media (min-width: 1100px) {
-    main {
-        margin: auto;
+    #container {
+        width: 70%;
     }
 }
 
 @media (min-width: 1380px) {
-    main {
-        max-width: 70%;
-        min-width: 1328px;
-    }
 }

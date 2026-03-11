@@ -3,81 +3,8 @@ const themes = {
     dark: "../style/dark-theme.css",
 };
 
-const gameCovers = [
-  '../images/lumi_banner.webp',
-  '../images/konisoft_speedruns_banner.webp',
-  '../images/konis_spring_jam_banner.webp',
-];
-
-const gameLogos = [
-  '../images/lumi.webp',
-  '../images/blank.webp',
-  '../images/blank.webp',
-];
-
 let isHungarian = false;
 
-const translations = {
-  en: {
-        homeGameTitles : [
-            'Free your friends!',
-            'Compete with time!',
-            'Join the Game Jam!',
-        ],
-
-        homeGameDescriptions : [
-            `Escape the dungeons and free Lumi's friends.`,
-            `Run the best times in our upcoming speedrun platform!`,
-            `Compete with others and win the 20€ Steam Prize!`,
-        ],
-
-        gameDescriptions : [
-            `True friends always help each other! And Lumi does the same! Escape from increasingly challenging levels, solve the puzzles, be quick, and don't run out of time! Rescue Muze, Rosey, and Zumi from the Dreadspire Dungeons! Our game is currently under development and will be available soon on Steam and Itch.io!`,
-        ]
-  },
-  hu: {
-        homeGameTitles : [
-            'Segíts a barátaidnak!',
-            'Légy a legyorsabb!',
-            'Csatlakozz a Jamhez!',
-        ],
-
-        homeGameDescriptions : [
-            `Szabadulj ki a fogságból Lumi barátaival!`,
-            `Versenyezz a hamarosan érkező platformunkon!`,
-            `Légy a legjobb és vidd el a 20€ Steam díjat!`,
-        ],  
-
-        gameDescriptions : [    
-            `Az igazi barátok mindig segítenek egymásnak! Lumi is így tesz! Szabadulj ki az egyre nehezedő pályákról, old meg a puzzleöket, légy gyors, és ne fuss ki az időből! Szabadítsd ki Muzet, Roseyt, és Zumit a Dreadspire Dungeonökből! Még fejlesztés alatt álló játékunk hamarosan elérhető lesz Steamen és Itch.io-n is!`,
-        ]
-  }
-};
-
-const translationsForGames = {
-  en: {
-        gameTitles : [
-            'Lumi Dungeon Of Dreadspire',
-            'Speedruns'
-        ],
-
-        gameDescriptions : [
-            `True friends always help each other! And Lumi does the same! Escape from increasingly challenging levels, solve the puzzles, be quick, and don't run out of time! Rescue Muze, Rosey, and Zumi from the Dreadspire Dungeons! Our game is currently under development and will be available soon on Steam and Itch.io!`,
-            'Racing has many ways! Konisoft decided to begin developing a brand-new speedrunning platform dedicated exclusively to our games. We wanted to create a platform where the community can truly show off what they can do. Play Konisoft games, push your limits, and upload your times!'
-        ]
-  },
-  hu: {
-        gameTitles : [
-            'Lumi Dungeon Of Dreadspire',
-            'Speedruns'
-        ],
-
-        gameDescriptions : [    
-            `Az igazi barátok mindig segítenek egymásnak! Lumi is így tesz! Szabadulj ki az egyre nehezedő pályákról, old meg a puzzleöket, légy gyors, és ne fuss ki az időből! Szabadítsd ki Muzet, Roseyt, és Zumit a Dreadspire Dungeonökből! Még fejlesztés alatt álló játékunk hamarosan elérhető lesz Steamen és Itch.io-n is!`,
-            'A versenyzésnek számos módja van! A Konisoftnál hivatalosan is elhatároztuk, hogy elkezdünk fejleszteni egy vadonatúj speedrun platformot, kifejezetten a mi játékainkhoz. Szerettünk volna egy olyan platformot létrehozni, ahol a közösségünk tagjai igazán megmutathatják, mire képesek. Játssz a Konisoft játékaival, feszegesd a határaidat, és töltsd fel az időeredményeidet!'
-        ]
-  }
-};
 
 const timeForImage = 5;
 
@@ -112,7 +39,6 @@ window.addEventListener('load', async () => {
   });
 
   const domImgSrcs = Array.from(document.images).map(img => img.src);
-  await preloadImages([...domImgSrcs, ...gameCovers]);
 
   document.querySelectorAll('.text-loading').forEach(el => el.classList.remove('text-loading'));
   document.querySelectorAll('.image-loading').forEach(el => el.classList.remove('image-loading'));
@@ -172,40 +98,6 @@ function SelectOption(selectedButton, fromDropdown = false) {
         }
     }
 }
-
-dropdownMenuButtons[0].style.fontWeight = 'bold';
-dropdownMenuButtons.forEach(button => {
-    button.addEventListener('click', (event) => {
-        SelectOption(event.currentTarget, true);
-        ToggleDropdown(settingsMobile);
-    });
-});
-
-menuButtons.forEach(button => {
-    button.addEventListener('click', (event) => {
-        SelectOption(event.currentTarget, false);
-    });
-});
-
-settingsMobile.addEventListener('click', (event) => {
-    ToggleDropdown(event.currentTarget)
-})
-
-// function ToggleDropdown(button) {
-//     if (dropdownMenu.classList.contains('dropdown-menu-down')) {
-//         dropdownMenu.classList.add('dropdown-menu-up')
-//         dropdownMenu.classList.remove('dropdown-menu-down')
-//         settingsMobile.classList.add('dropdown-menu-up')
-//         settingsMobile.classList.remove('dropdown-menu-down')
-//     }
-//     else {
-//         dropdownMenu.classList.add('dropdown-menu-down')
-//         dropdownMenu.classList.remove('dropdown-menu-up')
-//         settingsMobile.classList.add('dropdown-menu-down')
-//         settingsMobile.classList.remove('dropdown-menu-up')
-//     }
-// }
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const languageButtons = [
