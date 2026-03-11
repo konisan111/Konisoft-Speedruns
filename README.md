@@ -69,9 +69,9 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 
 | Fázis | Feladat megnevezése | Leadandó / Kimenet (Output) | Állapot |
 | :--- | :--- | :--- | :---: |
-| **1. Tervezés** | Csapatalkotás és szerepkörök (2-3 fő) | Munkamegosztási terv | ❌ |
-| | Problémafelvetés és funkcionális terv | Szoftver céljának leírása | ❌ |
-| | Technológiai stack kiválasztása | Rendszerarchitektúra vázlat | ❌ |
+| **1. Tervezés** | Csapatalkotás és szerepkörök (2-3 fő) | Munkamegosztási terv | ✔ |
+| | Problémafelvetés és funkcionális terv | Szoftver céljának leírása | ✔ |
+| | Technológiai stack kiválasztása | Rendszerarchitektúra vázlat | ✔ |
 | | **Adatbázis tervezése** | **Adatbázismodell-diagram (ER)** | ❌ |
 | **2. Fejlesztés** | **RESTful szerver** (API) megvalósítása | Szerveroldali forráskód | ❌ |
 | | **Kliensoldali fejlesztés** (Web/Mobil) | Kliensoldali forráskód | ❌ |
