@@ -1,14 +1,3 @@
-<!--                                                 
- _____ _____ _____ _____ _____ _____ _____ _____ 
-|  |  |     |   | |     |   __|     |   __|_   _|
-|    -|  |  | | | |-   -|__   |  |  |   __| | |  
-|__|__|_____|_|___|_____|_____|_____|__|    |_|  
-
-Konisoft Indie Game Studio since 2024.
-Games for gamers!
-
-Btw tell me what are you looking for in the developer view? :P
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,56 +51,52 @@ Btw tell me what are you looking for in the developer view? :P
 </script>
 <body>
     <div class="grid"></div>
-    <!-- <header>
-        <nav>
-            <div id="header-logo" class="fade-in"></div>
-            <div id="nav-buttons">
-                <div id="menu-buttons">
-                    <a id="home-nav-text" href="#home-container" class="menu-button fade-in"></a>
-                    <div id="nav-split"></div>
-                    <a id="games-nav-text" href="#games-container" class="menu-button fade-in"></a>
-                    <div id="nav-split"></div>
-                    <a id="jams-nav-text" href="#jam-card" class="menu-button fade-in"></a>
-                    <div id="nav-split"></div>
-                    <a id="about-nav-text" href="#about-container" class="menu-button fade-in"></a>
-                    <div id="nav-split"></div>
-                    <a id="faq-nav-text" href="#faq-container" class="menu-button fade-in"></a>
-                    <div id="nav-split"></div>
-                    <a id="contacts-nav-text" href="#contacts-container" class="menu-button fade-in"></a>
-                    <div id="nav-split"></div>
-                </div>
-                <div id="theme-and-settings">
-                    <div id="language" class="disable-mobile"></div>
-                    <div id="nav-split"></div>
-                    <div id="theme-switcher" class="disable-mobile"></div>
-                    <div id="settings-mobile" class="dropdown-menu-up"></div>
-                </div>
-            </div>
-        </nav>
-        <div id="dropdown-menu" class="dropdown-menu-up">
-            <div id="gap-for-news"></div>
-            <a id="home-nav-text-mobile" href="#home-container" class="dropdown-menu-button"></a>
-            <a id="games-nav-text-mobile" href="#games-container" class="dropdown-menu-button"></a>
-            <a id="jams-nav-text-mobile" href="#jams-text-container" class="dropdown-menu-button"></a>
-            <a id="about-nav-text-mobile" href="#about-container" class="dropdown-menu-button"></a>
-            <a id="faq-nav-text-mobile" href="#faq-container" class="dropdown-menu-button"></a>   
-            <a id="contacts-nav-text-mobile" href="#contacts-container" class="dropdown-menu-button"></a>
-            <div id="theme-and-settings-mobile">
-                <div id="language-mobile"></div>
-                <div id="theme-switcher-mobile"></div>
-            </div>
-        </div>
-    </header> -->
     <main>
         <div id="container" class="fade-in">
             <div id="logo"></div>
-            <input id="email" type="email" placeholder="Email or username">
-            <input id="password" type="password" placeholder="Password">
+            
+            <label id="username-label" for="username-input" style="display: none;">Username</label>
+            <input id="username-input" type="text" placeholder="" style="display: none;">
+
+            <label id="email-label" for="email-input">Email or username</label>
+            <input id="email-input" type="email" placeholder="example@speedruns.com">
+            
+            <div id="password-labels">
+                <label id="password-label" for="password-input">Password</label>
+                <div id="forgot-password">Forgot password?</div>
+            </div>
+            <input id="password-input" type="password" placeholder="********">
+            
+            <label id="repeat-password-label" for="repeat-password-input" style="display: none;">Repeat Password</label>
+            <input id="repeat-password-input" type="password" placeholder="********" style="display: none;">
+            
+            <div id="login-button"><span id="login-button-text">Login</span></div>
+            
+            <div id="login-register-separator">
+                <div id="separator-line-left"></div>
+                <div id="separator-text">or</div>
+                <div id="separator-line-right"></div>
+            </div>
+            
+            <div id="register-button"><span id="register-button-text">Register</span></div>
+            
+            <div id="back-to-login" style="display: none;">Back to Login</div>
+            
             <div id="google-login">
                 <div id="google-logo"></div>
                 <div id="google-text">Continue with Google</div>
             </div>
-            <div id="create-account">Create an account</div>
+            <div id="language-and-theme">
+                <div id="language-switcher">
+                    <div id="language-switcher-button"></div>
+                    <div id="language-switcher-text"></div>
+                </div>
+                <div id="theme-switcher">
+                    <div id="theme-switcher-button"></div>
+                    <div id="theme-switcher-text"></div>
+                </div>
+            </div>
+            <div id="copyright">Speedruns is a platform of Konisoft. Made and hosted by Konisoft Indie Game Studio. 2026-2027</div>
         </div>
     </main>
 </body>
