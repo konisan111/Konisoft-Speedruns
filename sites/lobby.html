@@ -1,0 +1,154 @@
+<!--                                                 
+ _____ _____ _____ _____ _____ _____ _____ _____ 
+|  |  |     |   | |     |   __|     |   __|_   _|
+|    -|  |  | | | |-   -|__   |  |  |   __| | |  
+|__|__|_____|_|___|_____|_____|_____|__|    |_|  
+
+Konisoft Indie Game Studio since 2024.
+Games for gamers!
+
+Btw tell me what are you looking for in the developer view? :P
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style/lobby.css">
+    <link id="theme-css" rel="stylesheet" href="style/dark-theme.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="../scripts/lobby.js"></script>
+    <title>Konisoft | Welcome to the official Konisoft website</title>
+    <meta name="description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
+    <link rel="icon" href="../images/favicon.png" type="image/x-icon" />
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Konisoft | Welcome to the official Konisoft website">
+    <meta property="og:description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
+    <meta property="og:image" content="https://konisoft.hu/images/favicon.png">
+    <meta property="og:url" content="https://konisoft.hu">
+    <meta property="og:site_name" content="Konisoft">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Konisoft | Welcome to the official Konisoft website">
+    <meta name="twitter:description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
+    <meta name="twitter:image" content="https://konisoft.hu/images/favicon.png">
+    <meta name="twitter:url" content="https://konisoft.hu">
+    <meta name="twitter:site" content="@konisoft_hu">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Konisoft",
+        "url": "https://konisoft.hu",
+        "sameAs": [
+        "https://youtube.com/@KoniSoft"
+        ]
+    }
+    </script>
+</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5P5D1PWEDT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5P5D1PWEDT');
+</script>
+<body>
+    <div class="grid"></div>
+    <header>
+        <nav>
+            <div id="header-logo" class="fade-in"></div>
+            <div id="nav-buttons">
+                <div id="menu-buttons">
+                    <a id="home-nav-text" href="#home-container" class="menu-button fade-in"></a>
+                    <div id="nav-split"></div>
+                    <a id="games-nav-text" href="#games-container" class="menu-button fade-in"></a>
+                    <div id="nav-split"></div>
+                    <a id="jams-nav-text" href="#jam-card" class="menu-button fade-in"></a>
+                    <div id="nav-split"></div>
+                    <a id="about-nav-text" href="#about-container" class="menu-button fade-in"></a>
+                    <div id="nav-split"></div>
+                    <a id="faq-nav-text" href="#faq-container" class="menu-button fade-in"></a>
+                    <div id="nav-split"></div>
+                    <a id="contacts-nav-text" href="#contacts-container" class="menu-button fade-in"></a>
+                    <div id="nav-split"></div>
+                </div>
+                <div id="theme-and-settings">
+                    <div id="language" class="disable-mobile"></div>
+                    <div id="nav-split"></div>
+                    <div id="theme-switcher" class="disable-mobile"></div>
+                    <div id="settings-mobile" class="dropdown-menu-up"></div>
+                </div>
+            </div>
+        </nav>
+        <div id="dropdown-menu" class="dropdown-menu-up">
+            <div id="gap-for-news"></div>
+            <a id="home-nav-text-mobile" href="#home-container" class="dropdown-menu-button"></a>
+            <a id="games-nav-text-mobile" href="#games-container" class="dropdown-menu-button"></a>
+            <a id="jams-nav-text-mobile" href="#jams-text-container" class="dropdown-menu-button"></a>
+            <a id="about-nav-text-mobile" href="#about-container" class="dropdown-menu-button"></a>
+            <a id="faq-nav-text-mobile" href="#faq-container" class="dropdown-menu-button"></a>   
+            <a id="contacts-nav-text-mobile" href="#contacts-container" class="dropdown-menu-button"></a>
+            <div id="theme-and-settings-mobile">
+                <div id="language-mobile"></div>
+                <div id="theme-switcher-mobile"></div>
+            </div>
+        </div>  
+        <a href="https://itch.io/jam/konis-xmas-jam" id="news-line"><p id="news-text" class="text-loading"></p></a>
+    </header>
+    <main>
+        <div id="account-container" class="fade-in">
+            <div id="account-content">
+                <div id="profile-picture"></div>
+                <div id="username">User1234</div>
+                <div id="account-information">Information about account</div>
+                <div id="recordings"></div>
+            </div>
+            <div id="logout-button">Logout</div>
+        </div>
+        <div id="leaderboard-container" class="fade-in">
+            <div class="leaderboard-card">
+                <div class="leaderboard-user-information">
+                    <div class="leaderboard-profile-picture"></div>
+                    <div class="leaderboard-flag"></div>
+                    <div class="leaderboard-username">koni111</div>
+                </div>
+                <div class="leaderboard-date">2026.11.23</div>
+                <div class="leaderboard-time">12:21:41</div>
+                <!-- <div class="leaderboard-game-cover"></div> -->
+            </div>
+            <div class="leaderboard-card">
+                <div class="leaderboard-user-information">
+                    <div class="leaderboard-profile-picture"></div>
+                    <div class="leaderboard-flag"></div>
+                    <div class="leaderboard-username">koni111</div>
+                </div>
+                <div class="leaderboard-date">2026.11.23</div>
+                <div class="leaderboard-time">12:21:41</div>
+                <!-- <div class="leaderboard-game-cover"></div> -->
+            </div>
+            <div class="leaderboard-card">
+                <div class="leaderboard-user-information">
+                    <div class="leaderboard-profile-picture"></div>
+                    <div class="leaderboard-flag"></div>
+                    <div class="leaderboard-username">koni111</div>
+                </div>
+                <div class="leaderboard-date">2026.11.23</div>
+                <div class="leaderboard-time">12:21:41</div>
+                <!-- <div class="leaderboard-game-cover"></div> -->
+            </div>
+        </div>
+        <div id="games-container" class="fade-in"></div>
+    </main>
+    <footer>
+        <div id="footer-logo"></div>
+        <div id="footer-text-1" class="text-loading"></div>
+        <div id="footer-text-2" class="text-loading"></div>
+        <div id="footer-text-3" class="text-loading"></div>
+    </footer>
+</body>
+</html>
