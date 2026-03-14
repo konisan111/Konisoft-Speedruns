@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { v4: uuidv4 } = require('uuid'); // We have to install UUIDs
-const API_KEY = process.env.API_KEY; // API Key to validate every request made to the RESTFul backend
 require('dotenv').config();
 
 const app = express();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' })); // Increased limit for base64 images
@@ -21,18 +23,21 @@ const userSchema = new mongoose.Schema({
     userId: { type: String, unique: true } // UUID
 });
 
-// API Key Authentication
-const authenticate = (req, res, next) => {
-    const userApiKey = req.headers['x-api-key'];
-    
-    if (userApiKey && userApiKey === API_KEY) {
-        next();
-    } else {
-        res.status(403).json({ error: "Unauthorized: Invalid API Key" });
-    }
-};
-
 const User = mongoose.model('User', userSchema);
+
+// JWT Authentication middleware
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) return res.status(401).json({ error: "Access denied" });
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ error: "Invalid token" });
+        req.user = user;
+        next();
+    });
+};
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
@@ -54,9 +59,11 @@ app.get('/', (req, res) => {
   res.send('The Konisoft-Speedruns backend is live!');
 });
 
-app.post('/register', authenticate, async (req, res) => {
+app.post('/register', async (req, res) => {
     try {
         const { username, email, password, nationality, imageData, fileName } = req.body;
+
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // Uploading image to R2
         let profileImageUrl = "";
@@ -78,18 +85,34 @@ app.post('/register', authenticate, async (req, res) => {
         const newUser = new User({
             username,
             email,
-            password,
+            password: hashedPassword,
             nationality,
             avatarUrl: profileImageUrl,
             userId: uuidv4() // Generating an ID
         });
 
         await newUser.save();
-        res.status(201).json({ message: "Successful registration!", user: newUser });
+        res.status(201).json({ message: "Successful registration!", user: { username, email, userId: newUser.userId } });
 
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "There was an error while registrating!" });
+    }
+});
+
+app.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        const token = jwt.sign({ userId: user.userId, username: user.username }, JWT_SECRET, { expiresIn: '24h' });
+        res.json({ message: "Login successful", token });
+    } catch (err) {
+        res.status(500).json({ error: "Login error" });
     }
 });
 
