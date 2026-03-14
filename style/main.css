@@ -159,6 +159,10 @@ label {
     box-sizing: border-box;
 }
 
+#repeat-password-input {
+    margin-bottom: 0.5rem;
+}
+
 #password-labels {
     display: flex;
     width: 90%;
