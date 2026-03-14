@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { v4: uuidv4 } = require('uuid'); // We have to install UUIDs
+const API_KEY = process.env.API_KEY; // API Key to validate every request made to the RESTFul backend
 require('dotenv').config();
 
 const app = express();
@@ -19,6 +20,17 @@ const userSchema = new mongoose.Schema({
     nationality: { type: String },
     userId: { type: String, unique: true } // UUID
 });
+
+// API Key Authentication
+const authenticate = (req, res, next) => {
+    const userApiKey = req.headers['x-api-key'];
+    
+    if (userApiKey && userApiKey === API_KEY) {
+        next();
+    } else {
+        res.status(403).json({ error: "Unauthorized: Invalid API Key" });
+    }
+};
 
 const User = mongoose.model('User', userSchema);
 
@@ -42,7 +54,7 @@ app.get('/', (req, res) => {
   res.send('The Konisoft-Speedruns backend is live!');
 });
 
-app.post('/register', async (req, res) => {
+app.post('/register', authenticate, async (req, res) => {
     try {
         const { username, email, password, nationality, imageData, fileName } = req.body;
 
