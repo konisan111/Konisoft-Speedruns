@@ -354,7 +354,6 @@ nav {
 }
 
 #dropdown-menu-icons {
-    /* height: 2em; */
     padding: 1em;
     display: flex;
     align-items: center;
@@ -366,9 +365,10 @@ main {
     grid-template-columns: 1fr 3fr;
     gap: 1em;
     width: 100%;
-    padding: 1em;
+    padding: 1rem;
     min-width: 0;
     overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 #account-container, #leaderboard-container, #games-container {
@@ -436,6 +436,7 @@ main {
     border-radius: 0.5rem;
     background-color: rgb(152, 1, 1);
     cursor: pointer;
+    color: white;
 }
 
 #leaderboard-container {
@@ -445,25 +446,68 @@ main {
     gap: 0.75rem;
 }
 
-.leaderboard-card {
-    width: 100%;
-    height: 50px;
-    border-radius: 0.8rem;
-    display: flex;
+#leaderboard-titlebar, .leaderboard-card {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
+    width: 100%;
     box-sizing: border-box;
-    /* border: 1px solid var(--global-border); */
+}
+
+#leaderboard-titlebar {
+    padding: 0 1rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#leaderboard-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    padding-right: 5px;
+}
+
+.leaderboard-card {
+    min-height: 50px;
+    border-radius: 0.8rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
 }
 
 .leaderboard-card:nth-child(odd) { background-color: var(--leaderboard-card-odd-color); }
 .leaderboard-card:nth-child(even) { background-color: var(--leaderboard-card-even-color); }
 
+#leaderboard-profile-title { 
+    text-align: left; 
+}
+
+#leaderboard-date-title, .leaderboard-date { 
+    text-align: center; 
+}
+
+#leaderboard-time-title, .leaderboard-time { 
+    text-align: right; 
+}
+
 .leaderboard-user-information {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     align-items: center;
+    max-width: 15rem;
+    overflow: hidden;
+}
+
+.leaderboard-username {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-all;
 }
 
 .leaderboard-profile-picture {
@@ -471,6 +515,7 @@ main {
     height: 32px;
     border-radius: 50%;
     background-color: white;
+    flex-shrink: 0;
 }
 
 .leaderboard-flag {
@@ -478,10 +523,7 @@ main {
     height: 32px;
     border-radius: 50%;
     background-color: white;
-}
-
-.leaderboard-username {
-
+    flex-shrink: 0;
 }
 
 #games-container {
@@ -542,6 +584,37 @@ footer {
     width: 12em;
     height: 1.2em;
     margin-top: 3em;
+}
+
+@media (max-width: 1075px) {
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+    #leaderboard-container {
+        order: 1;
+    }
+    #account-container {
+        order: 2;
+    }
+    #games-container {
+        order: 3;
+    }
+    #leaderboard-titlebar, .leaderboard-card {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 0.5rem;
+    }
+    #leaderboard-profile-title, .leaderboard-user-information {
+        grid-column: 1 / 3;
+        max-width: 100%;
+    }
+    #leaderboard-date-title, .leaderboard-date {
+        text-align: left;
+    }
+    .leaderboard-card {
+        min-height: 80px;
+        padding: 0.75rem 1rem;
+    }
 }
 
 @media (max-width: 469px) {
@@ -623,10 +696,7 @@ footer {
 
 @media (min-width: 1100px) {
     main {
-        width: 70%;
+        width: clamp(70%, 1056px + 4vw, 100%);
         margin: auto;
     }
-}
-
-@media (min-width: 1380px) {
 }

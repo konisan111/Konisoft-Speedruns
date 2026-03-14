@@ -6,8 +6,6 @@
     <meta name="description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/main.css">
@@ -15,7 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script defer src="scripts/main.js"></script>
     <title>Konisoft | Welcome to the official Konisoft website</title>
-    <meta name="description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
     <link rel="icon" href="images/favicon.png" type="image/x-icon" />
     <meta property="og:type" content="website">
     <meta property="og:title" content="Konisoft | Welcome to the official Konisoft website">
@@ -46,7 +43,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-5P5D1PWEDT');
 </script>
 <body>
@@ -70,7 +66,18 @@
             <label id="repeat-password-label" for="repeat-password-input" style="display: none;">Repeat Password</label>
             <input id="repeat-password-input" type="password" placeholder="********" style="display: none;">
             
-            <div id="login-button"><span id="login-button-text">Login</span></div>
+            <label id="country-label" for="custom-country-dropdown" style="display: none;">Country</label>
+            <div id="custom-country-dropdown" class="custom-dropdown" tabindex="0" style="display: none;">
+                <div class="dropdown-selected">
+                    <span class="dropdown-icon">▼</span>
+                    <div id="country-selected-text">Select your country</div>
+                </div>
+                <div class="dropdown-options" id="country-options">
+                    </div>
+            </div>
+            <input type="hidden" id="country-input" value="">
+            
+            <div id="login-button" class="action-button">Login</div>
             
             <div id="login-register-separator">
                 <div id="separator-line-left"></div>
@@ -78,14 +85,23 @@
                 <div id="separator-line-right"></div>
             </div>
             
-            <div id="register-button"><span id="register-button-text">Register</span></div>
+            <div id="register-button" class="action-button">Register</div>
             
             <div id="back-to-login" style="display: none;">Back to Login</div>
             
-            <div id="google-login">
+            <div id="google-login" class="action-button">
                 <div id="google-logo"></div>
                 <div id="google-text">Continue with Google</div>
             </div>
+
+            <div id="pfp-upload-container">
+                <div id="pfp-preview"></div>
+                <div id="pfp-text">Upload your profile picture</div>
+                <div id="pfp-upload-button" class="action-button">Select Image</div>
+                <div id="pfp-skip-button">Skip</div>
+                <input type="file" id="pfp-file-input" accept="image/*" style="display: none;">
+            </div>
+
             <div id="language-and-theme">
                 <div id="language-switcher">
                     <div id="language-switcher-button"></div>

@@ -1,6 +1,8 @@
 :root {
     --main-background:#ffffff;
     --main-background-elements:#ffffff91;
+    --leaderboard-card-odd-color: #f9f9f9;
+    --leaderboard-card-even-color: #ececec;
     --secondary-background:#f0f0f0;
     --text-color: #000000;
     --secondary-text-color: #474747;

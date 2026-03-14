@@ -19,7 +19,7 @@ Btw tell me what are you looking for in the developer view? :P
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style/lobby.css">
-    <link id="theme-css" rel="stylesheet" href="style/dark-theme.css">
+    <link id="theme-css" rel="stylesheet" href="../style/dark-theme.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script defer src="../scripts/lobby.js"></script>
     <title>Konisoft | Welcome to the official Konisoft website</title>
@@ -63,7 +63,7 @@ Btw tell me what are you looking for in the developer view? :P
         <nav>
             <div id="header-logo" class="fade-in"></div>
             <div id="nav-buttons">
-                <div id="menu-buttons">
+                <!-- <div id="menu-buttons">
                     <a id="home-nav-text" href="#home-container" class="menu-button fade-in"></a>
                     <div id="nav-split"></div>
                     <a id="games-nav-text" href="#games-container" class="menu-button fade-in"></a>
@@ -76,7 +76,7 @@ Btw tell me what are you looking for in the developer view? :P
                     <div id="nav-split"></div>
                     <a id="contacts-nav-text" href="#contacts-container" class="menu-button fade-in"></a>
                     <div id="nav-split"></div>
-                </div>
+                </div> -->
                 <div id="theme-and-settings">
                     <div id="language" class="disable-mobile"></div>
                     <div id="nav-split"></div>
@@ -111,35 +111,42 @@ Btw tell me what are you looking for in the developer view? :P
             <div id="logout-button">Logout</div>
         </div>
         <div id="leaderboard-container" class="fade-in">
-            <div class="leaderboard-card">
-                <div class="leaderboard-user-information">
-                    <div class="leaderboard-profile-picture"></div>
-                    <div class="leaderboard-flag"></div>
-                    <div class="leaderboard-username">koni111</div>
-                </div>
-                <div class="leaderboard-date">2026.11.23</div>
-                <div class="leaderboard-time">12:21:41</div>
-                <!-- <div class="leaderboard-game-cover"></div> -->
+            <div id="leaderboard-titlebar">
+                <div id="leaderboard-profile-title">Profile</div>
+                <div id="leaderboard-date-title">Date</div>
+                <div id="leaderboard-time-title">Time</div>
             </div>
-            <div class="leaderboard-card">
-                <div class="leaderboard-user-information">
-                    <div class="leaderboard-profile-picture"></div>
-                    <div class="leaderboard-flag"></div>
-                    <div class="leaderboard-username">koni111</div>
+            <div id="leaderboard-card-container">
+                <div class="leaderboard-card">
+                    <div class="leaderboard-user-information">
+                        <div class="leaderboard-profile-picture"></div>
+                        <div class="leaderboard-flag"></div>
+                        <div class="leaderboard-username">koni111</div>
+                    </div>
+                    <div class="leaderboard-date">2026.11.23</div>
+                    <div class="leaderboard-time">12:21:41</div>
+                    <!-- <div class="leaderboard-game-cover"></div> -->
                 </div>
-                <div class="leaderboard-date">2026.11.23</div>
-                <div class="leaderboard-time">12:21:41</div>
-                <!-- <div class="leaderboard-game-cover"></div> -->
-            </div>
-            <div class="leaderboard-card">
-                <div class="leaderboard-user-information">
-                    <div class="leaderboard-profile-picture"></div>
-                    <div class="leaderboard-flag"></div>
-                    <div class="leaderboard-username">koni111</div>
+                <div class="leaderboard-card">
+                    <div class="leaderboard-user-information">
+                        <div class="leaderboard-profile-picture"></div>
+                        <div class="leaderboard-flag"></div>
+                        <div class="leaderboard-username">koni111</div>
+                    </div>
+                    <div class="leaderboard-date">2026.11.23</div>
+                    <div class="leaderboard-time">12:21:41</div>
+                    <!-- <div class="leaderboard-game-cover"></div> -->
                 </div>
-                <div class="leaderboard-date">2026.11.23</div>
-                <div class="leaderboard-time">12:21:41</div>
-                <!-- <div class="leaderboard-game-cover"></div> -->
+                <div class="leaderboard-card">
+                    <div class="leaderboard-user-information">
+                        <div class="leaderboard-profile-picture"></div>
+                        <div class="leaderboard-flag"></div>
+                        <div class="leaderboard-username">koni111</div>
+                    </div>
+                    <div class="leaderboard-date">2026.11.23</div>
+                    <div class="leaderboard-time">12:21:41</div>
+                    <!-- <div class="leaderboard-game-cover"></div> -->
+                </div>
             </div>
         </div>
         <div id="games-container" class="fade-in"></div>

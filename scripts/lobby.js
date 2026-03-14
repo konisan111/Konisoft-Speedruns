@@ -5,70 +5,7 @@ const themes = {
 
 let isHungarian = false;
 
-const translations = {
-  en: {
-        homeGameTitles : [
-            'Free your friends!',
-            'Compete with time!',
-            'Join the Game Jam!',
-        ],
-
-        homeGameDescriptions : [
-            `Escape the dungeons and free Lumi's friends.`,
-            `Run the best times in our upcoming speedrun platform!`,
-            `Compete with others and win the 20€ Steam Prize!`,
-        ],
-
-        gameDescriptions : [
-            `True friends always help each other! And Lumi does the same! Escape from increasingly challenging levels, solve the puzzles, be quick, and don't run out of time! Rescue Muze, Rosey, and Zumi from the Dreadspire Dungeons! Our game is currently under development and will be available soon on Steam and Itch.io!`,
-        ]
-  },
-  hu: {
-        homeGameTitles : [
-            'Segíts a barátaidnak!',
-            'Légy a legyorsabb!',
-            'Csatlakozz a Jamhez!',
-        ],
-
-        homeGameDescriptions : [
-            `Szabadulj ki a fogságból Lumi barátaival!`,
-            `Versenyezz a hamarosan érkező platformunkon!`,
-            `Légy a legjobb és vidd el a 20€ Steam díjat!`,
-        ],  
-
-        gameDescriptions : [    
-            `Az igazi barátok mindig segítenek egymásnak! Lumi is így tesz! Szabadulj ki az egyre nehezedő pályákról, old meg a puzzleöket, légy gyors, és ne fuss ki az időből! Szabadítsd ki Muzet, Roseyt, és Zumit a Dreadspire Dungeonökből! Még fejlesztés alatt álló játékunk hamarosan elérhető lesz Steamen és Itch.io-n is!`,
-        ]
-  }
-};
-
-const translationsForGames = {
-  en: {
-        gameTitles : [
-            'Lumi Dungeon Of Dreadspire',
-            'Speedruns'
-        ],
-
-        gameDescriptions : [
-            `True friends always help each other! And Lumi does the same! Escape from increasingly challenging levels, solve the puzzles, be quick, and don't run out of time! Rescue Muze, Rosey, and Zumi from the Dreadspire Dungeons! Our game is currently under development and will be available soon on Steam and Itch.io!`,
-            'Racing has many ways! Konisoft decided to begin developing a brand-new speedrunning platform dedicated exclusively to our games. We wanted to create a platform where the community can truly show off what they can do. Play Konisoft games, push your limits, and upload your times!'
-        ]
-  },
-  hu: {
-        gameTitles : [
-            'Lumi Dungeon Of Dreadspire',
-            'Speedruns'
-        ],
-
-        gameDescriptions : [    
-            `Az igazi barátok mindig segítenek egymásnak! Lumi is így tesz! Szabadulj ki az egyre nehezedő pályákról, old meg a puzzleöket, légy gyors, és ne fuss ki az időből! Szabadítsd ki Muzet, Roseyt, és Zumit a Dreadspire Dungeonökből! Még fejlesztés alatt álló játékunk hamarosan elérhető lesz Steamen és Itch.io-n is!`,
-            'A versenyzésnek számos módja van! A Konisoftnál hivatalosan is elhatároztuk, hogy elkezdünk fejleszteni egy vadonatúj speedrun platformot, kifejezetten a mi játékainkhoz. Szerettünk volna egy olyan platformot létrehozni, ahol a közösségünk tagjai igazán megmutathatják, mire képesek. Játssz a Konisoft játékaival, feszegesd a határaidat, és töltsd fel az időeredményeidet!'
-        ]
-  }
-};
-
 const timeForImage = 5;
-
 let currentImageIndex = 0;
 
 let settingsMobile = document.getElementById('settings-mobile');
@@ -100,6 +37,7 @@ window.addEventListener('load', async () => {
   });
 
   const domImgSrcs = Array.from(document.images).map(img => img.src);
+  const gameCovers = []; 
   await preloadImages([...domImgSrcs, ...gameCovers]);
 
   document.querySelectorAll('.text-loading').forEach(el => el.classList.remove('text-loading'));
@@ -161,7 +99,10 @@ function SelectOption(selectedButton, fromDropdown = false) {
     }
 }
 
-dropdownMenuButtons[0].style.fontWeight = 'bold';
+if(dropdownMenuButtons.length > 0) {
+    dropdownMenuButtons[0].style.fontWeight = 'bold';
+}
+
 dropdownMenuButtons.forEach(button => {
     button.addEventListener('click', (event) => {
         SelectOption(event.currentTarget, true);
@@ -175,9 +116,11 @@ menuButtons.forEach(button => {
     });
 });
 
-settingsMobile.addEventListener('click', (event) => {
-    ToggleDropdown(event.currentTarget)
-})
+if(settingsMobile) {
+    settingsMobile.addEventListener('click', (event) => {
+        ToggleDropdown(event.currentTarget)
+    });
+}
 
 function ToggleDropdown(button) {
     if (dropdownMenu.classList.contains('dropdown-menu-down')) {
@@ -194,19 +137,34 @@ function ToggleDropdown(button) {
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const languageButtons = [
     document.getElementById("language"),
     document.getElementById("language-mobile")
   ];
 
-  const translations = {
-    en: {  
-      "": ""
+  const uiTranslations = {
+    en: {
+      "account-information": "Information about account",
+      "logout-button": "Logout",
+      "leaderboard-profile-title": "Profile",
+      "leaderboard-date-title": "Date",
+      "leaderboard-time-title": "Time",
+      "footer-text-1": "Konisoft Indie Game Studio since 2024.",
+      "footer-text-2": "Games for gamers!",
+      "footer-text-3": "All rights reserved.",
+      "username": "User1234"
     },
     hu: {
-      "": ""
+      "account-information": "Fiók információk",
+      "logout-button": "Kijelentkezés",
+      "leaderboard-profile-title": "Profil",
+      "leaderboard-date-title": "Dátum",
+      "leaderboard-time-title": "Idő",
+      "footer-text-1": "Konisoft Indie Game Studio 2024 óta.",
+      "footer-text-2": "Játékok gamereknek!",
+      "footer-text-3": "Minden jog fenntartva.",
+      "username": "Felhasználó1234"
     }
   };
 
@@ -214,12 +172,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateTexts = () => {
     const lang = currentLanguage;
-
-    Object.keys(translations[lang]).forEach(id => {
-      if (Array.isArray(translations[lang][id])) return;
-
+    Object.keys(uiTranslations[lang]).forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.textContent = translations[lang][id];
+      if (el) el.textContent = uiTranslations[lang][id];
     });
   };
 
@@ -233,17 +188,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const handleLanguageSwitch = () => {
     currentLanguage = currentLanguage === "en" ? "hu" : "en";
     isHungarian = currentLanguage === "hu";
-
     updateFlags();
     updateTexts();
+    generateLeaderboard();
   };
 
   languageButtons.forEach(btn => {
     if (!btn) return;
-
     btn.addEventListener("click", () => {
       btn.style.opacity = 0;
-
       setTimeout(() => {
         handleLanguageSwitch();
         btn.style.opacity = 1;
@@ -251,13 +204,75 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  const leaderboardData = [
+    { username: "koni111", date: "2026.11.23", time: "12:21:41", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
+    { username: "SpeedyGonzales", date: "2026.11.24", time: "12:45:10", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "PlayerOne", date: "2026.11.25", time: "13:05:22", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "ShadowRunner", date: "2026.11.25", time: "13:30:00", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
+    { username: "GhostInTheShell", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "NeonNinja", date: "2026.11.26", time: "14:40:55", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
+    { username: "RetroGamer", date: "2026.11.27", time: "15:10:33", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "PixelKing", date: "2026.11.28", time: "16:00:01", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "TimeWalker", date: "2026.11.29", time: "16:45:59", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" }
+  ];
+
+  const generateLeaderboard = () => {
+    const wrapper = document.getElementById("leaderboard-card-container");
+    if (!wrapper) return;
+    
+    wrapper.innerHTML = "";
+
+    leaderboardData.forEach(entry => {
+      const dateParts = entry.date.split('.');
+      const formattedDate = currentLanguage === 'en' 
+          ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` 
+          : entry.date;
+
+      const card = document.createElement("div");
+      card.className = "leaderboard-card";
+      
+      card.innerHTML = `
+        <div class="leaderboard-user-information">
+            <div class="leaderboard-profile-picture" style="background-image: url('${entry.pfp}'); background-size: cover; background-position: center;"></div>
+            <div class="leaderboard-flag" style="background-image: url('${entry.flag}'); background-size: cover; background-position: center;"></div>
+            <div class="leaderboard-username">${entry.username}</div>
+        </div>
+        <div class="leaderboard-date">${formattedDate}</div>
+        <div class="leaderboard-time">${entry.time}</div>
+      `;
+      wrapper.appendChild(card);
+    });
+  };
+
   updateTexts();
   updateFlags();
+  generateLeaderboard();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      } else {
+        entry.target.classList.remove("visible");
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll(".fade-in-section").forEach(el => {
+    observer.observe(el);
+  });
 });
 
 function setAnchorDisabled(a, disabled) {
   if (!a) return;
-
   if (disabled) {
     if (!a.dataset.originalHref) a.dataset.originalHref = a.getAttribute("href") || "";
     a.removeAttribute("href");
@@ -274,20 +289,3 @@ function setAnchorDisabled(a, disabled) {
     a.style.cursor = "";
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      } else {
-        entry.target.classList.remove("visible");
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll(".fade-in-section").forEach(el => {
-    observer.observe(el);
-  });
-});
