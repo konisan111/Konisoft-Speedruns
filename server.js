@@ -11,7 +11,8 @@ const app = express();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(cors());
-app.use(express.json({ limit: '10mb' })); // Increased limit for base64 images
+app.use(express.json({ limit: '10mb' })); 
+app.use(express.urlencoded({ extended: true, limit: '10mb' })); // Increased limit for base64 images
 
 // User schematics
 const userSchema = new mongoose.Schema({
@@ -60,6 +61,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
+    console.log("DEBUG: ", req.body);
     try {
         const { username, email, password, nationality, imageData, fileName } = req.body;
 
