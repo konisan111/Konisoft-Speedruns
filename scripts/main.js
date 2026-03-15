@@ -276,6 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "back-to-login": "Back to Login",
       "pfp-text": "Upload your profile picture",
       "pfp-upload-button": "Select Image",
+      "pfp-send-button": "Next",
       "pfp-skip-button": "Skip",
       "country-label": "Country",
       "country-selected-text": "Select your country"
@@ -299,6 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "back-to-login": "Vissza a bejelentkezéshez",
       "pfp-text": "Töltsd fel a profilképedet",
       "pfp-upload-button": "Kép kiválasztása",
+      "pfp-send-button": "Tovább",
       "pfp-skip-button": "Kihagyás",
       "country-label": "Ország",
       "country-selected-text": "Válassz országot"

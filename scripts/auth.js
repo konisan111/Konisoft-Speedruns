@@ -1,6 +1,6 @@
 const registerBtn = document.getElementById('register-button');
 const loginBtn = document.getElementById('login-button');
-const uploadPfpBtn = document.getElementById('pfp-upload-button');
+const uploadPfpBtn = document.getElementById('pfp-send-button');
 
 const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
