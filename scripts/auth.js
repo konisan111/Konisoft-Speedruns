@@ -50,13 +50,14 @@ registerBtn.addEventListener('click', async () => {
 
         const result = await response.json();
         if (response.ok) {
-            console.log("Registration successful:", result.message);
-        } else {
-            console.error("Registration failed:", result.error);
+            localStorage.setItem('token', result.token); 
+            console.log("Registration successful and logged in automatically!");
+            
+            document.getElementById('pfp-upload-container').style.display = 'block';
         }
-    } catch (err) {
-        console.error("Network error during registration:", err);
-    }
+        } catch (err) {
+            console.error("Network error during registration:", err);
+        }
 });
 
 loginBtn.addEventListener('click', async () => {
@@ -87,41 +88,38 @@ uploadPfpBtn.addEventListener('click', async () => {
     const pfpFile = pfpFileInput.files[0];
     const token = localStorage.getItem('token');
 
-    if (!pfpFile || !token) {
-        console.error("Error: no file detected, our you are logged out!");
+    if (!token) {
+        console.error("Hiba: Nem vagy bejelentkezve (hiányzik a token)!");
+        return;
+    }
+    if (!pfpFile) {
+        console.error("Hiba: Nincs kiválasztva fájl!");
         return;
     }
 
     try {
+        // Megvárjuk a konvertálást (await!)
         const base64String = await convertToBase64(pfpFile);
         const imageData = base64String.split(',')[1];
 
-        const data = {
-            imageData: imageData,
-            fileName: pfpFile.name
-        };
+        const data = { imageData, fileName: pfpFile.name };
 
         const response = await fetch('https://konisoftspeedruns.onrender.com/update-pfp', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}` 
             },
             body: JSON.stringify(data)
         });
 
         const result = await response.json();
         if (response.ok) {
-            console.log("IMAGE URL------------> ", result.avatarUrl);
-            const display = document.getElementById('user-avatar-display');
-            if (display) {
-                display.src = result.avatarUrl;
-                display.style.display = 'block';
-            }
+            console.log("PFP Updated!", result.avatarUrl);
         } else {
-            console.error("Server side error:", result.error);
+            console.error("Update failed:", result.error);
         }
     } catch (err) {
-        console.error("Connectivity error while upload:", err);
+        console.error("Hiba a feltöltés során:", err);
     }
 });

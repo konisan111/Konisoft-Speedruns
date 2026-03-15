@@ -94,7 +94,17 @@ app.post('/register', async (req, res) => {
         });
 
         await newUser.save();
-        res.status(201).json({ message: "Successful registration!", user: { username, email, userId: newUser.userId } });
+        const token = jwt.sign(
+            { userId: newUser.userId, username: newUser.username }, 
+            JWT_SECRET, 
+            { expiresIn: '24h' }
+        );
+
+        res.status(201).json({ 
+            message: "Successful registration!", 
+            token: token,
+            user: { username, email, userId: newUser.userId } 
+        });
 
     } catch (err) {
         console.error(err);
