@@ -118,6 +118,43 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.post('/update-pfp', authenticateToken, async (req, res) => {
+    try {
+        const { imageData, fileName } = req.body;
+        const userId = req.user.userId;
+
+        if (!imageData) {
+            return res.status(400).json({ error: "No image data provided" });
+        }
+
+        const fileKey = `avatars/${userId}-${Date.now()}-${fileName}`;
+        const uploadParams = {
+            Bucket: process.env.R2_BUCKET,
+            Key: fileKey,
+            Body: Buffer.from(imageData, 'base64'),
+            ContentType: 'image/png'
+        };
+
+        await s3.send(new PutObjectCommand(uploadParams));
+        const profileImageUrl = `${process.env.R2_PUBLIC_URL}/${fileKey}`;
+
+        const updatedUser = await User.findOneAndUpdate(
+            { userId: userId },
+            { avatarUrl: profileImageUrl },
+            { new: true }
+        );
+
+        res.json({ 
+            message: "Profile picture updated!", 
+            avatarUrl: profileImageUrl 
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to update profile picture" });
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
