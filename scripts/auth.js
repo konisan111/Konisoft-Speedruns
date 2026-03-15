@@ -83,23 +83,24 @@ loginBtn.addEventListener('click', async () => {
 });
 
 uploadPfpBtn.addEventListener('click', async () => {
-    const pfpFile = document.getElementById('pfp-file-input').files[0];
+    const pfpFileInput = document.getElementById('pfp-file-input');
+    const pfpFile = pfpFileInput.files[0];
     const token = localStorage.getItem('token');
 
     if (!pfpFile || !token) {
-        console.error("Missing file or you are not logged in!");
+        console.error("Error: no file detected, our you are logged out!");
         return;
     }
 
-    const base64String = await convertToBase64(pfpFile);
-    const imageData = base64String.split(',')[1];
-
-    const data = {
-        imageData: imageData,
-        fileName: pfpFile.name
-    };
-
     try {
+        const base64String = await convertToBase64(pfpFile);
+        const imageData = base64String.split(',')[1];
+
+        const data = {
+            imageData: imageData,
+            fileName: pfpFile.name
+        };
+
         const response = await fetch('https://konisoftspeedruns.onrender.com/update-pfp', {
             method: 'POST',
             headers: { 
@@ -111,12 +112,16 @@ uploadPfpBtn.addEventListener('click', async () => {
 
         const result = await response.json();
         if (response.ok) {
-            console.log("PFP Updated!", result.avatarUrl);
-            document.getElementById('user-avatar-display').src = result.avatarUrl;
+            console.log("IMAGE URL------------> ", result.avatarUrl);
+            const display = document.getElementById('user-avatar-display');
+            if (display) {
+                display.src = result.avatarUrl;
+                display.style.display = 'block';
+            }
         } else {
-            console.error("Update failed:", result.error);
+            console.error("Server side error:", result.error);
         }
     } catch (err) {
-        console.error("Network error:", err);
+        console.error("Connectivity error while upload:", err);
     }
 });
