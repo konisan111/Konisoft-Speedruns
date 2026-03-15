@@ -1,3 +1,13 @@
+google.accounts.id.initialize({
+    client_id: "362122696928-cppghj9ccgtf34qd4t1ugohbhptsaaco.apps.googleusercontent.com",
+    callback: handleGoogleResponse,
+    use_fedcm: false
+});
+
+googleLoginBtn.addEventListener('click', () => {
+    google.accounts.id.prompt();
+});
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
