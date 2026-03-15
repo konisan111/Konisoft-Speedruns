@@ -15,7 +15,7 @@ registerBtn.addEventListener('click', async () => {
     const email = document.getElementById('email-input').value;
     const password = document.getElementById('password-input').value;
     const repeatPassword = document.getElementById('repeat-password-input').value;
-    const nationality = document.getElementById('custom-country-dropdown').value;
+    const nationality = document.getElementById('country-selected-text').innerText;    
     const pfpFile = document.getElementById('pfp-file-input').files[0];
 
     if (password !== repeatPassword) {
