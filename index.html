@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style/main.css">
     <link id="theme-css" rel="stylesheet" href="style/dark-theme.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script defer src="scripts/main.js"></script>
+    <script defer type="module" src="scripts/main.js"></script>
     <script defer src="scripts/auth.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <title>Konisoft | Welcome to the official Konisoft website</title>
@@ -91,10 +91,9 @@
             
             <div id="back-to-login" style="display: none;">Back to Login</div>
             
-            <button id="google-login" class="action-button">
-                <div id="google-logo"></div>
-                <div id="google-text">Continue with Google</div>
-            </button>
+            <div id="google-login">
+                <div id="google-button-target"></div> 
+            </div>
 
             <div id="pfp-upload-container">
                 <div id="pfp-preview"></div>

@@ -1,3 +1,5 @@
+import { updateGoogleButton } from './google-id.js';
+
 const THEME_FILES = { light: "../style/light-theme.css", dark: "../style/dark-theme.css" };
 let isHungarian = false;
 
@@ -9,6 +11,9 @@ window.addEventListener('load', async () => {
   document.querySelectorAll('.text-loading, .image-loading, .video-loading').forEach(el => {
     el.classList.remove('text-loading', 'image-loading', 'video-loading');
   });
+  
+  const initialLang = isHungarian ? 'hu' : 'en';
+  updateGoogleButton(initialLang);
 });
 
 let themeLink = document.getElementById("theme-css");
@@ -394,6 +399,8 @@ document.addEventListener("DOMContentLoaded", () => {
     updateFlags();
     updateTexts();
 
+    updateGoogleButton(currentLanguage);
+
     const curTheme = document.documentElement.dataset.theme;
     if (curTheme) {
         setTheme(curTheme, false);
@@ -560,6 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   registerButton.addEventListener("click", () => {
     if (!isRegistering) {
+      
       showRegistrationForm();
     } else {
       showPfpUploadScreen();

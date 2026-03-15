@@ -2,15 +2,6 @@ const registerBtn = document.getElementById('register-button');
 const loginBtn = document.getElementById('login-button');
 const uploadPfpBtn = document.getElementById('pfp-send-button');
 const googleLoginBtn = document.getElementById('google-login');
-google.accounts.id.initialize({
-    client_id: "362122696928-cppghj9ccgtf34qd4t1ugohbhptsaaco.apps.googleusercontent.com",
-    callback: handleGoogleResponse,
-    use_fedcm: false
-});
-
-googleLoginBtn.addEventListener('click', () => {
-    google.accounts.id.prompt();
-});
 
 const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -93,6 +84,7 @@ loginBtn.addEventListener('click', async () => {
 
 async function handleGoogleResponse(response) {
     try {
+        console.log("Google token megérkezett a böngészőbe!");
         const res = await fetch('https://konisoftspeedruns.onrender.com/google-login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -103,16 +95,15 @@ async function handleGoogleResponse(response) {
         if (res.ok) {
             localStorage.setItem('token', result.token);
             console.log("Sikeres Google bejelentkezés!");
-            
-            if (result.avatarUrl) {
-                const pfp = document.getElementById('user-avatar-display');
-                if (pfp) pfp.src = result.avatarUrl;
-            }
+            window.location.reload();
         }
     } catch (err) {
         console.error("Google Login Network Error:", err);
     }
+    
 }
+
+window.handleGoogleResponse = handleGoogleResponse;
 
 uploadPfpBtn.addEventListener('click', async () => {
     const pfpFileInput = document.getElementById('pfp-file-input');

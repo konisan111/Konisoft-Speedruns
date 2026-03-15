@@ -361,6 +361,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 #google-login {
     justify-content: flex-start;
     font-weight: normal;
+    margin-bottom:1em;
 }
 
 #google-logo {
