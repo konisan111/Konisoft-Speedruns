@@ -2,6 +2,15 @@ const registerBtn = document.getElementById('register-button');
 const loginBtn = document.getElementById('login-button');
 const uploadPfpBtn = document.getElementById('pfp-send-button');
 const googleLoginBtn = document.getElementById('google-login');
+google.accounts.id.initialize({
+    client_id: "362122696928-cppghj9ccgtf34qd4t1ugohbhptsaaco.apps.googleusercontent.com",
+    callback: handleGoogleResponse,
+    use_fedcm: false
+});
+
+googleLoginBtn.addEventListener('click', () => {
+    google.accounts.id.prompt();
+});
 
 const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -80,15 +89,6 @@ loginBtn.addEventListener('click', async () => {
     } catch (err) {
         console.error("Network error during login:", err);
     }
-});
-
-googleLoginBtn.addEventListener('click', () => {
-    google.accounts.id.initialize({
-        client_id: "362122696928-cppghj9ccgtf34qd4t1ugohbhptsaaco.apps.googleusercontent.com",
-        callback: handleGoogleResponse,
-        use_fedcm: false
-    });
-    google.accounts.id.prompt();
 });
 
 async function handleGoogleResponse(response) {
