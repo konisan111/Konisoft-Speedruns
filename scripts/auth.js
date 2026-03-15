@@ -1,6 +1,7 @@
 const registerBtn = document.getElementById('register-button');
 const loginBtn = document.getElementById('login-button');
 const uploadPfpBtn = document.getElementById('pfp-send-button');
+const googleBtn = document.getElementById('google-login');
 
 const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -52,8 +53,6 @@ registerBtn.addEventListener('click', async () => {
         if (response.ok) {
             localStorage.setItem('token', result.token); 
             console.log("Registration successful and logged in automatically!");
-            
-            document.getElementById('pfp-upload-container').style.display = 'block';
         }
         } catch (err) {
             console.error("Network error during registration:", err);
@@ -82,6 +81,37 @@ loginBtn.addEventListener('click', async () => {
         console.error("Network error during login:", err);
     }
 });
+
+googleLoginBtn.addEventListener('click', () => {
+    google.accounts.id.initialize({
+        client_id: "362122696928-cppghj9ccgtf34qd4t1ugohbhptsaaco.apps.googleusercontent.com",
+        callback: handleGoogleResponse
+    });
+    google.accounts.id.prompt();
+});
+
+async function handleGoogleResponse(response) {
+    try {
+        const res = await fetch('https://konisoftspeedruns.onrender.com/google-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken: response.credential })
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+            localStorage.setItem('token', result.token);
+            console.log("Sikeres Google bejelentkezés!");
+            
+            if (result.avatarUrl) {
+                const pfp = document.getElementById('user-avatar-display');
+                if (pfp) pfp.src = result.avatarUrl;
+            }
+        }
+    } catch (err) {
+        console.error("Google Login Network Error:", err);
+    }
+}
 
 uploadPfpBtn.addEventListener('click', async () => {
     const pfpFileInput = document.getElementById('pfp-file-input');

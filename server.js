@@ -7,6 +7,9 @@ const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { v4: uuidv4 } = require('uuid'); // We have to install UUIDs
 require('dotenv').config();
 
+const { OAuth2Client } = require('google-auth-library');
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 const app = express();
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -125,6 +128,44 @@ app.post('/login', async (req, res) => {
         res.json({ message: "Login successful", token });
     } catch (err) {
         res.status(500).json({ error: "Login error" });
+    }
+});
+
+app.post('/google-login', async (req, res) => {
+    const { idToken } = req.body;
+
+    try {
+        const ticket = await googleClient.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        const { email, name, picture } = payload;
+
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            user = new User({
+                username: name,
+                email: email,
+                password: "GOOGLE_AUTH_USER_" + uuidv4(),
+                avatarUrl: picture,
+                nationality: "Unknown",
+                userId: uuidv4()
+            });
+            await user.save();
+        }
+
+        const token = jwt.sign(
+            { userId: user.userId, username: user.username }, 
+            JWT_SECRET, 
+            { expiresIn: '24h' }
+        );
+
+        res.json({ message: "Google Login Successful", token, avatarUrl: user.avatarUrl });
+    } catch (error) {
+        console.error("Google Auth Error:", error);
+        res.status(401).json({ error: "Invalid Google token" });
     }
 });
 
