@@ -1,7 +1,7 @@
 const registerBtn = document.getElementById('register-button');
 const loginBtn = document.getElementById('login-button');
 const uploadPfpBtn = document.getElementById('pfp-send-button');
-const googleBtn = document.getElementById('google-login');
+const googleLoginBtn = document.getElementById('google-login');
 
 const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -85,7 +85,8 @@ loginBtn.addEventListener('click', async () => {
 googleLoginBtn.addEventListener('click', () => {
     google.accounts.id.initialize({
         client_id: "362122696928-cppghj9ccgtf34qd4t1ugohbhptsaaco.apps.googleusercontent.com",
-        callback: handleGoogleResponse
+        callback: handleGoogleResponse,
+        use_fedcm: false
     });
     google.accounts.id.prompt();
 });
