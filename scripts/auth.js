@@ -35,6 +35,8 @@ loginBtn.addEventListener('click', async () => {
     }
 });
 
+window.isGoogleAuthSetup = false;
+
 async function handleGoogleResponse(response) {
     try {
         const res = await fetch('https://konisoftspeedruns.onrender.com/google-login', {
@@ -47,7 +49,9 @@ async function handleGoogleResponse(response) {
         if (res.ok) {
             localStorage.setItem('token', result.token);
             
-            if (result.isNewUser) {
+            if (result.isNewUser || result.nationality === "Unknown") {
+                window.isGoogleAuthSetup = true;
+                
                 const pfpPreview = document.getElementById("pfp-preview");
                 if (pfpPreview && result.avatarUrl) {
                     pfpPreview.style.backgroundImage = `url(${result.avatarUrl})`;
@@ -55,7 +59,7 @@ async function handleGoogleResponse(response) {
                 
                 window.showPfpUploadScreen(); 
             } else {
-                window.location.href = "lobby.html";
+                console.log("Már létező profil, normál esetben itt menne a lobby-ba.");
             }
         }
     } catch (err) {
@@ -64,17 +68,15 @@ async function handleGoogleResponse(response) {
 }
 
 window.handleGoogleResponse = handleGoogleResponse;
+
 const pfpSendButton = document.getElementById('pfp-send-button');
 pfpSendButton.addEventListener('click', async (e) => {
-    const username = document.getElementById('username-input').value;
-    const email = document.getElementById('email-input').value;
-    const password = document.getElementById('password-input').value;
     const nationality = document.getElementById('country-input').value;
     const pfpFileInput = document.getElementById('pfp-file-input');
     const pfpFile = pfpFileInput.files[0];
 
-    if (!username || !email || !password || !nationality) {
-        console.error("Missing info: nationality!", nationality);
+    if (!nationality) {
+        console.error("Hiányzó infó: nemzetiség!");
         return;
     }
 
@@ -82,39 +84,62 @@ pfpSendButton.addEventListener('click', async (e) => {
     let fileName = "";
 
     if (pfpFile) {
-        console.log("Processing image...");
+        console.log("Kép feldolgozása...");
         const base64String = await convertToBase64(pfpFile);
         imageData = base64String.split(',')[1];
         fileName = pfpFile.name;
     }
 
-    const userData = {
-        username,
-        email,
-        password,
-        nationality,
-        imageData,
-        fileName
-    };
+    if (window.isGoogleAuthSetup) {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await fetch('https://konisoftspeedruns.onrender.com/complete-google-profile', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ nationality, imageData, fileName })
+            });
 
-    try {
-        const response = await fetch('https://konisoftspeedruns.onrender.com/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData)
-        });
-
-        const result = await response.json();
-        
-        if (response.ok) {
-            console.log("Registration was successful!", result);
-            localStorage.setItem('token', result.token);
-            window.location.href = "lobby.html";
-        } else {
-            console.error("Server error:", result.error);
-            alert("Error: " + result.error);
+            const result = await response.json();
+            if (response.ok) {
+                console.log("Google profil sikeresen kiegészítve!", result);
+            } else {
+                alert("Hiba: " + result.error);
+            }
+        } catch (err) {
+            console.error("Hálózati hiba a Google profil kiegészítésekor.", err);
         }
-    } catch (err) {
-        console.error("Network error. Check the backend, sometimes this error can occur when it's down.", err);
+    } 
+    else {
+        const username = document.getElementById('username-input').value;
+        const email = document.getElementById('email-input').value;
+        const password = document.getElementById('password-input').value;
+
+        if (!username || !email || !password) {
+            console.error("Hiányzó adatok a sima regisztrációhoz!");
+            return;
+        }
+
+        const userData = { username, email, password, nationality, imageData, fileName };
+
+        try {
+            const response = await fetch('https://konisoftspeedruns.onrender.com/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                console.log("Sima regisztráció sikeres!", result);
+                localStorage.setItem('token', result.token);
+            } else {
+                alert("Hiba: " + result.error);
+            }
+        } catch (err) {
+            console.error("Hálózati hiba regisztrációnál.", err);
+        }
     }
 });

@@ -173,6 +173,40 @@ app.post('/google-login', async (req, res) => {
     }
 });
 
+app.post('/complete-google-profile', authenticateToken, async (req, res) => {
+    try {
+        const { nationality, imageData, fileName } = req.body;
+        const userId = req.user.userId;
+
+        let updateData = { nationality: nationality };
+
+        if (imageData) {
+            const fileKey = `avatars/${userId}-${Date.now()}-${fileName}`;
+            const uploadParams = {
+                Bucket: process.env.R2_BUCKET,
+                Key: fileKey,
+                Body: Buffer.from(imageData, 'base64'),
+                ContentType: 'image/png'
+            };
+
+            await s3.send(new PutObjectCommand(uploadParams));
+            updateData.avatarUrl = `${process.env.R2_PUBLIC_URL}/${fileKey}`;
+        }
+
+        const updatedUser = await User.findOneAndUpdate(
+            { userId: userId },
+            updateData,
+            { new: true }
+        );
+
+        res.json({ message: "Google profile is ready!", user: updatedUser });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "There was an error while finishing the google profile!" });
+    }
+});
+
 app.post('/update-pfp', authenticateToken, async (req, res) => {
     try {
         const { imageData, fileName } = req.body;
