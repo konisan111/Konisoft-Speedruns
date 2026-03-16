@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true }, // Email address of the user
     password: { type: String, required: true }, // Password for user
     avatarUrl: { type: String }, // R2 address link
-    nationality: { type: String, required: true  },
+    nationality: { type: String},
     userId: { type: String, unique: true } // UUID
 });
 
