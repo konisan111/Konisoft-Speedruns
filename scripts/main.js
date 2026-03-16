@@ -58,6 +58,37 @@ setTheme(initialTheme(), false);
     if (el) el.addEventListener("click", toggle);
 });
 
+function showToastError(message) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    
+    const icon = document.createElement('img');
+    icon.className = 'toast-icon';
+    icon.src = '../images/error_icon.png'; 
+    icon.alt = 'Error';
+    
+    const textNode = document.createElement('span');
+    textNode.textContent = message;
+    
+    toast.appendChild(icon);
+    toast.appendChild(textNode);
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        if(toast.parentNode) {
+            toast.remove();
+        }
+    }, 5000);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const languageContainer = document.getElementById("language-switcher");
   const languageButton = document.getElementById("language-switcher-button");
@@ -282,8 +313,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "pfp-text": "Upload your profile picture",
       "pfp-upload-button": "Select Image",
       "pfp-send-button": "Next",
-      "pfp-skip-button": "Skip",
-      "country-label": "Country",
       "country-selected-text": "Select your country"
     },
     hu: {
@@ -306,8 +335,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "pfp-text": "Töltsd fel a profilképedet",
       "pfp-upload-button": "Kép kiválasztása",
       "pfp-send-button": "Tovább",
-      "pfp-skip-button": "Kihagyás",
-      "country-label": "Ország",
       "country-selected-text": "Válassz országot"
     }
   };
@@ -338,6 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
           countrySelectedText.textContent = countryObj[langKey];
           hiddenCountryInput.value = countryObj.en;
           customCountryDropdown.classList.remove("open");
+          customCountryDropdown.classList.remove("input-error");
       });
       
       countryOptions.appendChild(optionDiv);
@@ -456,15 +484,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const repeatPasswordLabel = document.getElementById("repeat-password-label");
   const repeatPasswordInput = document.getElementById("repeat-password-input");
   
-  const countryLabel = document.getElementById("country-label");
   const customCountryDropdown = document.getElementById("custom-country-dropdown");
   const countryOptions = document.getElementById("country-options");
+  const hiddenCountryInput = document.getElementById("country-input");
 
   const pfpUploadContainer = document.getElementById("pfp-upload-container");
   const pfpPreview = document.getElementById("pfp-preview");
   const pfpUploadButton = document.getElementById("pfp-upload-button");
-  const pfpSkipButton = document.getElementById("pfp-skip-button");
+  const pfpSendButton = document.getElementById("pfp-send-button");
   const pfpFileInput = document.getElementById("pfp-file-input");
+
+  [usernameInput, emailInput, passwordInput, repeatPasswordInput].forEach(input => {
+      input.addEventListener('input', () => {
+          input.classList.remove('input-error');
+      });
+  });
 
   if (customCountryDropdown) {
       customCountryDropdown.addEventListener("click", () => {
@@ -497,7 +531,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const showRegistrationForm = () => {
     isRegistering = true;
     mainContainer.style.background = "var(--main-background)";
-    pfpSkipButton.style.color = "";
     
     loginButton.style.display = "none";
     forgotPassword.style.display = "none";
@@ -512,8 +545,6 @@ document.addEventListener("DOMContentLoaded", () => {
     usernameInput.style.display = "block";
     repeatPasswordLabel.style.display = "block";
     repeatPasswordInput.style.display = "block";
-    countryLabel.style.display = "block";
-    customCountryDropdown.style.display = "block";
     backToLoginButton.style.display = "block";
     
     updateTexts();
@@ -522,14 +553,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const showLoginForm = () => {
     isRegistering = false;
     mainContainer.style.background = "var(--main-background)";
-    pfpSkipButton.style.color = "";
     
     usernameLabel.style.display = "none";
     usernameInput.style.display = "none";
     repeatPasswordLabel.style.display = "none";
     repeatPasswordInput.style.display = "none";
-    countryLabel.style.display = "none";
-    customCountryDropdown.style.display = "none";
     backToLoginButton.style.display = "none";
     pfpUploadContainer.style.display = "none";
     
@@ -540,6 +568,8 @@ document.addEventListener("DOMContentLoaded", () => {
     forgotPassword.style.display = "block";
     loginSeparator.style.display = "flex";
     googleLoginButton.style.display = "flex";
+    
+    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
     
     updateTexts();
   };
@@ -552,8 +582,6 @@ document.addEventListener("DOMContentLoaded", () => {
     passwordInput.style.display = "none";
     repeatPasswordLabel.style.display = "none";
     repeatPasswordInput.style.display = "none";
-    countryLabel.style.display = "none";
-    customCountryDropdown.style.display = "none";
     registerButton.style.display = "none";
     backToLoginButton.style.display = "none";
     loginSeparator.style.display = "none";
@@ -567,10 +595,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
   registerButton.addEventListener("click", () => {
     if (!isRegistering) {
-      
       showRegistrationForm();
     } else {
-      showPfpUploadScreen();
+      let isValid = true;
+      let errors = [];
+      document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+      const userVal = usernameInput.value;
+      const usernameRegex = /^[a-zA-Z0-9_]+$/;
+      
+      if (userVal === '') {
+          usernameInput.classList.add('input-error');
+          errors.push(isHungarian ? "Kérlek adj meg egy felhasználónevet." : "Please enter a username.");
+          isValid = false;
+      } else if (userVal.length < 3 || userVal.length > 10) {
+          usernameInput.classList.add('input-error');
+          errors.push(isHungarian ? "A felhasználónévnek 3 és 10 karakter között kell lennie." : "Username must be between 3 and 10 characters.");
+          isValid = false;
+      } else if (!usernameRegex.test(userVal)) {
+          usernameInput.classList.add('input-error');
+          errors.push(isHungarian ? "A felhasználónév csak betűket, számokat és aláhúzást tartalmazhat." : "Username can only contain letters, numbers, and underscores.");
+          isValid = false;
+      }
+
+      const emailVal = emailInput.value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (emailVal === '') {
+          emailInput.classList.add('input-error');
+          errors.push(isHungarian ? "Kérlek adj meg egy e-mail címet." : "Please enter an email address.");
+          isValid = false;
+      } else if (!emailRegex.test(emailVal)) {
+          emailInput.classList.add('input-error');
+          errors.push(isHungarian ? "Kérlek adj meg egy érvényes e-mail címet." : "Please enter a valid email address.");
+          isValid = false;
+      }
+
+      const passVal = passwordInput.value;
+      const repPassVal = repeatPasswordInput.value;
+      
+      if (passVal === '') {
+          passwordInput.classList.add('input-error');
+          errors.push(isHungarian ? "Kérlek adj meg egy jelszót." : "Please enter a password.");
+          isValid = false;
+      } else if (passVal.length < 8 || passVal.length > 20) {
+          passwordInput.classList.add('input-error');
+          errors.push(isHungarian ? "A jelszónak 8 és 20 karakter között kell lennie." : "Password must be between 8 and 20 characters.");
+          isValid = false;
+      } else if (!/[A-Z]/.test(passVal) || !/[0-9]/.test(passVal)) {
+          passwordInput.classList.add('input-error');
+          errors.push(isHungarian ? "A jelszónak tartalmaznia kell legalább egy nagybetűt és egy számot." : "Password must contain at least one uppercase letter and one number.");
+          isValid = false;
+      }
+
+      if (repPassVal === '') {
+          repeatPasswordInput.classList.add('input-error');
+          errors.push(isHungarian ? "Kérlek ismételd meg a jelszavadat." : "Please repeat your password.");
+          isValid = false;
+      } else if (passVal !== '' && passVal !== repPassVal) {
+          repeatPasswordInput.classList.add('input-error');
+          passwordInput.classList.add('input-error');
+          errors.push(isHungarian ? "A jelszavak nem egyeznek." : "Passwords do not match.");
+          isValid = false;
+      }
+
+      if (isValid) {
+          showPfpUploadScreen();
+      } else {
+          errors.forEach(err => showToastError(err));
+      }
     }
   });
 
@@ -605,11 +698,9 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (distToBlack < 60 || distToWhite < 60) {
                 mainContainer.style.background = "var(--main-background)";
-                pfpSkipButton.style.color = "";
             } else {
                 const dominantColor = `rgba(${r}, ${g}, ${b}, 0.5)`;
                 mainContainer.style.background = `linear-gradient(to bottom, ${dominantColor} 0%, var(--main-background) 100%)`;
-                pfpSkipButton.style.color = "var(--text-color)";
             }
         };
         img.src = imgUrl;
@@ -618,8 +709,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  pfpSkipButton.addEventListener("click", () => {
-    
+  pfpSendButton.addEventListener("click", () => {
+      let isValid = true;
+      let errors = [];
+      customCountryDropdown.classList.remove('input-error');
+
+      if (hiddenCountryInput.value === "") {
+          customCountryDropdown.classList.add('input-error');
+          errors.push(isHungarian ? "Kérlek válassz egy országot." : "Please select a country.");
+          isValid = false;
+      }
+
+      if (isValid) {
+          console.log("Registration complete! Valid country selected.");
+          
+      } else {
+          errors.forEach(err => showToastError(err));
+      }
   });
 
   updateTexts();

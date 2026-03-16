@@ -153,14 +153,10 @@ label {
     width: 90%;
 }
 
-#username-label, #email-label, #repeat-password-label, #country-label {
+#username-label, #email-label, #repeat-password-label {
     margin-bottom: 0.5rem;
     padding-left: 0.4rem;
     box-sizing: border-box;
-}
-
-#repeat-password-input {
-    margin-bottom: 0.5rem;
 }
 
 #password-labels {
@@ -201,11 +197,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     outline: none;
 }
 
-#username-input, #email-input, #password-input {
-    margin-bottom: 0.5rem;
-}
-
-/* Custom Dropdown Styling */
 .custom-dropdown {
     width: 90%;
     background-color: var(--secondary-background);
@@ -248,7 +239,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     background-color: var(--secondary-background);
     border: 1px solid var(--global-border);
     border-radius: 15px;
-    max-height: 195px; /* Allows roughly 3.5 elements to show */
+    max-height: 195px;
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 10;
@@ -287,10 +278,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     background-color: var(--global-border);
 }
 
-#login-button {
-    margin-top: 0.7rem;
-}
-
 #login-register-separator {
     width: 90%;
     display: flex;
@@ -319,17 +306,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     transition: color 0.2s ease;
 }
 
-#pfp-skip-button {
-    color: var(--secondary-text-color);
-    cursor: pointer;
-    font-size: 1rem;
-    margin-bottom: 1.2rem;
-    transition: color 0.2s ease;
-    width: 90%;
-    text-align: right;
-}
-
-#back-to-login:hover, #pfp-skip-button:hover {
+#back-to-login:hover {
     color: var(--text-color);
     text-decoration: underline;
 }
@@ -352,10 +329,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     font-size: 1.3rem;
     font-weight: bold;
     color: var(--text-color);
-}
-
-#pfp-upload-button {
-    margin-bottom: 0;
 }
 
 #google-login {
@@ -445,9 +418,14 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 1rem;
+    gap: 1.2rem;
     margin-top: 1rem;
     margin-bottom: 1.2rem;
+}
+
+#pfp-upload-container .action-button,
+#pfp-upload-container .custom-dropdown {
+    margin-bottom: 0;
 }
 
 @media (min-width: 470px) {
@@ -458,4 +436,56 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     #container {
         width: 70%;
     }
+}
+
+.input-error {
+    border: 2px solid #ff4d4d !important;
+    outline: none;
+}
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+    max-width: 400px; 
+}
+
+.toast {
+    background-color: rgba(255, 77, 77, 0.15); 
+    color: #ff4d4d; 
+    border: 2px solid #ff4d4d; 
+    border-radius: 15px; 
+    min-height: 80px; 
+    padding: 10px 20px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px); 
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center; 
+    gap: 15px; 
+    animation: slideInRight 0.3s ease forwards, fadeOut 0.5s ease 4.5s forwards;
+}
+
+.toast-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0; 
+    object-fit: contain;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
