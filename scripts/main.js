@@ -574,24 +574,24 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTexts();
   };
 
-  const showPfpUploadScreen = () => {
-    usernameLabel.style.display = "none";
-    usernameInput.style.display = "none";
-    emailLabel.style.display = "none";
-    emailInput.style.display = "none";
-    passwordInput.style.display = "none";
-    repeatPasswordLabel.style.display = "none";
-    repeatPasswordInput.style.display = "none";
-    registerButton.style.display = "none";
-    backToLoginButton.style.display = "none";
-    loginSeparator.style.display = "none";
-    googleLoginButton.style.display = "none";
+  window.showPfpUploadScreen = () => {
+    const elementsToHide = [
+        "username-label", "username-input", "email-label", "email-input",
+        "password-input", "repeat-password-label", "repeat-password-input",
+        "register-button", "back-to-login", "login-separator", "google-login",
+        "logo", "password-labels"
+    ];
     
-    logo.style.display = "none";
-    passwordLabels.style.display = "none";
+    elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "none";
+    });
 
-    pfpUploadContainer.style.display = "flex";
-  };
+    const pfpUploadContainer = document.getElementById("pfp-upload-container");
+    if (pfpUploadContainer) {
+        pfpUploadContainer.style.display = "flex";
+    }
+};
 
   registerButton.addEventListener("click", () => {
     if (!isRegistering) {
