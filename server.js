@@ -147,8 +147,10 @@ app.post('/google-login', async (req, res) => {
         const { email, name, picture } = payload;
 
         let user = await User.findOne({ email });
+        let isNewUser = false;
 
         if (!user) {
+            isNewUser = true;
             user = new User({
                 username: name,
                 email: email,
@@ -166,7 +168,13 @@ app.post('/google-login', async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.json({ message: "Google Login Successful", token, avatarUrl: user.avatarUrl });
+        res.json({ 
+            message: "Google Login Successful", 
+            token, 
+            avatarUrl: user.avatarUrl,
+            isNewUser: isNewUser,
+            nationality: user.nationality
+        });
     } catch (error) {
         console.error("Google Auth Error:", error);
         res.status(401).json({ error: "Invalid Google token" });
