@@ -37,35 +37,60 @@ loginBtn.addEventListener('click', async () => {
 
 window.isGoogleAuthSetup = false;
 
-async function handleGoogleResponse(response) {
+// Helper to decode the Google JWT token
+function decodeJwtResponse(token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+}
+
+window.handleGoogleResponse = async (googleResponse) => {
+    // 1. Decode the user data from Google
+    const responsePayload = decodeJwtResponse(googleResponse.credential);
+    
+    // Store these globally so we can use them later in the final registration step
+    window.googleToken = googleResponse.credential;
+    window.googleProfileData = responsePayload;
+
+    console.log("Google Login Attempt for:", responsePayload.email);
+
     try {
-        const res = await fetch('https://konisoftspeedruns.onrender.com/google-login', {
+        // 2. Check if the user already exists in your database
+        const response = await fetch('https://konisoftspeedruns.onrender.com/google-login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ idToken: response.credential })
+            body: JSON.stringify({ token: googleResponse.credential })
         });
 
-        const result = await res.json();
-        if (res.ok) {
+        const result = await response.json();
+
+        if (response.ok) {
+            // Case A: User exists and is now logged in
             localStorage.setItem('token', result.token);
+            console.log("Login successful! Redirecting...");
+            // window.location.href = "/dashboard"; // Uncomment when ready
+        } else if (response.status === 404) {
+            // Case B: User doesn't exist yet (Needs to select PFP and Nationality)
+            console.log("New user detected. Moving to PFP and Nationality selection.");
             
-            if (result.isNewUser || result.nationality === "Unknown") {
-                window.isGoogleAuthSetup = true;
-                
-                const pfpPreview = document.getElementById("pfp-preview");
-                if (pfpPreview && result.avatarUrl) {
-                    pfpPreview.style.backgroundImage = `url(${result.avatarUrl})`;
-                }
-                
-                window.showPfpUploadScreen(); 
+            // This flag tells the PFP "Next" button to use the Google completion route
+            window.isGoogleAuthSetup = true; 
+
+            if (typeof window.showPfpUploadScreen === "function") {
+                window.showPfpUploadScreen();
             } else {
-                console.log("Már létező profil, normál esetben itt menne a lobby-ba.");
+                console.error("showPfpUploadScreen function not found in main.js");
             }
+        } else {
+            console.error("Google Login Error:", result.error);
         }
     } catch (err) {
-        console.error("Google Login Network Error:", err);
+        console.error("Google Login Network Error (Check if server is awake):", err);
     }
-}
+};
 
 window.handleGoogleResponse = handleGoogleResponse;
 
