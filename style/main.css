@@ -143,7 +143,6 @@ main {
     box-sizing: border-box; 
 }
 
-/* Layer container children above the pseudo-element background */
 #container > * {
     position: relative;
     z-index: 1;
@@ -163,7 +162,6 @@ main {
     z-index: 0;
 }
 
-/* Helper class to instantly snap the clip-path back to the top without animating */
 .no-bg-transition::before {
     transition: none !important;
 }
@@ -216,6 +214,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     height: 65px;
     font-size: 1.3rem;
     line-height: 63px; 
+    font-family: inherit;
     color: var(--text-color);
     padding: 0 1rem;
     border-radius: 15px;
@@ -244,6 +243,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     border: 1px solid var(--global-border);
     height: 65px;
     font-size: 1.3rem;
+    font-family: inherit;
     color: var(--text-color);
     border-radius: 15px;
     box-sizing: border-box;
@@ -258,7 +258,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     transition: background-color 0.25s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Only scale when the dropdown is NOT open */
 .custom-dropdown:not(.open):hover {
     transform: scale(1.01) translateZ(0);
 }
@@ -380,6 +379,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     cursor: pointer;
     margin-bottom: 1.2rem;
     font-size: 1.3rem;
+    font-family: inherit;
     font-weight: bold;
     color: var(--text-color);
     backface-visibility: hidden;
@@ -406,7 +406,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 }
 
 #google-text {
-    font-family: "Roboto", sans-serif;
     font-size: 1.2rem;
 }
 
@@ -481,7 +480,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     gap: 1.2rem;
     margin-top: 1rem;
     margin-bottom: 1.2rem;
-    z-index: 10;
+    z-index: 10; 
 }
 
 #pfp-upload-container .action-button,

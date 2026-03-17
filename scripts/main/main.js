@@ -192,7 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = mainContainer;
     const children = Array.from(container.children);
     
-    // 1. Lock height and begin fade out
     const currentHeight = container.getBoundingClientRect().height;
     container.style.height = `${currentHeight}px`;
     container.style.overflow = "hidden";
@@ -202,37 +201,30 @@ document.addEventListener("DOMContentLoaded", () => {
         child.style.opacity = "0";
     });
 
-    // 2. Wait for fade out to complete
     setTimeout(() => {
         toggleLogic(); 
 
-        // Keep the newly rendered elements invisible for now
         const newChildren = Array.from(container.children);
         newChildren.forEach(child => {
             child.style.transition = "none"; 
             child.style.opacity = "0";
         });
 
-        // 3. Measure the new height needed
         container.style.height = "auto";
         const newHeight = container.getBoundingClientRect().height;
         
-        // Reflow back to old height
         container.style.height = `${currentHeight}px`;
         container.offsetHeight; 
         
-        // 4. Animate to the new height
         container.style.transition = "height 0.2s ease, background 0.2s ease";
         container.style.height = `${newHeight}px`;
 
-        // 5. Wait for height animation to finish, then fade in new content
         setTimeout(() => {
             newChildren.forEach(child => {
                 child.style.transition = "opacity 0.2s ease"; 
                 child.style.opacity = "1";
             });
 
-            // Clean up inline styles once everything is visible
             setTimeout(() => {
                 container.style.height = ""; 
                 container.style.overflow = "";
