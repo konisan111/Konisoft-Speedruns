@@ -112,6 +112,7 @@ body {
     font-family: "Oxanium", sans-serif;
     color: var(--text-color);
     min-width: 0;
+    -webkit-font-smoothing: antialiased;
 }
 
 main {
@@ -127,6 +128,7 @@ main {
 }
 
 #container {
+    position: relative;
     background-color: var(--main-background);
     width: 90%;
     height: auto;
@@ -137,7 +139,33 @@ main {
     flex-direction: column;
     align-items: center;
     border: 1px solid var(--global-border);
-    transition: background-image 0.5s ease, background-color 0.5s ease;
+    transition: background-color 0.5s ease;
+    box-sizing: border-box; 
+}
+
+/* Layer container children above the pseudo-element background */
+#container > * {
+    position: relative;
+    z-index: 1;
+}
+
+#container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--dynamic-bg, transparent);
+    opacity: var(--dynamic-bg-opacity, 0);
+    -webkit-clip-path: var(--dynamic-bg-clip, inset(0 0 100% 0));
+    clip-path: var(--dynamic-bg-clip, inset(0 0 100% 0));
+    transition: opacity 0.3s ease, clip-path 0.5s cubic-bezier(0.25, 1, 0.5, 1), -webkit-clip-path 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Helper class to instantly snap the clip-path back to the top without animating */
+.no-bg-transition::before {
+    transition: none !important;
 }
 
 #logo {
@@ -151,6 +179,7 @@ main {
 
 label {
     width: 90%;
+    pointer-events: none; 
 }
 
 #username-label, #email-label, #repeat-password-label {
@@ -171,6 +200,7 @@ label {
     width: 50%;
     text-align: right;
     cursor: pointer;
+    pointer-events: auto;
 }
 
 #forgot-password:hover {
@@ -178,26 +208,37 @@ label {
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
+    -webkit-appearance: none;
+    appearance: none;
     width: 90%;
     background-color: var(--secondary-background);
-    border: none;
+    border: 1px solid var(--global-border);
     height: 65px;
     font-size: 1.3rem;
+    line-height: 63px; 
     color: var(--text-color);
-    padding: 0.5rem;
-    padding-left: 1rem;
+    padding: 0 1rem;
     border-radius: 15px;
     box-sizing: border-box;
-    border: 1px solid var(--global-border);
     margin-bottom: 1.2rem;
+    backface-visibility: hidden; 
+    transform-origin: center;
+    transition: background-color 0.25s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:hover, input[type="email"]:hover, input[type="password"]:hover {
+    transform: scale(1.01) translateZ(0);
 }
 
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-    border: 2px solid green;
+    border-color: green;
+    box-shadow: 0 0 0 1px green;
     outline: none;
 }
 
 .custom-dropdown {
+    -webkit-appearance: none;
+    appearance: none;
     width: 90%;
     background-color: var(--secondary-background);
     border: 1px solid var(--global-border);
@@ -211,10 +252,20 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     position: relative;
     outline: none;
     user-select: none;
+    backface-visibility: hidden;
+    transform-origin: center;
+    z-index: 10;
+    transition: background-color 0.25s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Only scale when the dropdown is NOT open */
+.custom-dropdown:not(.open):hover {
+    transform: scale(1.01) translateZ(0);
 }
 
 .custom-dropdown.open {
-    border: 2px solid green;
+    border-color: green;
+    box-shadow: 0 0 0 1px green;
 }
 
 .dropdown-selected {
@@ -236,13 +287,13 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     top: calc(100% + 5px);
     left: 0;
     width: 100%;
-    background-color: var(--secondary-background);
+    background-color: var(--main-background); 
     border: 1px solid var(--global-border);
     border-radius: 15px;
     max-height: 195px;
     overflow-y: auto;
     overflow-x: hidden;
-    z-index: 10;
+    z-index: 100;
     box-sizing: border-box;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
 }
@@ -258,7 +309,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 .dropdown-options::-webkit-scrollbar-thumb {
     background: rgb(200, 200, 200);
     border-radius: 10px;
-    border: 3px solid var(--secondary-background);
+    border: 3px solid var(--main-background);
 }
 .dropdown-options::-webkit-scrollbar-thumb:hover {
     background: rgb(170, 170, 170);
@@ -312,6 +363,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 }
 
 .action-button {
+    -webkit-appearance: none;
+    appearance: none;
     width: 90%;
     height: 65px;
     padding: 0.5rem;
@@ -329,6 +382,13 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     font-size: 1.3rem;
     font-weight: bold;
     color: var(--text-color);
+    backface-visibility: hidden;
+    transform-origin: center;
+    transition: background-color 0.25s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-button:hover {
+    transform: scale(1.01) translateZ(0);
 }
 
 #google-login {
@@ -421,6 +481,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     gap: 1.2rem;
     margin-top: 1rem;
     margin-bottom: 1.2rem;
+    z-index: 10;
 }
 
 #pfp-upload-container .action-button,
@@ -439,7 +500,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 }
 
 .input-error {
-    border: 2px solid #ff4d4d !important;
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 0 1px #ff4d4d !important;
     outline: none;
 }
 
@@ -488,4 +550,14 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 @keyframes fadeOut {
     from { opacity: 1; }
     to { opacity: 0; }
+}
+
+@keyframes pfpBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+.pfp-bounce {
+    animation: pfpBounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

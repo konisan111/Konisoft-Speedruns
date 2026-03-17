@@ -18,13 +18,41 @@ export function registerButtonFunction(
     const password = passwordInput.value;
     const repeatPassword = repeatPasswordInput.value;
 
-    // Validation logic
-    if (!username || !email || !password || !repeatPassword) {
+    let hasError = false;
+
+    usernameInput.classList.remove('input-error');
+    emailInput.classList.remove('input-error');
+    passwordInput.classList.remove('input-error');
+    repeatPasswordInput.classList.remove('input-error');
+
+    if (!username) {
+        usernameInput.classList.add('input-error');
+        hasError = true;
+    }
+
+    if (!email) {
+        emailInput.classList.add('input-error');
+        hasError = true;
+    }
+
+    if (!password) {
+        passwordInput.classList.add('input-error');
+        hasError = true;
+    }
+
+    if (!repeatPassword) {
+        repeatPasswordInput.classList.add('input-error');
+        hasError = true;
+    }
+
+    if (hasError) {
         showToastError(isHungarian ? "Kérjük, töltsön ki minden mezőt!" : "Please fill in all fields!");
         return;
     }
 
     if (password !== repeatPassword) {
+        passwordInput.classList.add('input-error');
+        repeatPasswordInput.classList.add('input-error');
         showToastError(isHungarian ? "A jelszavak nem egyeznek!" : "Passwords do not match!");
         return;
     }

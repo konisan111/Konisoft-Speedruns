@@ -3,6 +3,7 @@ import { countries, translations } from '../data/translations.js';
 import { showToastError } from '../elements/toast-error.js';
 import { pfpFileInputFunction } from '../functions/pfp-file-input.js';
 import { registerButtonFunction } from '../functions/register-button.js';
+import { loginButtonFunction } from '../functions/login-button.js';
 import { elementsToHide } from '../functions/elements-to-hide.js'
 import { pfpSendButtonFunction } from '../functions/pfp-send-button.js';
 import { toggle, initialTheme, setTheme } from '../functions/theme-functions.js';
@@ -131,10 +132,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const showRegistrationForm = (isRegistering, mainContainer) => {
+  const clearInputsAndErrors = () => {
+    [usernameInput, emailInput, passwordInput, repeatPasswordInput].forEach(input => {
+        input.value = '';
+        input.classList.remove('input-error');
+    });
+  };
+
+  const showRegistrationForm = (mainContainer) => {
     isRegistering = true;
-    mainContainer.style.background = "var(--main-background)";
+    mainContainer.style.setProperty('--dynamic-bg-opacity', '0');
     
+    clearInputsAndErrors();
+
     loginButton.style.display = "none";
     forgotPassword.style.display = "none";
     
@@ -149,14 +159,17 @@ document.addEventListener("DOMContentLoaded", () => {
     repeatPasswordLabel.style.display = "block";
     repeatPasswordInput.style.display = "block";
     backToLoginButton.style.display = "block";
+    pfpUploadContainer.style.display = "none";
     
     updateTexts();
   };
 
-  const showLoginForm = (isRegistering, mainContainer) => {
+  const showLoginForm = (mainContainer) => {
     isRegistering = false;
-    mainContainer.style.background = "var(--main-background)";
+    mainContainer.style.setProperty('--dynamic-bg-opacity', '0');
     
+    clearInputsAndErrors();
+
     usernameLabel.style.display = "none";
     usernameInput.style.display = "none";
     repeatPasswordLabel.style.display = "none";
@@ -172,9 +185,67 @@ document.addEventListener("DOMContentLoaded", () => {
     loginSeparator.style.display = "flex";
     googleLoginButton.style.display = "flex";
     
-    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
-    
     updateTexts();
+  };
+
+  const animateFormTransition = (toggleLogic) => {
+    const container = mainContainer;
+    const children = Array.from(container.children);
+    
+    // 1. Lock height and begin fade out
+    const currentHeight = container.getBoundingClientRect().height;
+    container.style.height = `${currentHeight}px`;
+    container.style.overflow = "hidden";
+    
+    children.forEach(child => {
+        child.style.transition = "opacity 0.2s ease"; 
+        child.style.opacity = "0";
+    });
+
+    // 2. Wait for fade out to complete
+    setTimeout(() => {
+        toggleLogic(); 
+
+        // Keep the newly rendered elements invisible for now
+        const newChildren = Array.from(container.children);
+        newChildren.forEach(child => {
+            child.style.transition = "none"; 
+            child.style.opacity = "0";
+        });
+
+        // 3. Measure the new height needed
+        container.style.height = "auto";
+        const newHeight = container.getBoundingClientRect().height;
+        
+        // Reflow back to old height
+        container.style.height = `${currentHeight}px`;
+        container.offsetHeight; 
+        
+        // 4. Animate to the new height
+        container.style.transition = "height 0.2s ease, background 0.2s ease";
+        container.style.height = `${newHeight}px`;
+
+        // 5. Wait for height animation to finish, then fade in new content
+        setTimeout(() => {
+            newChildren.forEach(child => {
+                child.style.transition = "opacity 0.2s ease"; 
+                child.style.opacity = "1";
+            });
+
+            // Clean up inline styles once everything is visible
+            setTimeout(() => {
+                container.style.height = ""; 
+                container.style.overflow = "";
+                container.style.transition = "background 0.2s ease";
+                newChildren.forEach(child => {
+                    child.style.transition = "";
+                    child.style.opacity = "";
+                });
+            }, 200);
+            
+        }, 200); 
+
+    }, 200); 
   };
 
   const updateFlags = () => {
@@ -267,30 +338,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.showPfpUploadScreen = () => {
-    
-    elementsToHide.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = "none";
-    });
+    animateFormTransition(() => {
+        elementsToHide.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = "none";
+        });
 
-    const pfpUploadContainer = document.getElementById("pfp-upload-container");
-    if (pfpUploadContainer) {
-        pfpUploadContainer.style.display = "flex";
-    }
+        const pfpUploadContainer = document.getElementById("pfp-upload-container");
+        if (pfpUploadContainer) {
+            pfpUploadContainer.style.display = "flex";
+        }
+    });
   };
 
   if (backToLoginButton) {
     backToLoginButton.addEventListener("click", () => {
-      showLoginForm(isRegistering, mainContainer);
+      animateFormTransition(() => showLoginForm(mainContainer));
     });
   }
+
+  loginButton.addEventListener("click", () => {
+      loginButtonFunction(
+          isRegistering,
+          emailInput,
+          passwordInput,
+          isHungarian,
+          showToastError
+      );
+  });
 
   registerButton.addEventListener("click", () => {
       registerButtonFunction(
           isRegistering, 
           () => { 
-              showRegistrationForm(isRegistering, mainContainer); 
-              isRegistering = true;
+              animateFormTransition(() => showRegistrationForm(mainContainer)); 
           }, 
           usernameInput, 
           emailInput, 
