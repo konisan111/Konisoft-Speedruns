@@ -47,18 +47,10 @@ function decodeJwtResponse(token) {
     return JSON.parse(jsonPayload);
 }
 
+let isGoogleRegistration = false;
+
 window.handleGoogleResponse = async (googleResponse) => {
-    // 1. Decode the user data from Google
-    const responsePayload = decodeJwtResponse(googleResponse.credential);
-    
-    // Store these globally so we can use them later in the final registration step
-    window.googleToken = googleResponse.credential;
-    window.googleProfileData = responsePayload;
-
-    console.log("Google Login Attempt for:", responsePayload.email);
-
     try {
-        // 2. Check if the user already exists in your database
         const response = await fetch('https://konisoftspeedruns.onrender.com/google-login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -68,56 +60,54 @@ window.handleGoogleResponse = async (googleResponse) => {
         const result = await response.json();
 
         if (response.ok) {
-            // Case A: User exists and is now logged in
             localStorage.setItem('token', result.token);
-            console.log("Login successful! Redirecting...");
-            // window.location.href = "/dashboard"; // Uncomment when ready
-        } else if (response.status === 404) {
-            // Case B: User doesn't exist yet (Needs to select PFP and Nationality)
-            console.log("New user detected. Moving to PFP and Nationality selection.");
-            
-            // This flag tells the PFP "Next" button to use the Google completion route
-            window.isGoogleAuthSetup = true; 
 
-            if (typeof window.showPfpUploadScreen === "function") {
-                window.showPfpUploadScreen();
+            if (result.isNewUser) {
+                isGoogleRegistration = true;
+                
+                const pfpPreview = document.getElementById('pfp-preview');
+                if (pfpPreview && result.avatarUrl) {
+                    pfpPreview.style.backgroundImage = `url(${result.avatarUrl})`;
+                }
+
+                if (typeof window.showPfpUploadScreen === "function") {
+                    window.showPfpUploadScreen();
+                }
             } else {
-                console.error("showPfpUploadScreen function not found in main.js");
+                console.log("Sikeres bejelentkezés (Létező felhasználó):", result);
+                alert("Sikeresen bejelentkeztél mint " + (result.username || "felhasználó") + "!");
+                // window.location.reload();
             }
         } else {
-            console.error("Google Login Error:", result.error);
+            console.error("Szerver hiba:", result.error);
+            alert("Hiba a bejelentkezés során: " + result.error);
         }
     } catch (err) {
-        console.error("Google Login Network Error (Check if server is awake):", err);
+        console.error("Hálózati hiba:", err);
     }
 };
 
 window.handleGoogleResponse = handleGoogleResponse;
-
 const pfpSendButton = document.getElementById('pfp-send-button');
-pfpSendButton.addEventListener('click', async (e) => {
+
+uploadPfpBtn.addEventListener('click', async () => {
     const nationality = document.getElementById('country-input').value;
+    const pfpPreview = document.getElementById('pfp-preview');
     const pfpFileInput = document.getElementById('pfp-file-input');
-    const pfpFile = pfpFileInput.files[0];
+    
+    let imageData = null;
+    let fileName = null;
 
-    if (!nationality) {
-        console.error("Hiányzó infó: nemzetiség!");
-        return;
+    if (pfpFileInput.files.length > 0) {
+        const file = pfpFileInput.files[0];
+        const base64 = await convertToBase64(file);
+        imageData = base64.split(',')[1];
+        fileName = file.name;
     }
 
-    let imageData = "";
-    let fileName = "";
-
-    if (pfpFile) {
-        console.log("Kép feldolgozása...");
-        const base64String = await convertToBase64(pfpFile);
-        imageData = base64String.split(',')[1];
-        fileName = pfpFile.name;
-    }
-
-    if (window.isGoogleAuthSetup) {
-        const token = localStorage.getItem('token');
+    if (isGoogleRegistration) {
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch('https://konisoftspeedruns.onrender.com/complete-google-profile', {
                 method: 'POST',
                 headers: { 
@@ -129,15 +119,14 @@ pfpSendButton.addEventListener('click', async (e) => {
 
             const result = await response.json();
             if (response.ok) {
-                console.log("Google profil sikeresen kiegészítve!", result);
+                console.log("Google profil sikeresen kiegészítve!");
             } else {
-                alert("Hiba: " + result.error);
+                alert(result.error);
             }
         } catch (err) {
-            console.error("Hálózati hiba a Google profil kiegészítésekor.", err);
+            console.error("Hiba a Google profil kiegészítésekor:", err);
         }
-    } 
-    else {
+    } else {
         const username = document.getElementById('username-input').value;
         const email = document.getElementById('email-input').value;
         const password = document.getElementById('password-input').value;
@@ -158,13 +147,13 @@ pfpSendButton.addEventListener('click', async (e) => {
 
             const result = await response.json();
             if (response.ok) {
-                console.log("Sima regisztráció sikeres!", result);
+                console.log("Sima regisztráció sikeres!");
                 localStorage.setItem('token', result.token);
             } else {
-                alert("Hiba: " + result.error);
+                alert(result.error);
             }
         } catch (err) {
-            console.error("Hálózati hiba regisztrációnál.", err);
+            console.error("Hiba a regisztráció során:", err);
         }
     }
 });
