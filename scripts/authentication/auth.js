@@ -62,7 +62,7 @@ window.handleGoogleResponse = async (googleResponse) => {
         const response = await fetch('https://konisoftspeedruns.onrender.com/google-login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: googleResponse.credential })
+            body: JSON.stringify({ idToken: googleResponse.credential })
         });
 
         const result = await response.json();
