@@ -59,9 +59,9 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 
 | Terület | Eszközök | Állapot |
 | :--- | :--- | :--- |
-| **Frontend** | HTML5 🟠 CSS3 🔵 JavaScript 🟡 | 📌 Folyamatban |
-| **Backend** | REST API ☁️ Node.js (tervezett) | ❌ Tervezés fázis |
-| **Adatbázis** | MongoDB 🌐 Cloudflare R2 🟠 | ❌ Tervezés fázis |
+| **Frontend** | HTML5 🟠 CSS3 🔵 JavaScript 🟡 | 📌 Login-Register készen, lobby fejlesztés alatt |
+| **Backend** | REST API ☁️ Node.js (tervezett) / Render | ✔ Elkészült, Render Szerver |
+| **Adatbázis** | MongoDB 🌐 Cloudflare R2 🟠 | ✔ Készen állnak |
 
 ---
 
@@ -79,6 +79,7 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 | | **Kliensoldali fejlesztés** (Web/Mobil) | Kliensoldali forráskód | ✔ |
 | | CRUD funkciók és adattárolás | Működő szoftveralkalmazás | ✔ |
 | | Clean Code felülvizsgálat | Tiszta, dokumentált kód | ❌ |
+| | Lumi Technikusi verzió | Debuggolt, értékelésre elkészített kód | ❌ |
 | **3. Tesztelés** | Egység- és integrációs tesztelés | **Tesztek kódja** | ❌ |
 | | Teszteredmények kiértékelése | **Teszteredmények dokumentációja** | ❌ |
 | **4. Dokumentálás** | Műszaki és felhasználói leírás | **Szoftveralkalmazás dokumentációja** | ❌ |
@@ -91,6 +92,6 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 
 <p align="center">
   <img src="https://i.ibb.co/gZ7HPdTS/Konisoft-Speedruns-Outlined-Logo.png" width="120"><br>
-  <sub><i>Frissítve: 2026. március 11.</i></sub><br>
-  <b>Konisoft 2026</b>
+  <sub><i>Frissítve: 2026. március 19.</i></sub><br>
+  <b>Konisoft 2024-2026</b>
 </p>
