@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearInputsAndErrors();
 
     loginButton.style.display = "none";
-    forgotPassword.style.display = "none";
+    // forgotPassword.style.display = "none";
     
     logo.style.display = "";
     passwordLabels.style.display = "flex";
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
     passwordLabels.style.display = "flex";
 
     loginButton.style.display = "flex";
-    forgotPassword.style.display = "block";
+    // forgotPassword.style.display = "block";
     loginSeparator.style.display = "flex";
     googleLoginButton.style.display = "flex";
     

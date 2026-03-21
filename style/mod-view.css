@@ -631,7 +631,7 @@ main {
 
 #leaderboard-titlebar, .leaderboard-card {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr max-content;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 1.5rem;
     align-items: center;
     width: 100%;
@@ -644,18 +644,16 @@ main {
     box-sizing: border-box;
 }
 
-#leaderboard-titlebar > div, .leaderboard-card > div {
+#leaderboard-titlebar > div {
+    text-align: center;
+}
+
+#leaderboard-titlebar > div:first-child {
     text-align: left;
 }
 
-#leaderboard-titlebar > #leaderboard-time-title, .leaderboard-time {
+#leaderboard-action-title {
     text-align: right !important;
-    justify-self: end;
-}
-
-#leaderboard-time-title {
-    width: 85px;
-    display: flex;
 }
 
 #leaderboard-card-container {
@@ -679,16 +677,13 @@ main {
 .leaderboard-card:nth-child(odd) { background-color: var(--leaderboard-card-odd-color); }
 .leaderboard-card:nth-child(even) { background-color: var(--leaderboard-card-even-color); }
 
-.leaderboard-datetime {
-    display: contents;
-}
-
 .leaderboard-user-information {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     align-items: center;
     overflow: hidden;
+    justify-self: start;
 }
 
 .leaderboard-username {
@@ -712,6 +707,7 @@ main {
     align-items: center;
     gap: 0.5rem;
     overflow: hidden;
+    justify-self: center;
 }
 
 .leaderboard-country-name {
@@ -720,19 +716,68 @@ main {
     text-overflow: ellipsis;
 }
 
-.leaderboard-game {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.95em;
-}
-
 .leaderboard-flag {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     background-color: white;
     flex-shrink: 0;
+}
+
+.view-footage-container {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+}
+
+.view-footage-btn {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--global-border);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.view-footage-btn:hover {
+    transform: scale(1.05);
+}
+
+.review-actions-container {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    justify-self: end;
+}
+
+.action-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 35%;
+    border: none;
+    cursor: pointer;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.action-btn:hover {
+    filter: brightness(1.2);
+    transform: scale(1.1);
+}
+
+.action-btn.approve {
+    background-color: #2e7d32;
+    background-image: url('../images/check_icon.png');
+}
+
+.action-btn.reject {
+    background-color: #a72020;
+    background-image: url('../images/error_icon.png');
 }
 
 #games-container {
@@ -795,6 +840,41 @@ footer {
     margin-top: 3em;
 }
 
+#mini-leaderboard-cards .mini-card {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    grid-template-areas:
+        "user date"
+        "country time";
+    gap: 0.4rem 1rem;
+    padding: 0.8rem 1rem;
+    height: auto;
+    min-height: max-content;
+    align-items: center;
+}
+
+#mini-leaderboard-cards .mini-card .leaderboard-user-information {
+    grid-area: user;
+    max-width: 100%;
+}
+
+#mini-leaderboard-cards .mini-card .leaderboard-country {
+    grid-area: country;
+    justify-content: flex-start;
+    justify-self: start;
+}
+
+#mini-leaderboard-cards .mini-card .leaderboard-date {
+    grid-area: date;
+    text-align: right;
+    opacity: 0.8;
+}
+
+#mini-leaderboard-cards .mini-card .leaderboard-time {
+    grid-area: time;
+    text-align: right;
+}
+
 @media (max-width: 900px) {
     main {
         flex-direction: column;
@@ -837,8 +917,8 @@ footer {
         display: grid;
         grid-template-columns: 1fr max-content;
         grid-template-areas:
-            "user game"
-            "country datetime";
+            "user footage"
+            "country review";
         gap: 0.5rem 1.5rem;
         padding: 1rem;
         height: max-content;
@@ -848,12 +928,14 @@ footer {
         overflow-x: hidden;
     }
 
-    .leaderboard-datetime {
-        display: flex;
-        grid-area: datetime;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 0.5rem;
+    .view-footage-container {
+        grid-area: footage;
+        justify-self: end;
+    }
+
+    .review-actions-container {
+        grid-area: review;
+        justify-self: end;
     }
 
     .leaderboard-user-information {
@@ -872,22 +954,6 @@ footer {
     }
 
     .leaderboard-country-name {
-        font-size: 1.15em;
-    }
-
-    .leaderboard-game {
-        grid-area: game;
-        text-align: right;
-        white-space: normal;
-        font-size: 1.25em;
-        justify-self: end;
-    }
-
-    .leaderboard-date {
-        font-size: 1.15em;
-    }
-
-    .leaderboard-time {
         font-size: 1.15em;
     }
 }
@@ -954,14 +1020,18 @@ footer {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
             "user country"
-            "game game"
-            "datetime datetime";
+            "footage review";
         gap: 0.5rem 0.8rem;
     }
 
-    .leaderboard-datetime {
-        justify-content: space-between;
-        width: 100%;
+    .view-footage-container {
+        grid-area: footage;
+        justify-self: start;
+    }
+
+    .review-actions-container {
+        grid-area: review;
+        justify-self: end;
     }
     
     .leaderboard-username {
@@ -975,20 +1045,6 @@ footer {
 
     .leaderboard-country-name {
         font-size: inherit;
-    }
-    
-    .leaderboard-game {
-        text-align: left;
-        font-size: 1.05em;
-        justify-self: start;
-    }
-    
-    .leaderboard-date {
-        font-size: 0.95em;
-    }
-
-    .leaderboard-time {
-        font-size: 0.95em;
     }
 
     #header-logo {

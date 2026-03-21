@@ -176,9 +176,8 @@ const initLobby = () => {
       
       "leaderboard-profile-title": "Profile",
       "leaderboard-country-title": "Country",
-      "leaderboard-game-title": "Game",
-      "leaderboard-date-title": "Date",
-      "leaderboard-time-title": "Time",
+      "leaderboard-footage-title": "Footage",
+      "leaderboard-action-title": "Review",
       
       "profile-member-since": "Member since:",
       "profile-country-name-static": "Hungary",
@@ -215,9 +214,8 @@ const initLobby = () => {
       
       "leaderboard-profile-title": "Profil",
       "leaderboard-country-title": "Ország",
-      "leaderboard-game-title": "Játék",
-      "leaderboard-date-title": "Dátum",
-      "leaderboard-time-title": "Idő",
+      "leaderboard-footage-title": "Felvétel",
+      "leaderboard-action-title": "Értékelés",
       
       "profile-member-since": "Fiók létrehozva:",
       "profile-country-name-static": "Magyarország",
@@ -279,20 +277,20 @@ const initLobby = () => {
   });
 
   const leaderboardData = [
-    { username: "koni111", countryName: "Hungary", date: "2026.11.23", time: "12:21:41", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
-    { username: "SpeedyGonzales", countryName: "USA", date: "2026.11.24", time: "12:45:10", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "PlayerOne", countryName: "UK", date: "2026.11.25", time: "13:05:22", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "ShadowRunner", countryName: "Hungary", date: "2026.11.25", time: "13:30:00", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
-    { username: "WWWWWWWWWW", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" }
+    { username: "koni111", countryName: "Hungary", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
+    { username: "SpeedyGonzales", countryName: "USA", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "PlayerOne", countryName: "UK", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "ShadowRunner", countryName: "Hungary", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
+    { username: "WWWWWWWWWW", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
+    { username: "GhostInTheShell", countryName: "Canada", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" }
   ];
 
   const generateLeaderboard = (animate = true) => {
@@ -301,12 +299,9 @@ const initLobby = () => {
     
     wrapper.innerHTML = "";
 
-    leaderboardData.forEach((entry, index) => {
-      const dateParts = entry.date.split('.');
-      const formattedDate = currentLanguage === 'en' 
-          ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` 
-          : entry.date;
+    const viewFootageText = currentLanguage === 'hu' ? 'Felvétel megtekintése' : 'View Footage';
 
+    leaderboardData.forEach((entry, index) => {
       const translatedCountry = countryTranslations[entry.countryName] ? countryTranslations[entry.countryName][currentLanguage] : entry.countryName;
 
       const card = document.createElement("div");
@@ -329,10 +324,12 @@ const initLobby = () => {
             <div class="leaderboard-flag" style="background-image: url('${entry.flag}'); background-size: cover; background-position: center;"></div>
             <span class="leaderboard-country-name">${translatedCountry || 'Unknown'}</span>
         </div>
-        <div class="leaderboard-game">Lumi Dungeon of Dreadspire</div>
-        <div class="leaderboard-datetime">
-            <div class="leaderboard-date">${formattedDate}</div>
-            <div class="leaderboard-time">${entry.time}</div>
+        <div class="view-footage-container">
+            <button class="view-footage-btn">${viewFootageText}</button>
+        </div>
+        <div class="review-actions-container">
+            <button class="action-btn reject" aria-label="Reject"></button>
+            <button class="action-btn approve" aria-label="Approve"></button>
         </div>
       `;
       wrapper.appendChild(card);
