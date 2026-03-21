@@ -388,16 +388,22 @@ const s3 = new S3Client({
 
 app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
     try {
+        console.log("Feltöltés elkezdődött..."); 
+        
         if (!req.file) {
-            return res.status(400).json({ error: "No file" });
+            return res.status(400).json({ error: "Nincs fájl kiválasztva!" });
         }
 
         const videoId = uuidv4();
         const fileExtension = req.file.originalname.split('.').pop();   
         const fileName = `${videoId}.${fileExtension}`;
 
+        if (!process.env.R2_BUCKET || !process.env.R2_PUBLIC_URL) {
+            throw new Error("Hiányzó R2 konfiguráció a környezeti változókban!");
+        }
+
         await s3.send(new PutObjectCommand({
-            Bucket: process.env.R2_BUCKET || "konisoft-speedruns",
+            Bucket: process.env.R2_BUCKET,
             Key: fileName,
             Body: req.file.buffer,
             ContentType: req.file.mimetype
@@ -433,14 +439,11 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
             }
         );
 
-        res.status(200).json({ 
-            message: "Success", 
-            videoId, 
-            videoUrl 
-        });
+        console.log("Sikeres mentés!");
+        res.status(200).json({ message: "Success", videoId, videoUrl });
 
     } catch (err) {
-        console.error(err);
+        console.error("FELTÖLTÉSI HIBA:", err.message);
         res.status(500).json({ error: err.message });
     }
 });
