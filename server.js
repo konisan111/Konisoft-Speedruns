@@ -4,6 +4,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { NodeHttpHandler } = require("@smithy/node-http-handler");
 const { v4: uuidv4 } = require('uuid'); // We have to install UUIDs
 require('dotenv').config();
 
@@ -389,38 +390,53 @@ const s3 = new S3Client({
         accessKeyId: process.env.R2_ACCESS_KEY,
         secretAccessKey: process.env.R2_SECRET_KEY,
     },
-    forcePathStyle: true, 
-    tls: true 
+    forcePathStyle: true,
+    requestHandler: new NodeHttpHandler({
+        httpsAgent: new https.Agent({
+            rejectUnauthorized: false
+        }),
+    }),
 });
 
 app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
     try {
+        if (!req.file) {
+            return res.status(400).json({ error: "No file" });
+        }
+
         const videoId = crypto.randomUUID();
-        const fileName = `${videoId}-${req.file.originalname}`;
+        const fileExtension = req.file.originalname.split('.').pop();   
+        const fileName = `${videoId}.${fileExtension}`;
 
         await s3.send(new PutObjectCommand({
             Bucket: "konisoft-speedruns",
             Key: fileName,
             Body: req.file.buffer,
-            ContentType: req.file.mimetype,
+            ContentType: req.file.mimetype
         }));
 
-        const videoUrl = `https://your-r2-public-url.com/${fileName}`;
+        const publicUrl = process.env.R2_PUBLIC_URL.endsWith('/') 
+            ? process.env.R2_PUBLIC_URL 
+            : `${process.env.R2_PUBLIC_URL}/`;
+            
+        const videoUrl = `${publicUrl}${fileName}`;
 
         const newVideo = new Video({
             videoId: videoId,
             videoUrl: videoUrl,
             uploaderId: req.user.userId,
             speedrunTime: req.body.speedrunTime,
-            isAccepted: false
+            isAccepted: false,
+            uploadDate: new Date()
         });
 
         await newVideo.save();
-        res.status(200).json({ message: "Video uploaded and pending approval." });
+
+        res.status(200).json({ message: "Success" });
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Upload failed" });
+        res.status(500).json({ error: err.message });
     }
 });
 

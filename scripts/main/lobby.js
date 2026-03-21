@@ -1,5 +1,5 @@
 import { getCountryCode } from "../flagcdn-api/get-country.js";
-import { showToastError } from "./toast-error.js"; //
+import { showToastError } from "../elements/toast-error.js"; //
 
 const uploadBtn = document.getElementById('nav-upload');
 const uploadBtnMobile = document.getElementById('nav-upload-mobile');
@@ -356,15 +356,12 @@ const initLobby = () => {
         const realData = await response.json();
 
         realData.forEach((entry, index) => {
-            // Idő formázása (perc:másodperc.tized)
             const formattedTime = formatSpeedrunTime(entry.speedrunTime);
             
-            // Zászló kód lekérése
             const countryCode = getCountryCode(entry.nationality);
             const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
             
-            // Profilkép (ha nincs, akkor placeholder)
-            const avatarUrl = entry.avatarUrl || "../images/pfp_placeholder.webp";
+            const avatarUrl = entry.avatarUrl || "https://katona-konstanti.imgbb.com/";
 
             const card = document.createElement("div");
             card.className = "leaderboard-card";
