@@ -1,5 +1,67 @@
 import { getCountryCode } from "../flagcdn-api/get-country.js";
+import { showToastError } from "./toast-error.js"; //
 
+const uploadBtn = document.getElementById('nav-upload');
+const uploadBtnMobile = document.getElementById('nav-upload-mobile');
+const uploadModal = document.getElementById('upload-modal');
+const closeUploadModal = document.getElementById('close-upload-modal');
+const selectVideoBtn = document.getElementById('select-video-btn');
+const videoFileInput = document.getElementById('video-file-input');
+const startUploadBtn = document.getElementById('start-upload-btn');
+const fileNameDisplay = document.getElementById('selected-file-name');
+
+[uploadBtn, uploadBtnMobile].forEach(btn => {
+    btn?.addEventListener('click', () => uploadModal.classList.remove('hidden'));
+});
+
+closeUploadModal?.addEventListener('click', () => uploadModal.classList.add('hidden'));
+
+selectVideoBtn?.addEventListener('click', () => videoFileInput.click());
+
+videoFileInput?.addEventListener('change', () => {
+    if (videoFileInput.files.length > 0) {
+        fileNameDisplay.textContent = videoFileInput.files[0].name;
+    }
+});
+
+startUploadBtn?.addEventListener('click', async () => {
+    const file = videoFileInput.files[0];
+    const time = document.getElementById('speedrun-time-input').value;
+    const token = localStorage.getItem('token'); //
+
+    if (!file || !time) {
+        showToastError("Please select a file and enter your time!");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('video', file);
+    formData.append('speedrunTime', time);
+
+    startUploadBtn.disabled = true;
+    startUploadBtn.textContent = "Uploading...";
+
+    try {
+        const response = await fetch('https://konisoftspeedruns.onrender.com/upload-video', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: formData
+        });
+
+        if (response.ok) {
+            alert("Upload successful! o(*￣▽￣*)o Waiting for admin approval.");
+            uploadModal.classList.add('hidden');
+            location.reload();
+        } else {
+            showToastError("Upload failed! (´;ω;`) Try again later.");
+        }
+    } catch (err) {
+        showToastError("Server error during upload.");
+    } finally {
+        startUploadBtn.disabled = false;
+        startUploadBtn.textContent = "Upload";
+    }
+});
 const themes = {
     light: "../style/light-theme.css",
     dark: "../style/dark-theme.css",

@@ -49,6 +49,27 @@
     </header>
 
     <main>
+        <div id="upload-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-upload-modal">×</button>
+            <h2 class="rainbow-text" style="font-weight: 800;">Upload Speedrun</h2>
+            
+            <div class="upload-area">
+                <input type="file" id="video-file-input" accept="video/mp4,video/x-m4v,video/*" hidden>
+                <button id="select-video-btn" class="menu-button">Please select video file</button>
+                <p id="selected-file-name" style="font-size: 12px; margin-top: 5px;"></p>
+            </div>
+
+            <div class="input-group">
+                <label style="font-size: 12px;">Speedrun Time (ms):</label>
+                <input type="number" id="speedrun-time-input" placeholder="e.g. 741410" style="width: 100%; padding: 5px; background: #222; border: 1px solid cyan; color: white;">
+            </div>
+
+            <button id="start-upload-btn" class="menu-button" style="margin-top: 20px; width: 100%;">Upload</button>
+            
+            <div id="upload-progress-bar" style="width: 0%; height: 5px; background: cyan; margin-top: 10px; transition: width 0.3s;"></div>
+        </div>
+    </div>
         <div id="leaderboard-container">
             <div id="leaderboard-top-header">
                 <div id="leaderboard-main-title-container">

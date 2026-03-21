@@ -373,6 +373,50 @@ app.get('/me', authenticateToken, async (req, res) => {
     }
 });
 
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
+
+const s3 = new S3Client({
+    region: "auto",
+    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+        accessKeyId: process.env.R2_ACCESS_KEY,
+        secretAccessKey: process.env.R2_SECRET_KEY,
+    },
+});
+
+app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
+    try {
+        const videoId = crypto.randomUUID();
+        const fileName = `${videoId}-${req.file.originalname}`;
+
+        await s3.send(new PutObjectCommand({
+            Bucket: "konisoft-speedruns",
+            Key: fileName,
+            Body: req.file.buffer,
+            ContentType: req.file.mimetype,
+        }));
+
+        const videoUrl = `https://your-r2-public-url.com/${fileName}`;
+
+        const newVideo = new Video({
+            videoId: videoId,
+            videoUrl: videoUrl,
+            uploaderId: req.user.userId,
+            speedrunTime: req.body.speedrunTime,
+            isAccepted: false
+        });
+
+        await newVideo.save();
+        res.status(200).json({ message: "Video uploaded and pending approval." });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Upload failed" });
+    }
+});
+
 app.get('/leaderboard', async (req, res) => {
     try {
         const topVideos = await Video.find({ isAccepted: true })
@@ -405,7 +449,7 @@ app.listen(PORT, () => {
 const createTestData = async () => {
     try {
         const testUserId = "test-user-uuid-123";
-        
+
         await User.findOneAndUpdate(
             { userId: testUserId },
             {
