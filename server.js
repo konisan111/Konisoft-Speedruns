@@ -389,6 +389,8 @@ const s3 = new S3Client({
         accessKeyId: process.env.R2_ACCESS_KEY,
         secretAccessKey: process.env.R2_SECRET_KEY,
     },
+    forcePathStyle: true, 
+    tls: true 
 });
 
 app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
