@@ -386,7 +386,7 @@ const s3 = new S3Client({
     }),
 });
 
-aapp.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
+app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: "No file" });
