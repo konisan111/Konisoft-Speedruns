@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const https = require('https');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { NodeHttpHandler } = require("@smithy/node-http-handler");
 const { v4: uuidv4 } = require('uuid'); // We have to install UUIDs
