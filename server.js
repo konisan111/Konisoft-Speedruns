@@ -32,7 +32,8 @@ const userSchema = new mongoose.Schema({
     userId: { type: String, unique: true },
     videos: [{
         videoId: { type: String },
-        approved: { type: Boolean, default: false }
+        approved: { type: Boolean, default: false },
+        speedrunTime: { type: Number }
     }],
     accountCreation: { type: Date, default: Date.now }
 });
@@ -385,7 +386,7 @@ const s3 = new S3Client({
     }),
 });
 
-app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
+aapp.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: "No file" });
@@ -419,15 +420,14 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
 
         await newVideo.save();
 
-        await newVideo.save();
-
         await User.findOneAndUpdate(
             { userId: req.user.userId },
             { 
                 $push: { 
                     videos: { 
                         videoId: videoId, 
-                        approved: false
+                        approved: false,
+                        speedrunTime: req.body.speedrunTime 
                     } 
                 } 
             }
