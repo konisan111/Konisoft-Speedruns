@@ -398,19 +398,11 @@ const s3 = new S3Client({
 
 app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
     try {
-        console.log("Feltöltés elkezdődött..."); 
-        
-        if (!req.file) {
-            return res.status(400).json({ error: "Nincs fájl kiválasztva!" });
-        }
+        if (!req.file) return res.status(400).json({ error: "No file" });
 
         const videoId = uuidv4();
         const fileExtension = req.file.originalname.split('.').pop();   
         const fileName = `${videoId}.${fileExtension}`;
-
-        if (!process.env.R2_BUCKET || !process.env.R2_PUBLIC_URL) {
-            throw new Error("Hiányzó R2 konfiguráció a környezeti változókban!");
-        }
 
         await s3.send(new PutObjectCommand({
             Bucket: process.env.R2_BUCKET,
@@ -425,63 +417,55 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
             
         const videoUrl = `${publicUrl}${fileName}`;
 
-        const newVideo = new Video({
-            videoId: videoId,
-            videoUrl: videoUrl,
-            uploaderId: req.user.userId,
-            speedrunTime: req.body.speedrunTime,
-            isAccepted: false,
-            uploadDate: new Date()
-        });
-
-        await newVideo.save();
-
         await User.findOneAndUpdate(
             { userId: req.user.userId },
             { 
                 $push: { 
                     videos: { 
                         videoId: videoId, 
+                        videoUrl: videoUrl,
                         approved: false,
-                        speedrunTime: req.body.speedrunTime 
+                        speedrunTime: Number(req.body.speedrunTime),
+                        uploadDate: new Date()
                     } 
                 } 
             }
         );
 
-        console.log("Sikeres mentés!");
-        res.status(200).json({ message: "Success", videoId, videoUrl });
-
+        res.status(200).json({ message: "Success", videoUrl });
     } catch (err) {
-        console.error("FELTÖLTÉSI HIBA:", err.message);
+        console.error(err);
         res.status(500).json({ error: err.message });
     }
 });
 
 app.get('/leaderboard', async (req, res) => {
     try {
-        // Csak az elfogadott videókat kérjük le
-        const topVideos = await Video.find({ isAccepted: true })
-                                     .sort({ speedrunTime: 1 })
-                                     .limit(50);
+        const users = await User.find({ "videos.0": { $exists: true } });
 
-        const leaderboardData = await Promise.all(topVideos.map(async (video) => {
-            const user = await User.findOne({ userId: video.uploaderId });
-            
-            return {
-                username: user ? user.username : "Unknown",
-                avatarUrl: user ? user.avatarUrl : null,
-                nationality: user ? user.nationality : "Unknown",
-                speedrunTime: video.speedrunTime,
-                videoUrl: video.videoUrl,
-                uploadDate: video.uploadDate
-            };
-        }));
+        let allApprovedVideos = [];
 
-        res.json(leaderboardData);
+        users.forEach(user => {
+            user.videos.forEach(vid => {
+                if (vid.approved) {
+                    allApprovedVideos.push({
+                        username: user.username,
+                        avatarUrl: user.avatarUrl,
+                        nationality: user.nationality || "hu",
+                        speedrunTime: vid.speedrunTime,
+                        videoUrl: vid.videoUrl,
+                        uploadDate: vid.uploadDate
+                    });
+                }
+            });
+        });
+
+        allApprovedVideos.sort((a, b) => a.speedrunTime - b.speedrunTime);
+
+        res.json(allApprovedVideos.slice(0, 50));
     } catch (err) {
-        console.error("Hiba:", err);
-        res.status(500).json({ error: "Szerver hiba" });
+        console.error(err);
+        res.status(500).json({ error: "Hiba a ranglista generálásakor" });
     }
 });
 
@@ -489,40 +473,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });
-
-const createTestData = async () => {
-    try {
-        const testUserId = "test-user-uuid-123";
-
-        await User.findOneAndUpdate(
-            { userId: testUserId },
-            {
-                username: "KONCSIEHH",
-                nationality: "Iceland",
-                avatarUrl: "https://i.ibb.co/8Lq8QLYN/code-geass-cc.gif",
-                accountCreation: new Date()
-            },
-            { upsert: true, new: true }
-        );
-
-        const testVideo = new Video({
-            videoId: "video-uuid-999",
-            videoUrl: "https://r2.konisoft.hu/test_run.mp4",
-            uploaderId: testUserId,
-            speedrunTime: 741410,
-            isAccepted: true,
-            uploadDate: new Date()
-        });
-
-        await Video.deleteOne({ videoId: "video-uuid-999" });
-        await testVideo.save();
-
-        console.log("Siker! A teszt adatok (felhasználó + videó) létrejöttek a MongoDB-ben! ᕙ( • ‿ • )ᕗ");
-    } catch (err) {
-        console.error("Hiba a teszt adatok létrehozásakor:", err);
-    }
-};
-
-createTestData();
 
 console.log("Is Google ID loaded:", process.env.GOOGLE_CLIENT_ID ? "Yes" : "No");
