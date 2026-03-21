@@ -500,14 +500,6 @@ const initLobby = () => {
     if (!miniWrapper) return;
     miniWrapper.innerHTML = "";
 
-    const miniData = [
-      { username: "SpeedyGonzales", countryName: "USA", date: "2026.11.24", time: "12:45:10", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp", isUser: false },
-      { username: "PlayerOne", countryName: "UK", date: "2026.11.25", time: "13:05:22", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp", isUser: false },
-      { username: "User1234", countryName: "Hungary", date: "2026.11.25", time: "13:15:00", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp", isUser: true },
-      { username: "ShadowRunner", countryName: "Hungary", date: "2026.11.25", time: "13:30:00", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp", isUser: false },
-      { username: "WWWWWWWWWW", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp", isUser: false }
-    ];
-
     miniData.forEach(entry => {
       const dateParts = entry.date.split('.');
       const formattedDate = currentLanguage === 'en' 

@@ -401,12 +401,12 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
             return res.status(400).json({ error: "No file" });
         }
 
-        const videoId = crypto.randomUUID();
+        const videoId = uuidv4();
         const fileExtension = req.file.originalname.split('.').pop();   
         const fileName = `${videoId}.${fileExtension}`;
 
         await s3.send(new PutObjectCommand({
-            Bucket: "konisoft-speedruns",
+            Bucket: process.env.R2_BUCKET || "konisoft-speedruns",
             Key: fileName,
             Body: req.file.buffer,
             ContentType: req.file.mimetype
@@ -429,7 +429,16 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
 
         await newVideo.save();
 
-        res.status(200).json({ message: "Success" });
+        await User.findOneAndUpdate(
+            { userId: req.user.userId },
+            { $push: { videos: videoId } }
+        );
+
+        res.status(200).json({ 
+            message: "Success", 
+            videoId, 
+            videoUrl 
+        });
 
     } catch (err) {
         console.error(err);
