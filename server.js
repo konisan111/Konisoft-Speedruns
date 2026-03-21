@@ -64,9 +64,94 @@ const s3 = new S3Client({
   },
 });
 
-// Backend responses
 app.get('/', (req, res) => {
-  res.send('The Konisoft-Speedruns backend is live!');
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="hu">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Konisoft Speedruns Backend</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+        <style>
+            body {
+                background-color: #000000;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                font-family: 'Oxanium', sans-serif;
+                overflow: hidden;
+            }
+
+            .rainbow-text {
+                background: linear-gradient(-45deg, 
+                    #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3,
+                    #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3
+                );
+                background-size: 400% 400%;
+                
+                -webkit-background-clip: text;
+                background-clip: text;
+                
+                color: transparent; 
+                
+                animation: rainbowShift 15s ease infinite;
+                
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            pre {
+                font-family: 'Courier New', monospace;
+                font-size: 2.2vw;
+                line-height: 1.1;
+                margin: 0;
+                color: inherit; 
+            }
+
+            h1 {
+                font-size: 4.5rem;
+                font-weight: 800;
+                letter-spacing: 3px;
+                margin: 20px 0 10px 0;
+                color: inherit;
+            }
+
+            p {
+                font-size: 1.8rem;
+                margin: 0;
+                font-weight: 400;
+                color: inherit;
+                opacity: 0.9;
+            }
+
+            @keyframes rainbowShift {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="rainbow-text">
+            <pre>
+ _           _         ___ _   
+| |_ ___ ___|_|___ ___|  _| |_ 
+| '_| . |   | |_ -| . |  _|  _|
+|_,_|___|_|_|_|___|___|_| |_|  
+            </pre>
+            <h1>Welcome to Konisoft Speedruns!</h1>
+            <p>The backend is live and running... o(*￣▽￣*)o</p>
+        </div>
+    </body>
+    </html>
+  `);
 });
 
 app.post('/register', async (req, res) => {
