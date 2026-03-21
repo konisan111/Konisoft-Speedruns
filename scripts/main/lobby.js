@@ -1,5 +1,5 @@
 import { getCountryCode } from "../flagcdn-api/get-country.js";
-import { showToastError } from "../elements/toast-error.js"; //
+import { showToastError } from "../elements/toast-error.js";
 
 const uploadBtn = document.getElementById('nav-upload');
 const uploadBtnMobile = document.getElementById('nav-upload-mobile');
@@ -27,7 +27,7 @@ videoFileInput?.addEventListener('change', () => {
 startUploadBtn?.addEventListener('click', async () => {
     const file = videoFileInput.files[0];
     const time = document.getElementById('speedrun-time-input').value;
-    const token = localStorage.getItem('token'); //
+    const token = localStorage.getItem('token');
 
     if (!file || !time) {
         showToastError("Please select a file and enter your time!");
@@ -349,7 +349,6 @@ const initLobby = () => {
     wrapper.innerHTML = "";
 
     try {
-        // Lekérjük a valódi adatokat a szerverről
         const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
         if (!response.ok) throw new Error("Hiba a letöltéskor");
         
@@ -504,7 +503,7 @@ const initLobby = () => {
         const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
         if (!response.ok) throw new Error("Failed to fetch");
         
-        const miniData = await response.json(); // Define miniData from the response
+        const miniData = await response.json();
 
         miniData.forEach(entry => {
             const formattedTime = formatSpeedrunTime(entry.speedrunTime);
@@ -645,6 +644,85 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (profileImg && userData.avatarUrl) {
                 profileImg.style.backgroundImage = `url('${userData.avatarUrl}')`;
             }
+
+            const navUserProfile = document.getElementById('nav-user-profile');
+            const navUsername = document.getElementById('nav-username');
+            const navProfilePicture = document.getElementById('nav-profile-picture');
+
+            const dropdownIcons = document.getElementById('dropdown-menu-icons');
+            let navUserProfileMobile = document.getElementById('nav-user-profile-mobile');
+            
+            if (!navUserProfileMobile && dropdownIcons) {
+                navUserProfileMobile = document.createElement('div');
+                navUserProfileMobile.id = 'nav-user-profile-mobile';
+                navUserProfileMobile.className = 'hidden';
+                navUserProfileMobile.innerHTML = `
+                    <div id="nav-profile-picture-mobile"></div>
+                    <span id="nav-username-mobile"></span>
+                `;
+                dropdownIcons.parentNode.insertBefore(navUserProfileMobile, dropdownIcons);
+            }
+
+            const navUsernameMobile = document.getElementById('nav-username-mobile');
+            const navProfilePictureMobile = document.getElementById('nav-profile-picture-mobile');
+
+            if (navUsername) navUsername.textContent = userData.username || "???";
+            if (navUsernameMobile) navUsernameMobile.textContent = userData.username || "???";
+            
+            if (navProfilePicture && userData.avatarUrl) {
+                navProfilePicture.style.backgroundImage = `url('${userData.avatarUrl}')`;
+            }
+            if (navProfilePictureMobile && userData.avatarUrl) {
+                navProfilePictureMobile.style.backgroundImage = `url('${userData.avatarUrl}')`;
+            }
+
+            if (userData.avatarUrl) {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.src = userData.avatarUrl;
+
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                    canvas.width = 1;
+                    canvas.height = 1;
+                    
+                    ctx.drawImage(img, 0, 0, 1, 1);
+                    
+                    try {
+                        const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+                        const distToBlack = Math.sqrt(Math.pow(r - 0, 2) + Math.pow(g - 0, 2) + Math.pow(b - 0, 2));
+                        const distToWhite = Math.sqrt(Math.pow(r - 255, 2) + Math.pow(g - 255, 2) + Math.pow(b - 255, 2));
+                        
+                        if (distToBlack > 60 && distToWhite > 60) {
+                            if (navUserProfile) navUserProfile.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.25)`;
+                            if (navUserProfileMobile) navUserProfileMobile.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.25)`;
+                        }
+                    } catch (e) {
+                    }
+                };
+            }
+
+            if (navUserProfile) {
+                navUserProfile.classList.remove('hidden');
+                navUserProfile.addEventListener('click', () => {
+                    const profileBtn = document.getElementById('nav-profile');
+                    if(profileBtn) profileBtn.click();
+                });
+            }
+
+            if (navUserProfileMobile) {
+                navUserProfileMobile.classList.remove('hidden');
+                navUserProfileMobile.addEventListener('click', () => {
+                    const profileBtnMobile = document.getElementById('nav-profile-mobile');
+                    if(profileBtnMobile) profileBtnMobile.click();
+                    const settingsMobileBtn = document.getElementById('settings-mobile');
+                    if(settingsMobileBtn && typeof ToggleDropdown === 'function') {
+                        ToggleDropdown(settingsMobileBtn);
+                    }
+                });
+            }
+
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', () => {
                     localStorage.removeItem('token');

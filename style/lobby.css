@@ -807,6 +807,74 @@ footer {
     margin-top: 3em;
 }
 
+#nav-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    cursor: pointer;
+    padding: 0.2em 0.9em;
+    border-radius: 2em;
+    transition: transform 0.2s ease, filter 0.2s ease, background-color 0.2s ease;
+}
+
+#nav-user-profile:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+#nav-profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-image: url('../images/pfp_placeholder.webp');
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--global-border);
+}
+
+#nav-username {
+    font-family: "Oxanium", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-color);
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#nav-user-profile-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    padding: 0.8em;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+}
+
+#nav-profile-picture-mobile {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-image: url('../images/pfp_placeholder.webp');
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--global-border);
+}
+
+#nav-username-mobile {
+    font-family: "Oxanium", sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media (max-width: 900px) {
     main {
         flex-direction: column;
@@ -837,8 +905,8 @@ footer {
         padding-right: 0;
     }
 
-    #language, #theme-switcher {
-        display: none;
+    #language, #theme-switcher, #nav-user-profile {
+        display: none !important;
     }
 
     #leaderboard-titlebar {
@@ -1043,7 +1111,7 @@ footer {
         width: 30px;
     }
 
-    #dropdown-menu { display: none !important; }
+    #dropdown-menu, #nav-user-profile-mobile { display: none !important; }
 
     #footer-logo { width: 20em; }
     #footer-text-1 { width: 18rem; }
