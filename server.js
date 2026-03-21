@@ -28,7 +28,9 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true }, // Password for user
     avatarUrl: { type: String }, // R2 address link
     nationality: { type: String},
-    userId: { type: String, unique: true } // UUID
+    userId: { type: String, unique: true }, // UUID
+    videos: [{ type: String, default: [] }], // Video IDs
+    accountCreation: { type: Date, default: Date.now } // Registration Date
 });
 
 const User = mongoose.model('User', userSchema);

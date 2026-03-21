@@ -1,3 +1,5 @@
+import { getCountryCode } from "../flagcdn-api/get-country.js";
+
 const themes = {
     light: "../style/light-theme.css",
     dark: "../style/dark-theme.css",
@@ -559,14 +561,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             const userData = await response.json();
 
             const profileName = document.getElementById('profile-username');
-            const profileImg = document.getElementById('profile-img-settings'); // Ellenőrizd az ID-t a HTML-ben!
-            const profileNat = document.getElementById('profile-nationality');
+            const profileImg = document.getElementById('profile-picture');
+            const profileNat = document.getElementById('profile-country-name-static');
+            const profileFlag = document.getElementById('profile-flag');
+            const profileDate = document.getElementById('profile-creation-date');
+            const countryName = userData.nationality;
 
-            if (profileName) profileName.textContent = userData.username;
-            if (profileNat) profileNat.textContent = userData.nationality || "Nincs megadva";
+            if (profileFlag && countryName) {
+                const code = getCountryCode(countryName);
+                profileFlag.style.backgroundImage = `url('https://flagcdn.com/w80/${code}.png')` || "https://i.ibb.co/20fL10wk/no-pfp.png";
+            }
+            if(profileName) profileName.profileDate = userData.userCreationDate || "???";
+
+            if (profileName) profileName.textContent = userData.username || "???";
+            if (profileNat) profileNat.textContent = userData.nationality || "???";
             
             if (profileImg && userData.avatarUrl) {
-                profileImg.src = userData.avatarUrl;
+                profileImg.style.backgroundImage = `url('${userData.avatarUrl}')`;
             }
         } else {
             console.error("Nem sikerült lekérni a profiladatokat");
