@@ -402,16 +402,39 @@ app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });
 
-const testVideo = new Video({
-    videoId: "test-123",
-    videoUrl: "https://r2.konisoft.hu/test.mp4",
-    uploaderId: "rendszer",
-    speedrunTime: 120000,
-    isAccepted: true
-});
+const createTestData = async () => {
+    try {
+        const testUserId = "test-user-uuid-123";
+        
+        await User.findOneAndUpdate(
+            { userId: testUserId },
+            {
+                username: "KONCSIEHH",
+                nationality: "Iceland",
+                avatarUrl: "https://i.ibb.co/20fL10wk/no-pfp.png",
+                accountCreation: new Date()
+            },
+            { upsert: true, new: true }
+        );
 
-testVideo.save()
-    .then(() => console.log("Siker! Most már látnod kell a 'videos' gyűjteményt!"))
-    .catch(err => console.error("Hiba a mentésnél:", err));
+        const testVideo = new Video({
+            videoId: "video-uuid-999",
+            videoUrl: "https://r2.konisoft.hu/test_run.mp4",
+            uploaderId: testUserId,
+            speedrunTime: 741410,
+            isAccepted: true,
+            uploadDate: new Date()
+        });
+
+        await Video.deleteOne({ videoId: "video-uuid-999" });
+        await testVideo.save();
+
+        console.log("Siker! A teszt adatok (felhasználó + videó) létrejöttek a MongoDB-ben! ᕙ( • ‿ • )ᕗ");
+    } catch (err) {
+        console.error("Hiba a teszt adatok létrehozásakor:", err);
+    }
+};
+
+createTestData();
 
 console.log("Is Google ID loaded:", process.env.GOOGLE_CLIENT_ID ? "Yes" : "No");
