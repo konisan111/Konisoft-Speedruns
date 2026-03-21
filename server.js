@@ -262,7 +262,8 @@ app.get('/me', authenticateToken, async (req, res) => {
         res.json({
             username: user.username,
             avatarUrl: user.avatarUrl,
-            nationality: user.nationality
+            nationality: user.nationality,
+            accountCreation: user.accountCreation
         });
     } catch (err) {
         res.status(500).json({ error: "Hiba a profil lekérésekor" });

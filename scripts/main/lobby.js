@@ -571,9 +571,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const code = getCountryCode(countryName);
                 profileFlag.style.backgroundImage = `url('https://flagcdn.com/w80/${code}.png')` || "https://i.ibb.co/20fL10wk/no-pfp.png";
             }
-            if(profileName) profileName.profileDate = userData.userCreationDate || "???";
+
+            if (profileDate) {
+                if (userData.accountCreation) {
+                    const dateObj = new Date(userData.accountCreation);
+                    profileDate.textContent = dateObj.toLocaleDateString('hu-HU');
+                } else {
+                    profileDate.textContent = "???";
+                }
+            }
 
             if (profileName) profileName.textContent = userData.username || "???";
+
             if (profileNat) profileNat.textContent = userData.nationality || "???";
             
             if (profileImg && userData.avatarUrl) {
