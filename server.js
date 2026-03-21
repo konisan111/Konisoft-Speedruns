@@ -97,8 +97,8 @@ app.get('/', (req, res) => {
                 width: 100%;
                 height: 100%;
                 background-image: 
-                    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
                 background-size: 30px 30px;
                 z-index: 0;
             }
@@ -129,13 +129,14 @@ app.get('/', (req, res) => {
                 line-height: 1.1;
                 margin: 0;
                 padding: 0;
+                font-weight: 800;
             }
 
             p {
                 font-size: 14px;
                 margin: 0;
                 padding: 0;
-                font-weight: 400;
+                font-weight: 800;
             }
 
             @keyframes rainbowShift {
