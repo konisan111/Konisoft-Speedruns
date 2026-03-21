@@ -79,74 +79,80 @@ app.get('/', (req, res) => {
             body {
                 background-color: #000000;
                 margin: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                padding: 30px;
                 height: 100vh;
+                width: 100vw;
                 font-family: 'Oxanium', sans-serif;
                 overflow: hidden;
+                box-sizing: border-box;
+                position: relative;
+                color: white;
+            }
+
+            body::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: 
+                    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                background-size: 30px 30px;
+                z-index: 0;
+            }
+
+            .content-wrapper {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
             }
 
             .rainbow-text {
                 background: linear-gradient(-45deg, 
-                    #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3,
                     #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3
                 );
-                background-size: 400% 400%;
-                
+                background-size: 200% 200%;
                 -webkit-background-clip: text;
                 background-clip: text;
-                
-                color: transparent; 
-                
-                animation: rainbowShift 15s ease infinite;
-                
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
+                color: transparent;
+                animation: rainbowShift 10s linear infinite;
             }
 
             pre {
                 font-family: 'Courier New', monospace;
-                font-size: 2.2vw;
+                font-size: 14px;
                 line-height: 1.1;
                 margin: 0;
-                color: inherit; 
-            }
-
-            h1 {
-                font-size: 4.5rem;
-                font-weight: 800;
-                letter-spacing: 3px;
-                margin: 20px 0 10px 0;
-                color: inherit;
+                padding: 0;
             }
 
             p {
-                font-size: 1.8rem;
+                font-size: 14px;
                 margin: 0;
+                padding: 0;
                 font-weight: 400;
-                color: inherit;
-                opacity: 0.9;
             }
 
             @keyframes rainbowShift {
                 0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
+                100% { background-position: 200% 50%; }
             }
         </style>
     </head>
     <body>
-        <div class="rainbow-text">
+        <div class="content-wrapper rainbow-text">
             <pre>
  _           _         ___ _   
 | |_ ___ ___|_|___ ___|  _| |_ 
 | '_| . |   | |_ -| . |  _|  _|
 |_,_|___|_|_|_|___|___|_| |_|  
             </pre>
-            <h1>Welcome to Konisoft Speedruns!</h1>
+            <p>Welcome to Konisoft Speedruns!</p>
             <p>The backend is live and running... o(*￣▽￣*)o</p>
         </div>
     </body>
