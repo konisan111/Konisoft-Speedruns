@@ -23,29 +23,19 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' })); 
 app.use(express.urlencoded({ extended: true, limit: '10mb' })); // Increased limit for base64 images
 
-// User schematics
 const userSchema = new mongoose.Schema({
-    username: { type: String, required: true }, // Username
-    email: { type: String, required: true, unique: true }, // Email address of the user
-    password: { type: String, required: true }, // Password for user
-    avatarUrl: { type: String }, // R2 address link
+    username: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    avatarUrl: { type: String },
     nationality: { type: String},
-    userId: { type: String, unique: true }, // UUID
-    videos: [{ type: String, default: [] }], // Video IDs
-    accountCreation: { type: Date, default: Date.now } // Registration Date
+    userId: { type: String, unique: true },
+    videos: [{
+        videoId: { type: String },
+        approved: { type: Boolean, default: false }
+    }],
+    accountCreation: { type: Date, default: Date.now }
 });
-
-// Video schematics
-const videoSchema = new mongoose.Schema({
-    videoId: { type: String, required: true, unique: true },
-    videoUrl: { type: String, required: true },
-    uploadDate: { type: Date, default: Date.now },
-    isAccepted: { type: Boolean, default: false },
-    uploaderId: { type: String, required: true },
-    speedrunTime: { type: Number, required: true }
-});
-
-const Video = mongoose.model('Video', videoSchema);
 const User = mongoose.model('User', userSchema);
 
 // JWT Authentication middleware
@@ -429,9 +419,18 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
 
         await newVideo.save();
 
+        await newVideo.save();
+
         await User.findOneAndUpdate(
             { userId: req.user.userId },
-            { $push: { videos: videoId } }
+            { 
+                $push: { 
+                    videos: { 
+                        videoId: videoId, 
+                        approved: false
+                    } 
+                } 
+            }
         );
 
         res.status(200).json({ 
