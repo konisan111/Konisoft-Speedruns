@@ -280,66 +280,61 @@ const initLobby = () => {
     });
   });
 
-  const leaderboardData = [
-    { username: "koni111", countryName: "Hungary", date: "2026.11.23", time: "12:21:41", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
-    { username: "SpeedyGonzales", countryName: "USA", date: "2026.11.24", time: "12:45:10", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "PlayerOne", countryName: "UK", date: "2026.11.25", time: "13:05:22", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "ShadowRunner", countryName: "Hungary", date: "2026.11.25", time: "13:30:00", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_hu.webp" },
-    { username: "WWWWWWWWWW", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" },
-    { username: "GhostInTheShell", countryName: "Canada", date: "2026.11.26", time: "14:12:15", pfp: "../images/pfp_placeholder.webp", flag: "../images/lang_en.webp" }
-  ];
-
-  const generateLeaderboard = (animate = true) => {
+  const generateLeaderboard = async (animate = true) => {
     const wrapper = document.getElementById("leaderboard-card-container");
     if (!wrapper) return;
     
     wrapper.innerHTML = "";
 
-    leaderboardData.forEach((entry, index) => {
-      const dateParts = entry.date.split('.');
-      const formattedDate = currentLanguage === 'en' 
-          ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` 
-          : entry.date;
+    try {
+        // Lekérjük a valódi adatokat a szerverről
+        const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
+        if (!response.ok) throw new Error("Hiba a letöltéskor");
+        
+        const realData = await response.json();
 
-      const translatedCountry = countryTranslations[entry.countryName] ? countryTranslations[entry.countryName][currentLanguage] : entry.countryName;
+        realData.forEach((entry, index) => {
+            // Idő formázása (perc:másodperc.tized)
+            const formattedTime = formatSpeedrunTime(entry.speedrunTime);
+            
+            // Zászló kód lekérése
+            const countryCode = getCountryCode(entry.nationality);
+            const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
+            
+            // Profilkép (ha nincs, akkor placeholder)
+            const avatarUrl = entry.avatarUrl || "../images/pfp_placeholder.webp";
 
-      const card = document.createElement("div");
-      card.className = "leaderboard-card";
-      
-      if (animate) {
-          card.style.opacity = '0';
-          card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.05}s`;
-      } else {
-          card.style.opacity = '1';
-          card.style.animation = 'none';
-      }
-      
-      card.innerHTML = `
-        <div class="leaderboard-user-information">
-            <div class="leaderboard-profile-picture" style="background-image: url('${entry.pfp}'); background-size: cover; background-position: center;"></div>
-            <div class="leaderboard-username">${entry.username}</div>
-        </div>
-        <div class="leaderboard-country">
-            <div class="leaderboard-flag" style="background-image: url('${entry.flag}'); background-size: cover; background-position: center;"></div>
-            <span class="leaderboard-country-name">${translatedCountry || 'Unknown'}</span>
-        </div>
-        <div class="leaderboard-game">Lumi Dungeon of Dreadspire</div>
-        <div class="leaderboard-datetime">
-            <div class="leaderboard-date">${formattedDate}</div>
-            <div class="leaderboard-time">${entry.time}</div>
-        </div>
-      `;
-      wrapper.appendChild(card);
-    });
-  };
+            const card = document.createElement("div");
+            card.className = "leaderboard-card";
+            
+            if (animate) {
+                card.style.opacity = '0';
+                card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.05}s`;
+            }
+            
+            card.innerHTML = `
+                <div class="leaderboard-user-information">
+                    <div class="leaderboard-profile-picture" style="background-image: url('${avatarUrl}'); background-size: cover; background-position: center;"></div>
+                    <div class="leaderboard-username">${entry.username}</div>
+                </div>
+                <div class="leaderboard-country">
+                    <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
+                    <span class="leaderboard-country-name">${entry.nationality || 'Unknown'}</span>
+                </div>
+                <div class="leaderboard-game">Lumi Dungeon of Dreadspire</div>
+                <div class="leaderboard-datetime">
+                    <div class="leaderboard-date">${new Date().toLocaleDateString()}</div>
+                    <div class="leaderboard-time">${formattedTime}</div>
+                </div>
+                <a href="${entry.videoUrl}" target="_blank" style="color: cyan; text-decoration: none; font-size: 12px; margin-top: 5px;">WATCH VIDEO</a>
+            `;
+            wrapper.appendChild(card);
+        });
+    } catch (err) {
+        console.error("Nem sikerült betölteni a ranglistát:", err);
+        wrapper.innerHTML = "<p style='color: red;'>Hiba történt a ranglista betöltésekor.</p>";
+    }
+};
 
   updateTexts();
   updateFlags();

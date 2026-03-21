@@ -402,4 +402,16 @@ app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });
 
+const testVideo = new Video({
+    videoId: "test-123",
+    videoUrl: "https://r2.konisoft.hu/test.mp4",
+    uploaderId: "rendszer",
+    speedrunTime: 120000,
+    isAccepted: true
+});
+
+testVideo.save()
+    .then(() => console.log("Siker! Most már látnod kell a 'videos' gyűjteményt!"))
+    .catch(err => console.error("Hiba a mentésnél:", err));
+
 console.log("Is Google ID loaded:", process.env.GOOGLE_CLIENT_ID ? "Yes" : "No");
