@@ -27,6 +27,7 @@ loginBtn.addEventListener('click', async () => {
         if (response.ok) {
             localStorage.setItem('token', result.token);
             console.log("Login successful! Token saved.");
+            window.location.href = '../sites/lobby.html';
         } else {
             console.error("Login failed:", result.error);
         }
@@ -76,7 +77,7 @@ window.handleGoogleResponse = async (googleResponse) => {
             } else {
                 console.log("Sikeres bejelentkezés (Létező felhasználó):", result);
                 alert("Sikeresen bejelentkeztél mint " + (result.username || "felhasználó") + "!");
-                // window.location.reload();
+                window.location.href = '../sites/lobby.html';
             }
         } else {
             console.error("Szerver hiba:", result.error);
@@ -120,6 +121,7 @@ uploadPfpBtn.addEventListener('click', async () => {
             const result = await response.json();
             if (response.ok) {
                 console.log("Google profil sikeresen kiegészítve!");
+                window.location.href = '../sites/lobby.html';
             } else {
                 alert(result.error);
             }
@@ -149,6 +151,7 @@ uploadPfpBtn.addEventListener('click', async () => {
             if (response.ok) {
                 console.log("Sima regisztráció sikeres!");
                 localStorage.setItem('token', result.token);
+                window.location.href = '../sites/lobby.html';
             } else {
                 alert(result.error);
             }

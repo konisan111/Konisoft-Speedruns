@@ -539,6 +539,43 @@ if (document.readyState === "loading") {
   initLobby();
 }
 
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    try {
+        const response = await fetch('https://konisoftspeedruns.onrender.com/me', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const userData = await response.json();
+
+            const profileName = document.getElementById('profile-username');
+            const profileImg = document.getElementById('profile-img-settings'); // Ellenőrizd az ID-t a HTML-ben!
+            const profileNat = document.getElementById('profile-nationality');
+
+            if (profileName) profileName.textContent = userData.username;
+            if (profileNat) profileNat.textContent = userData.nationality || "Nincs megadva";
+            
+            if (profileImg && userData.avatarUrl) {
+                profileImg.src = userData.avatarUrl;
+            }
+        } else {
+            console.error("Nem sikerült lekérni a profiladatokat");
+        }
+    } catch (err) {
+        console.error("Hiba:", err);
+    }
+});
+
 function setAnchorDisabled(a, disabled) {
   if (!a) return;
   if (disabled) {

@@ -252,6 +252,21 @@ app.post('/update-pfp', authenticateToken, async (req, res) => {
     }
 });
 
+app.get('/me', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findOne({ userId: req.user.userId });
+        if (!user) return res.status(404).json({ error: "Felhasználó nem található" });
+
+        res.json({
+            username: user.username,
+            avatarUrl: user.avatarUrl,
+            nationality: user.nationality
+        });
+    } catch (err) {
+        res.status(500).json({ error: "Hiba a profil lekérésekor" });
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
