@@ -167,19 +167,15 @@ app.get('/', (req, res) => {
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
+    if (!token) return res.status(401).json({ error: "No token" });
 
-    if (!token) {
-        return res.status(401).json({ error: "Access denied. No token provided." });
-    }
-
-    try {
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = verified;
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ error: "Invalid token" });
+        req.user = user;
         next();
-    } catch (err) {
-        res.status(400).json({ error: "Invalid token." });
-    }
+    });
 };
+
 app.post('/register', async (req, res) => {
     console.log("DEBUG: ", req.body);
     try {
@@ -386,7 +382,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const s3 = new S3Client({
     region: "auto",
-    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    endpoint: process.env.R2_ENDPOINT,
     credentials: {
         accessKeyId: process.env.R2_ACCESS_KEY,
         secretAccessKey: process.env.R2_SECRET_KEY,
@@ -479,7 +475,7 @@ const createTestData = async () => {
             {
                 username: "KONCSIEHH",
                 nationality: "Iceland",
-                avatarUrl: "https://i.ibb.co/20fL10wk/no-pfp.png",
+                avatarUrl: "https://i.ibb.co/8Lq8QLYN/code-geass-cc.gif",
                 accountCreation: new Date()
             },
             { upsert: true, new: true }
