@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/konisan111/Konisoft-Speedruns#readme",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1009.0",
+    "@aws-sdk/client-s3": "^3.1014.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
@@ -26,6 +26,7 @@
     "google-auth-library": "^10.6.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.0",
+    "multer": "^1.4.5-lts.1",
     "uuid": "^13.0.0"
   }
 }
