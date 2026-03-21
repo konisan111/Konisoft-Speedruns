@@ -23,16 +23,6 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' })); 
 app.use(express.urlencoded({ extended: true, limit: '10mb' })); // Increased limit for base64 images
 
-const videoSchema = new mongoose.Schema({
-    videoId: { type: String, required: true, unique: true },
-    videoUrl: { type: String, required: true },
-    uploaderId: { type: String, required: true },
-    speedrunTime: { type: Number, required: true },
-    isAccepted: { type: Boolean, default: false },
-    uploadDate: { type: Date, default: Date.now }
-});
-const Video = mongoose.model('Video', videoSchema);
-
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
