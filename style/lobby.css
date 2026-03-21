@@ -433,7 +433,7 @@ main {
     height: max-content;
     max-height: calc(100vh - 6.5rem);
     align-items: center;
-    overflow-y: auto;
+    overflow-y: none;
 }
 
 #profile-header {

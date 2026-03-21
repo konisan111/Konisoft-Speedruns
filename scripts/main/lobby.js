@@ -495,36 +495,46 @@ const initLobby = () => {
   if (navHomeBtn) navHomeBtn.addEventListener('click', openHomeView);
   if (navHomeMobileBtn) navHomeMobileBtn.addEventListener('click', openHomeView);
 
-  const generateMiniLeaderboard = () => {
+  const generateMiniLeaderboard = async () => {
     const miniWrapper = document.getElementById("mini-leaderboard-cards");
     if (!miniWrapper) return;
     miniWrapper.innerHTML = "";
 
-    miniData.forEach(entry => {
-      const dateParts = entry.date.split('.');
-      const formattedDate = currentLanguage === 'en' 
-          ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` 
-          : entry.date;
+    try {
+        const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
+        if (!response.ok) throw new Error("Failed to fetch");
+        
+        const miniData = await response.json(); // Define miniData from the response
 
-      const translatedCountry = countryTranslations[entry.countryName] ? countryTranslations[entry.countryName][currentLanguage] : entry.countryName;
+        miniData.forEach(entry => {
+            const formattedTime = formatSpeedrunTime(entry.speedrunTime);
+            const countryCode = getCountryCode(entry.nationality);
+            const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
+            
+            const currentUserId = localStorage.getItem('userId'); 
+            const isUser = entry.userId === currentUserId;
 
-      const card = document.createElement("div");
-      card.className = `leaderboard-card mini-card ${entry.isUser ? 'highlight-user' : ''}`;
-      
-      card.innerHTML = `
-        <div class="leaderboard-user-information">
-            <div class="leaderboard-profile-picture" style="background-image: url('${entry.pfp}'); background-size: cover; background-position: center;"></div>
-            <div class="leaderboard-username">${entry.username}</div>
-        </div>
-        <div class="leaderboard-country">
-            <div class="leaderboard-flag" style="background-image: url('${entry.flag}'); background-size: cover; background-position: center;"></div>
-            <span class="leaderboard-country-name">${translatedCountry || 'Unknown'}</span>
-        </div>
-        <div class="leaderboard-date">${formattedDate}</div>
-        <div class="leaderboard-time">${entry.time}</div>
-      `;
-      miniWrapper.appendChild(card);
-    });
+            const card = document.createElement("div");
+            card.className = `leaderboard-card mini-card ${isUser ? 'highlight-user' : ''}`;
+            
+            card.innerHTML = `
+                <div class="leaderboard-user-information">
+                    <div class="leaderboard-profile-picture" style="background-image: url('${entry.avatarUrl || ''}'); background-size: cover; background-position: center;"></div>
+                    <div class="leaderboard-username">${entry.username}</div>
+                </div>
+                <div class="leaderboard-country">
+                    <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
+                    <span class="leaderboard-country-name">${entry.nationality || 'Unknown'}</span>
+                </div>
+                <div class="leaderboard-date">${new Date(entry.uploadDate).toLocaleDateString()}</div>
+                <div class="leaderboard-time">${formattedTime}</div>
+            `;
+            miniWrapper.appendChild(card);
+        });
+    } catch (err) {
+        console.error("Error loading mini leaderboard:", err);
+        miniWrapper.innerHTML = "<p>Error loading data.</p>";
+    }
   };
 
   const customDropdowns = document.querySelectorAll('.custom-dropdown');
