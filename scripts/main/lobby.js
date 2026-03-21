@@ -153,11 +153,11 @@ const initLobby = () => {
 
   const uiTranslations = {
     en: {
-      "nav-home": "Home",
+      "nav-home": "Leaderboard",
       "nav-upload": "Upload your time",
       "nav-profile": "Profile",
       "nav-logout": "Logout",
-      "nav-home-mobile": "Home",
+      "nav-home-mobile": "Leaderboard",
       "nav-upload-mobile": "Upload your time",
       "nav-profile-mobile": "Profile",
       "nav-logout-mobile": "Logout",
@@ -192,11 +192,11 @@ const initLobby = () => {
       "footer-text-3": "All rights reserved."
     },
     hu: {
-      "nav-home": "Főoldal",
+      "nav-home": "Ranglista",
       "nav-upload": "Idő feltöltése",
       "nav-profile": "Profil",
       "nav-logout": "Kijelentkezés",
-      "nav-home-mobile": "Főoldal",
+      "nav-home-mobile": "Ranglista",
       "nav-upload-mobile": "Idő feltöltése",
       "nav-profile-mobile": "Profil",
       "nav-logout-mobile": "Kijelentkezés",
@@ -565,7 +565,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const profileNat = document.getElementById('profile-country-name-static');
             const profileFlag = document.getElementById('profile-flag');
             const profileDate = document.getElementById('profile-creation-date');
-            const countryName = userData.nationality;
+            const logoutBtn = document.getElementById('profile-logout-button');
+            const countryName = userData.nationality
 
             if (profileFlag && countryName) {
                 const code = getCountryCode(countryName);
@@ -588,12 +589,57 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (profileImg && userData.avatarUrl) {
                 profileImg.style.backgroundImage = `url('${userData.avatarUrl}')`;
             }
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    window.location.href = '../../index.html';
+                });
+            }
         } else {
             console.error("Nem sikerült lekérni a profiladatokat");
         }
     } catch (err) {
         console.error("Hiba:", err);
     }
+
+    const loadLeaderboard = async () => {
+    try {
+        const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
+        
+        if (response.ok) {
+            const leaderboardData = await response.json();
+            const leaderboardContainer = document.getElementById('leaderboard-container');
+            
+            if (!leaderboardContainer) return;
+
+            leaderboardContainer.innerHTML = '';
+
+            leaderboardData.forEach((entry, index) => {
+                const formattedTime = formatSpeedrunTime(entry.speedrunTime);
+                const countryCode = getCountryCode(entry.nationality);
+                const flagUrl = countryCode === "un" ? "https://i.ibb.co/20fL10wk/no-pfp.png" : `https://flagcdn.com/w80/${countryCode}.png`;
+                const avatar = entry.avatarUrl ? entry.avatarUrl : 'default-avatar.png';
+
+                const playerRow = document.createElement('div');
+                playerRow.className = 'leaderboard-row';
+                playerRow.innerHTML = `
+                    <div class="rank">#${index + 1}</div>
+                    <div class="player-info">
+                        <div class="player-avatar" style="background-image: url('${avatar}')"></div>
+                        <div class="player-flag" style="background-image: url('${flagUrl}')"></div>
+                        <span class="player-name">${entry.username}</span>
+                    </div>
+                    <div class="speedrun-time">${formattedTime}</div>
+                    <a href="${entry.videoUrl}" target="_blank" class="watch-video-btn">Videó</a>
+                `;
+                
+                leaderboardContainer.appendChild(playerRow);
+            });
+        }
+    } catch (err) {
+        console.error("Hiba a ranglista betöltésekor:", err);
+    }
+    };
 });
 
 function setAnchorDisabled(a, disabled) {
@@ -614,3 +660,11 @@ function setAnchorDisabled(a, disabled) {
     a.style.cursor = "";
   }
 }
+
+const formatSpeedrunTime = (ms) => {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    const milliseconds = ms % 1000;
+    
+    return `${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+};

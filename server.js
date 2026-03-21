@@ -33,6 +33,17 @@ const userSchema = new mongoose.Schema({
     accountCreation: { type: Date, default: Date.now } // Registration Date
 });
 
+// Video schematics
+const videoSchema = new mongoose.Schema({
+    videoId: { type: String, required: true, unique: true },
+    videoUrl: { type: String, required: true },
+    uploadDate: { type: Date, default: Date.now },
+    isAccepted: { type: Boolean, default: false },
+    uploaderId: { type: String, required: true },
+    speedrunTime: { type: Number, required: true }
+});
+
+const Video = mongoose.model('Video', videoSchema);
 const User = mongoose.model('User', userSchema);
 
 // JWT Authentication middleware
@@ -114,7 +125,7 @@ app.get('/', (req, res) => {
 
             .rainbow-text {
                 background: linear-gradient(-45deg, 
-                    #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3
+                     #b300ff, #ffff00, #00ff00, #0000ff, #b300ff
                 );
                 background-size: 200% 200%;
                 -webkit-background-clip: text;
@@ -359,6 +370,30 @@ app.get('/me', authenticateToken, async (req, res) => {
         });
     } catch (err) {
         res.status(500).json({ error: "Hiba a profil lekérésekor" });
+    }
+});
+
+app.get('/leaderboard', async (req, res) => {
+    try {
+        const topVideos = await Video.find({ isAccepted: true })
+                                     .sort({ speedrunTime: 1 })
+                                     .limit(50);
+
+        const leaderboardData = await Promise.all(topVideos.map(async (video) => {
+            const user = await User.findOne({ userId: video.uploaderId });
+            return {
+                username: user ? user.username : "Ismeretlen",
+                avatarUrl: user ? user.avatarUrl : null,
+                nationality: user ? user.nationality : "Unknown",
+                speedrunTime: video.speedrunTime,
+                videoUrl: video.videoUrl
+            };
+        }));
+
+        res.json(leaderboardData);
+    } catch (err) {
+        console.error("Hiba a ranglista lekérésekor:", err);
+        res.status(500).json({ error: "Szerver hiba a ranglista betöltésekor" });
     }
 });
 
