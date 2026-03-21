@@ -460,25 +460,28 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
 
 app.get('/leaderboard', async (req, res) => {
     try {
+        // Csak az elfogadott videókat kérjük le
         const topVideos = await Video.find({ isAccepted: true })
                                      .sort({ speedrunTime: 1 })
                                      .limit(50);
 
         const leaderboardData = await Promise.all(topVideos.map(async (video) => {
             const user = await User.findOne({ userId: video.uploaderId });
+            
             return {
-                username: user ? user.username : "Ismeretlen",
+                username: user ? user.username : "Unknown",
                 avatarUrl: user ? user.avatarUrl : null,
                 nationality: user ? user.nationality : "Unknown",
                 speedrunTime: video.speedrunTime,
-                videoUrl: video.videoUrl
+                videoUrl: video.videoUrl,
+                uploadDate: video.uploadDate
             };
         }));
 
         res.json(leaderboardData);
     } catch (err) {
-        console.error("Hiba a ranglista lekérésekor:", err);
-        res.status(500).json({ error: "Szerver hiba a ranglista betöltésekor" });
+        console.error("Hiba:", err);
+        res.status(500).json({ error: "Szerver hiba" });
     }
 });
 

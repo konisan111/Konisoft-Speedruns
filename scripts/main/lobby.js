@@ -673,20 +673,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             leaderboardData.forEach((entry, index) => {
                 const formattedTime = formatSpeedrunTime(entry.speedrunTime);
                 const countryCode = getCountryCode(entry.nationality);
-                const flagUrl = countryCode === "un" ? "https://i.ibb.co/20fL10wk/no-pfp.png" : `https://flagcdn.com/w80/${countryCode}.png`;
+                const flagUrl = entry.nationality !== "Unknown" 
+                    ? `https://flagcdn.com/w40/${entry.nationality.toLowerCase()}.png` 
+                    : "../images/default-flag.png";                
                 const avatar = entry.avatarUrl ? entry.avatarUrl : 'default-avatar.png';
 
                 const playerRow = document.createElement('div');
+                
                 playerRow.className = 'leaderboard-row';
                 playerRow.innerHTML = `
-                    <div class="rank">#${index + 1}</div>
                     <div class="player-info">
-                        <div class="player-avatar" style="background-image: url('${avatar}')"></div>
+                        <div class="player-pfp" style="background-image: url('${entry.avatarUrl || '../images/default-pfp.png'}')"></div>
                         <div class="player-flag" style="background-image: url('${flagUrl}')"></div>
                         <span class="player-name">${entry.username}</span>
                     </div>
-                    <div class="speedrun-time">${formattedTime}</div>
-                    <a href="${entry.videoUrl}" target="_blank" class="watch-video-btn">Videó</a>
+                    <div class="speedrun-time">${formatSpeedrunTime(entry.speedrunTime)}</div>
+                    <a href="${entry.videoUrl}" target="_blank" class="watch-video-btn">Watch</a>
                 `;
                 
                 leaderboardContainer.appendChild(playerRow);
