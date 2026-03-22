@@ -217,11 +217,9 @@ const initLobby = () => {
     en: {
       "nav-home": "Leaderboard",
       "nav-upload": "Upload your time",
-      "nav-profile": "Profile",
       "nav-logout": "Logout",
       "nav-home-mobile": "Leaderboard",
       "nav-upload-mobile": "Upload your time",
-      "nav-profile-mobile": "Profile",
       "nav-logout-mobile": "Logout",
       
       "leaderboard-main-title": "Leaderboard",
@@ -259,11 +257,9 @@ const initLobby = () => {
     hu: {
       "nav-home": "Ranglista",
       "nav-upload": "Idő feltöltése",
-      "nav-profile": "Profil",
       "nav-logout": "Kijelentkezés",
       "nav-home-mobile": "Ranglista",
       "nav-upload-mobile": "Idő feltöltése",
-      "nav-profile-mobile": "Profil",
       "nav-logout-mobile": "Kijelentkezés",
       
       "leaderboard-main-title": "Ranglista",

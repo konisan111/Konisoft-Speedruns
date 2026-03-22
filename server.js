@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
     userId: { type: String, unique: true },
     videos: [{
         videoId: { type: String },
+        videoUrl: { type: String },
         approved: { type: Boolean, default: false },
         speedrunTime: { type: Number },
         uploadDate: { type: Date, default: Date.now }
