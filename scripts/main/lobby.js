@@ -1,4 +1,4 @@
-import { getCountryCode } from "../flagcdn-api/get-country.js";
+import { getCountryCode, countryMapping} from "../flagcdn-api/get-country.js";
 import { showToastError } from "../elements/toast-error.js";
 
 const uploadBtn = document.getElementById('nav-upload');
@@ -227,14 +227,14 @@ const initLobby = () => {
       "leaderboard-main-title": "Leaderboard",
       "leaderboard-scope": "global",
       
-      "opt-nation": "by nation",
-      "opt-time": "by time",
-      "opt-game": "by game",
+      "opt-nation": "By Nation",
+      "opt-time": "By Time",
+      "opt-game": "By Game",
       
       "opt-nation-1": "Global",
       "opt-nation-2": "Hungary",
-      "opt-time-1": "All Time",
-      "opt-time-2": "Monthly",
+      "opt-time-1": "Shortest Time",
+      "opt-time-2": "Longest Time",
       "opt-game-1": "All Games",
       "opt-game-2": "Lumi Dungeon of Dreadspire",
       
@@ -251,7 +251,10 @@ const initLobby = () => {
       
       "footer-text-1": "Konisoft Indie Game Studio",
       "footer-text-2": "info@konisoft.hu",
-      "footer-text-3": "All rights reserved."
+      "footer-text-3": "All rights reserved.",
+      "opt-upload": "By Upload date",
+      "opt-upload-1": "Newest",
+      "opt-upload-2": "Oldest"
     },
     hu: {
       "nav-home": "Ranglista",
@@ -266,14 +269,14 @@ const initLobby = () => {
       "leaderboard-main-title": "Ranglista",
       "leaderboard-scope": "globális",
       
-      "opt-nation": "nemzet szerint",
-      "opt-time": "idő szerint",
-      "opt-game": "játék szerint",
+      "opt-nation": "Nemzet szerint",
+      "opt-time": "Idő szerint",
+      "opt-game": "Játék szerint",
       
       "opt-nation-1": "Globális",
       "opt-nation-2": "Magyarország",
-      "opt-time-1": "Összesített",
-      "opt-time-2": "Havi",
+      "opt-time-1": "Legrövidebb idő",
+      "opt-time-2": "Leghosszabb idő",
       "opt-game-1": "Összes játék",
       "opt-game-2": "Lumi Dungeon of Dreadspire",
       
@@ -290,7 +293,10 @@ const initLobby = () => {
       
       "footer-text-1": "Konisoft Indie Játék Stúdió",
       "footer-text-2": "info@konisoft.hu",
-      "footer-text-3": "Minden jog fenntartva."
+      "footer-text-3": "Minden jog fenntartva.",
+      "opt-upload": "Dátum szerint",
+      "opt-upload-1": "Newest",
+      "opt-upload-2": "Oldest"
     }
   };
 
@@ -342,6 +348,41 @@ const initLobby = () => {
     });
   });
 
+  const nationHeader = document.querySelector('#opt-nation').closest('.custom-dropdown');
+  const nationList = nationHeader.querySelector('.custom-dropdown-list');
+  
+  nationList.style.maxHeight = '300px';
+  nationList.style.overflowY = 'auto';
+  nationHeader.tabIndex = 0;
+
+  nationList.innerHTML = '<div class="custom-dropdown-item" id="opt-nation-1">Global</div>';
+  
+  Object.keys(countryMapping).forEach(country => {
+      const item = document.createElement('div');
+      item.className = 'custom-dropdown-item';
+      item.textContent = country;
+      nationList.appendChild(item);
+  });
+
+  let searchTimeout;
+  let searchString = "";
+
+  nationHeader.addEventListener('keydown', (e) => {
+      if (nationHeader.classList.contains('open') && e.key.length === 1 && e.key.match(/[a-z]/i)) {
+          searchString += e.key.toLowerCase();
+          
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => searchString = "", 1000);
+
+          const items = Array.from(nationList.querySelectorAll('.custom-dropdown-item'));
+          const match = items.find(item => item.textContent.toLowerCase().startsWith(searchString));
+          
+          if (match) {
+              match.scrollIntoView({ block: "nearest" });
+          }
+      }
+  });
+
   const generateLeaderboard = async (animate = true) => {
     const wrapper = document.getElementById("leaderboard-card-container");
     if (!wrapper) return;
@@ -352,15 +393,48 @@ const initLobby = () => {
         const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
         if (!response.ok) throw new Error("Hiba a letöltéskor");
         
-        const realData = await response.json();
+        const rawData = await response.json();
+        
+        const nationFilterText = document.getElementById("opt-nation")?.textContent;
+        const timeFilterText = document.getElementById("opt-time")?.textContent;
+        const uploadFilterText = document.getElementById("opt-upload")?.textContent;
+
+        const globalTextEN = uiTranslations.en["opt-nation-1"];
+        const globalTextHU = uiTranslations.hu["opt-nation-1"];
+        
+        let realData = rawData;
+
+        if (nationFilterText !== globalTextEN && 
+            nationFilterText !== globalTextHU && 
+            nationFilterText !== "by nation" && 
+            nationFilterText !== "nemzet szerint") {
+            realData = rawData.filter(entry => entry.nationality === nationFilterText);
+        }
+
+        const newestTextEN = uiTranslations.en["opt-upload-1"];
+        const newestTextHU = uiTranslations.hu["opt-upload-1"];
+        const oldestTextEN = uiTranslations.en["opt-upload-2"];
+        const oldestTextHU = uiTranslations.hu["opt-upload-2"];
+
+        const longestTextEN = uiTranslations.en["opt-time-2"];
+        const longestTextHU = uiTranslations.hu["opt-time-2"];
+
+        if (uploadFilterText === newestTextEN || uploadFilterText === newestTextHU) {
+            realData.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
+        } else if (uploadFilterText === oldestTextEN || uploadFilterText === oldestTextHU) {
+            realData.sort((a, b) => new Date(a.uploadDate) - new Date(b.uploadDate));
+        } else if (timeFilterText === longestTextEN || timeFilterText === longestTextHU) {
+            realData.sort((a, b) => b.speedrunTime - a.speedrunTime);
+        } else {
+            realData.sort((a, b) => a.speedrunTime - b.speedrunTime);
+        }
 
         realData.forEach((entry, index) => {
             const formattedTime = formatSpeedrunTime(entry.speedrunTime);
-            
             const countryCode = getCountryCode(entry.nationality);
             const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
-            
             const avatarUrl = entry.avatarUrl || "https://katona-konstanti.imgbb.com/";
+            const videoLink = entry.videoUrl || entry.url || "#";
 
             const card = document.createElement("div");
             card.className = "leaderboard-card";
@@ -381,10 +455,10 @@ const initLobby = () => {
                 </div>
                 <div class="leaderboard-game">Lumi Dungeon of Dreadspire</div>
                 <div class="leaderboard-datetime">
-                    <div class="leaderboard-date">${new Date().toLocaleDateString()}</div>
+                    <div class="leaderboard-date">${entry.uploadDate ? new Date(entry.uploadDate).toLocaleDateString() : new Date().toLocaleDateString()}</div>
                     <div class="leaderboard-time">${formattedTime}</div>
                 </div>
-                <a href="${entry.videoUrl}" target="_blank" style="color: cyan; text-decoration: none; font-size: 12px; margin-top: 5px;">WATCH VIDEO</a>
+                <a href="${videoLink}" target="_blank" style="color: cyan; text-decoration: none; font-size: 12px; margin-top: 5px;">WATCH VIDEO</a>
             `;
             wrapper.appendChild(card);
         });
@@ -768,7 +842,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="speedrun-time">${formatSpeedrunTime(entry.speedrunTime)}</div>
                     <a href="${entry.videoUrl}" target="_blank" class="watch-video-btn">Watch</a>
                 `;
-                
+                console.log(entry.videoUrl);
                 leaderboardContainer.appendChild(playerRow);
             });
         }

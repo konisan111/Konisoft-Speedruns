@@ -47,7 +47,6 @@
         <div id="dropdown-menu">
             <a href="#" class="dropdown-menu-button" id="nav-upload-mobile">Upload your time</a>
             <a href="#" class="dropdown-menu-button" id="nav-home-mobile">Leaderboard</a>
-            <a href="#" class="dropdown-menu-button" id="nav-profile-mobile">Profile</a>
             <a href="https://konisoft.hu" class="dropdown-menu-button" id="nav-profile-mobile">Konisoft</a>
             <div id="dropdown-menu-icons">
                 <div id="language-mobile"></div>
@@ -82,7 +81,6 @@
             <div id="leaderboard-top-header">
                 <div id="leaderboard-main-title-container">
                     <h1 id="leaderboard-main-title">Leaderboard</h1>
-                    <span id="leaderboard-scope">global</span>
                 </div>
                 <div id="leaderboard-filters">
                     <div class="custom-dropdown">
@@ -98,11 +96,21 @@
                     <div class="custom-dropdown">
                         <button class="custom-dropdown-header">
                             <div class="dropdown-icon">▼</div>
+                            <div class="dropdown-text" id="opt-upload">by upload date</div>
+                        </button>
+                        <div class="custom-dropdown-list">
+                            <div class="custom-dropdown-item" id="opt-upload-1">Newest</div>
+                            <div class="custom-dropdown-item" id="opt-upload-2">Oldest</div>
+                        </div>
+                    </div>
+                    <div class="custom-dropdown">
+                        <button class="custom-dropdown-header">
+                            <div class="dropdown-icon">▼</div>
                             <div class="dropdown-text" id="opt-time">by time</div>
                         </button>
                         <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-time-1">All Time</div>
-                            <div class="custom-dropdown-item" id="opt-time-2">Monthly</div>
+                            <div class="custom-dropdown-item" id="opt-time-1">Shortest Time</div>
+                            <div class="custom-dropdown-item" id="opt-time-2">Longest Time</div>
                         </div>
                     </div>
                     <div class="custom-dropdown">
