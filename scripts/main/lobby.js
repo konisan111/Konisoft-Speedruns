@@ -401,13 +401,15 @@ const initLobby = () => {
 
         const globalTextEN = uiTranslations.en["opt-nation-1"];
         const globalTextHU = uiTranslations.hu["opt-nation-1"];
+        const defaultNationEN = uiTranslations.en["opt-nation"];
+        const defaultNationHU = uiTranslations.hu["opt-nation"];
         
         let realData = rawData;
 
         if (nationFilterText !== globalTextEN && 
             nationFilterText !== globalTextHU && 
-            nationFilterText !== "by nation" && 
-            nationFilterText !== "nemzet szerint") {
+            nationFilterText !== defaultNationEN && 
+            nationFilterText !== defaultNationHU) {
             realData = rawData.filter(entry => entry.nationality === nationFilterText);
         }
 
@@ -466,7 +468,7 @@ const initLobby = () => {
         console.error("Nem sikerült betölteni a ranglistát:", err);
         wrapper.innerHTML = "<p style='color: red;'>Hiba történt a ranglista betöltésekor.</p>";
     }
-};
+  };
 
   updateTexts();
   updateFlags();
@@ -597,9 +599,7 @@ const initLobby = () => {
                 </div>
                 <div class="leaderboard-country">
                     <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
-                    <span class="leaderboard-country-name">${entry.nationality || 'Unknown'}</span>
                 </div>
-                <div class="leaderboard-date">${new Date(entry.uploadDate).toLocaleDateString()}</div>
                 <div class="leaderboard-time">${formattedTime}</div>
             `;
             miniWrapper.appendChild(card);

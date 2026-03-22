@@ -402,11 +402,10 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
             ContentType: req.file.mimetype
         }));
 
-        const publicUrl = process.env.R2_PUBLIC_URL.endsWith('/') 
-            ? process.env.R2_PUBLIC_URL 
-            : `${process.env.R2_PUBLIC_URL}/`;
-            
-        const videoUrl = `${publicUrl}${fileName}`;
+        const rawPublicUrl = process.env.R2_PUBLIC_URL || "";
+        const publicUrl = rawPublicUrl.endsWith('/') ? rawPublicUrl : `${rawPublicUrl}/`;
+        const cleanFileName = fileName.startsWith('/') ? fileName.substring(1) : fileName;
+        const videoUrl = `${publicUrl}${cleanFileName}`;
 
         await User.findOneAndUpdate(
             { userId: req.user.userId },
@@ -424,6 +423,7 @@ app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) 
         );
 
         res.status(200).json({ message: "Success", videoUrl });
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message });
