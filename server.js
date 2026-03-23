@@ -60,7 +60,6 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB!'))
   .catch(err => console.error('MongoDB error:', err));
 
-  const express = require('express');
   const os = require('os');
   
   function getProgressBar(percent) {
