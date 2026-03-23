@@ -66,7 +66,7 @@ mongoose.connect(process.env.MONGO_URI)
       const size = 20;
       const completed = Math.round(size * (percent / 100));
       const remaining = size - completed;
-      return '[' + '='.repeat(completed) + ' '.repeat(remaining) + ']';
+      return '[' + '█'.repeat(completed) + ' '.repeat(remaining) + ']';
   }
   
   app.get('/api/stats', (req, res) => {
@@ -169,7 +169,8 @@ mongoose.connect(process.env.MONGO_URI)
   
               .stats-container {
                   margin-top: 20px;
-                  font-family: 'Courier New', monospace;
+                  font-family: 'Oxanium', sans-serif;
+                  font-weight: 800;
               }
   
               p {
@@ -188,10 +189,10 @@ mongoose.connect(process.env.MONGO_URI)
       <body>
           <div class="content-wrapper rainbow-text">
               <pre>
-   _           _         ___ _   
-  | |_ ___ ___|_|___ ___|  _| |_ 
-  | '_| . |   | |_ -| . |  _|  _|
-  |_,_|___|_|_|_|___|___|_| |_|  
+ _           _         ___ _   
+| |_ ___ ___|_|___ ___|  _| |_ 
+| '_| . |   | |_ -| . |  _|  _|
+|_,_|___|_|_|_|___|___|_| |_|  
               </pre>
               <p>Welcome to Konisoft Speedruns!</p>
               <p>The backend is live and running... o(*￣▽￣*)o</p>
