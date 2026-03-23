@@ -63,11 +63,12 @@ mongoose.connect(process.env.MONGO_URI)
   const os = require('os');
   
   function getProgressBar(percent) {
-      const size = 20;
-      const completed = Math.round(size * (percent / 100));
-      const remaining = size - completed;
-      return '[' + '█'.repeat(completed) + ' '.repeat(remaining) + ']';
-  }
+    const size = 20;
+    const safePercent = Math.min(Math.max(percent || 0, 0), 100);
+    const completed = Math.round(size * (safePercent / 100));
+    const remaining = size - completed;
+    return '[' + '█'.repeat(completed) + ' '.repeat(remaining) + ']';
+    }
   
   app.get('/api/stats', (req, res) => {
       const totalMem = os.totalmem();
@@ -159,9 +160,9 @@ mongoose.connect(process.env.MONGO_URI)
               }
   
               pre {
-                  font-family: 'Oxanium', sans-serif;
+                  font-family: 'monospace';
                   font-size: 14px;
-                  line-height: 1.1;
+                  line-height: 1.2;
                   margin: 0;
                   padding: 0;
                   font-weight: 800;
@@ -197,7 +198,6 @@ mongoose.connect(process.env.MONGO_URI)
               </pre>
               <p>Welcome to Konisoft Speedruns!</p>
               <p>The backend is live and running... o(*￣▽￣*)o</p>
-              <p> </p>
               
               <div class="stats-container">
                   <p>--- RENDER STATISTICS ---</p>
@@ -211,25 +211,29 @@ mongoose.connect(process.env.MONGO_URI)
               async function updateStats() {
                   try {
                       const response = await fetch('/api/stats');
+                      if (!response.ok) throw new Error('Network response was not ok');
                       const data = await response.json();
                       
                       document.getElementById('cpu-stat').innerText = \`CPU LOAD: \${data.cpu.bar} \${data.cpu.percent}%\`;
                       document.getElementById('ram-stat').innerText = \`RAM USED: \${data.ram.bar} \${data.ram.percent}% (\${data.ram.used}GB/\${data.ram.total}GB)\`;
                       document.getElementById('uptime-stat').innerText = \`UPTIME: \${data.uptime}\`;
                   } catch (err) {
-                      console.error('Error fetching stats');
+                      console.error('Error fetching stats:', err);
                   }
               }
   
-              setInterval(updateStats, 1000);
+              setInterval(updateStats, 2000);
               updateStats();
           </script>
       </body>
       </html>
     `);
-  });
+});
   
-  app.listen(3000);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port \${PORT}`);
+});
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
