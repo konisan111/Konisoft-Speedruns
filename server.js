@@ -229,10 +229,6 @@ mongoose.connect(process.env.MONGO_URI)
       </html>
     `);
 });
-  
-app.listen(PORT, () => {
-  console.log(`Server is running on port \${PORT}`);
-});
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
