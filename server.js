@@ -160,9 +160,7 @@ mongoose.connect(process.env.MONGO_URI)
               }
   
               pre {
-                  font-family: 'monospace';
-                  font-size: 14px;
-                  line-height: 1.2;
+                  font-family: 'Oxanium', sans-serif;
                   margin: 0;
                   padding: 0;
                   font-weight: 800;
@@ -200,7 +198,7 @@ mongoose.connect(process.env.MONGO_URI)
               <p>The backend is live and running... o(*￣▽￣*)o</p>
               
               <div class="stats-container">
-                  <p>--- RENDER STATISTICS ---</p>
+                  <p>RENDER STATISTICS</p>
                   <p id="cpu-stat">CPU LOAD: [                    ] 0%</p>
                   <p id="ram-stat">RAM USED: [                    ] 0% (0GB/0GB)</p>
                   <p id="uptime-stat">UPTIME: 0h 0m 0s</p>
