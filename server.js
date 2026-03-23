@@ -156,7 +156,7 @@ mongoose.connect(process.env.MONGO_URI)
                   -webkit-background-clip: text;
                   background-clip: text;
                   color: transparent;
-                  animation: rainbowShift 10s linear infinite;
+                  animation: rainbowShift 5s linear infinite;
               }
   
                 pre {
