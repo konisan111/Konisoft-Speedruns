@@ -159,12 +159,11 @@ mongoose.connect(process.env.MONGO_URI)
                   animation: rainbowShift 10s linear infinite;
               }
   
-              pre {
-                  font-family: 'Oxanium', sans-serif;
-                  margin: 0;
-                  padding: 0;
-                  font-weight: 800;
-              }
+                pre {
+                    margin: 0;
+                    padding: 0;
+                    font-weight: 800;
+                }
   
               .stats-container {
                   margin-top: 20px;
@@ -188,12 +187,12 @@ mongoose.connect(process.env.MONGO_URI)
       </head>
       <body>
           <div class="content-wrapper rainbow-text">
-          <p>
+<pre>
  _           _         ___ _   
 | |_ ___ ___|_|___ ___|  _| |_ 
 | '_| . |   | |_ -| . |  _|  _|
 |_,_|___|_|_|_|___|___|_| |_|
-</p>  
+</pre>
               <p>Welcome to Konisoft Speedruns!</p>
               <p>The backend is live and running... o(*￣▽￣*)o</p>
               
