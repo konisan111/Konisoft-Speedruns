@@ -62,7 +62,6 @@ mongoose.connect(process.env.MONGO_URI)
 
   const express = require('express');
   const os = require('os');
-  const app = express();
   
   function getProgressBar(percent) {
       const size = 20;
