@@ -1,5 +1,14 @@
 import { getCountryCode, countryMapping} from "../flagcdn-api/get-country.js";
 import { showToastError } from "../elements/toast-error.js";
+import { countries } from "../data/translations.js";
+
+let isHungarian = false;
+
+const getTranslatedCountry = (englishName, lang) => {
+    if (!englishName || englishName === "Unknown") return "Unknown";
+    const country = countries.find(c => c.en === englishName);
+    return country ? country[lang] : englishName;
+};
 
 const uploadBtn = document.getElementById('nav-upload');
 const uploadBtnMobile = document.getElementById('nav-upload-mobile');
@@ -8,13 +17,24 @@ const closeUploadModal = document.getElementById('close-upload-modal');
 const selectVideoBtn = document.getElementById('select-video-btn');
 const videoFileInput = document.getElementById('video-file-input');
 const startUploadBtn = document.getElementById('start-upload-btn');
+const cancelUploadBtn = document.getElementById('cancel-upload-btn');
 const fileNameDisplay = document.getElementById('selected-file-name');
 
 [uploadBtn, uploadBtnMobile].forEach(btn => {
-    btn?.addEventListener('click', () => uploadModal.classList.remove('hidden'));
+    btn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        uploadModal.classList.add('show');
+    });
 });
 
-closeUploadModal?.addEventListener('click', () => uploadModal.classList.add('hidden'));
+closeUploadModal?.addEventListener('click', () => uploadModal.classList.remove('show'));
+cancelUploadBtn?.addEventListener('click', () => uploadModal.classList.remove('show'));
+
+uploadModal?.addEventListener('click', (e) => {
+    if (e.target === uploadModal) {
+        uploadModal.classList.remove('show');
+    }
+});
 
 selectVideoBtn?.addEventListener('click', () => videoFileInput.click());
 
@@ -26,20 +46,25 @@ videoFileInput?.addEventListener('change', () => {
 
 startUploadBtn?.addEventListener('click', async () => {
     const file = videoFileInput.files[0];
-    const time = document.getElementById('speedrun-time-input').value;
+    
+    const mins = parseInt(document.getElementById('time-minutes').value) || 0;
+    const secs = parseInt(document.getElementById('time-seconds').value) || 0;
+    const ms = parseInt(document.getElementById('time-milliseconds').value) || 0;
+    const totalMs = (mins * 60000) + (secs * 1000) + ms;
+    
     const token = localStorage.getItem('token');
 
-    if (!file || !time) {
-        showToastError("Please select a file and enter your time!");
+    if (!file || totalMs <= 0) {
+        showToastError(isHungarian ? "Kérjük, válasszon egy fájlt, és adjon meg érvényes időt!" : "Please select a file and enter a valid time!");
         return;
     }
 
     const formData = new FormData();
     formData.append('video', file);
-    formData.append('speedrunTime', time);
+    formData.append('speedrunTime', totalMs);
 
     startUploadBtn.disabled = true;
-    startUploadBtn.textContent = "Uploading...";
+    startUploadBtn.textContent = isHungarian ? "Feltöltés folyamatban..." : "Uploading...";
 
     try {
         const response = await fetch('https://konisoftspeedruns.onrender.com/upload-video', {
@@ -49,25 +74,24 @@ startUploadBtn?.addEventListener('click', async () => {
         });
 
         if (response.ok) {
-            alert("Upload successful! o(*￣▽￣*)o Waiting for admin approval.");
-            uploadModal.classList.add('hidden');
+            alert(isHungarian ? "Feltöltés sikeres! o(*￣▽￣*)o Várakozás az adminisztrátori jóváhagyásra." : "Upload successful! o(*￣▽￣*)o Waiting for admin approval.");
+            uploadModal.classList.remove('show');
             location.reload();
         } else {
-            showToastError("Upload failed! (´;ω;`) Try again later.");
+            showToastError(isHungarian ? "Sikertelen feltöltés! (´;ω;`) Próbálja újra később." : "Upload failed! (´;ω;`) Try again later.");
         }
     } catch (err) {
-        showToastError("Server error during upload.");
+        showToastError(isHungarian ? "Szerverhiba a feltöltés során." : "Server error during upload.");
     } finally {
         startUploadBtn.disabled = false;
-        startUploadBtn.textContent = "Upload";
+        startUploadBtn.textContent = isHungarian ? "Feltöltés" : "Upload";
     }
 });
+
 const themes = {
     light: "../style/light-theme.css",
     dark: "../style/dark-theme.css",
 };
-
-let isHungarian = false;
 
 const timeForImage = 5;
 let currentImageIndex = 0;
@@ -206,13 +230,6 @@ const initLobby = () => {
     document.getElementById("language-mobile")
   ];
 
-  const countryTranslations = {
-    "Hungary": { en: "Hungary", hu: "Magyarország" },
-    "USA": { en: "USA", hu: "USA" },
-    "UK": { en: "UK", hu: "Egyesült Királyság" },
-    "Canada": { en: "Canada", hu: "Kanada" }
-  };
-
   const uiTranslations = {
     en: {
       "nav-home": "Leaderboard",
@@ -230,7 +247,6 @@ const initLobby = () => {
       "opt-game": "By Game",
       
       "opt-nation-1": "Global",
-      "opt-nation-2": "Hungary",
       "opt-time-1": "Shortest Time",
       "opt-time-2": "Longest Time",
       "opt-game-1": "All Games",
@@ -252,7 +268,16 @@ const initLobby = () => {
       "footer-text-3": "All rights reserved.",
       "opt-upload": "By Upload date",
       "opt-upload-1": "Newest",
-      "opt-upload-2": "Oldest"
+      "opt-upload-2": "Oldest",
+
+      "upload-modal-title": "Upload Time",
+      "select-video-btn": "Select video file",
+      "upload-time-label": "Speedrun Time:",
+      "upload-time-min": "min",
+      "upload-time-sec": "sec",
+      "upload-time-ms": "ms",
+      "start-upload-btn": "Upload",
+      "cancel-upload-btn": "Cancel"
     },
     hu: {
       "nav-home": "Ranglista",
@@ -270,7 +295,6 @@ const initLobby = () => {
       "opt-game": "Játék szerint",
       
       "opt-nation-1": "Globális",
-      "opt-nation-2": "Magyarország",
       "opt-time-1": "Legrövidebb idő",
       "opt-time-2": "Leghosszabb idő",
       "opt-game-1": "Összes játék",
@@ -291,8 +315,17 @@ const initLobby = () => {
       "footer-text-2": "info@konisoft.hu",
       "footer-text-3": "Minden jog fenntartva.",
       "opt-upload": "Dátum szerint",
-      "opt-upload-1": "Newest",
-      "opt-upload-2": "Oldest"
+      "opt-upload-1": "Legújabb",
+      "opt-upload-2": "Legrégebbi",
+
+      "upload-modal-title": "Idő Feltöltése",
+      "select-video-btn": "Videófájl kiválasztása",
+      "upload-time-label": "Speedrun Idő:",
+      "upload-time-min": "perc",
+      "upload-time-sec": "mp",
+      "upload-time-ms": "ms",
+      "start-upload-btn": "Feltöltés",
+      "cancel-upload-btn": "Mégse"
     }
   };
 
@@ -329,6 +362,23 @@ const initLobby = () => {
     isHungarian = currentLanguage === "hu";
     updateFlags();
     updateTexts();
+
+    document.querySelectorAll('.dropdown-text').forEach(header => {
+        if (header.dataset.selectedId) {
+            header.textContent = uiTranslations[currentLanguage][header.dataset.selectedId];
+        } else if (header.dataset.value) {
+            header.textContent = getTranslatedCountry(header.dataset.value, currentLanguage);
+        }
+    });
+
+    document.querySelectorAll('.nation-item').forEach(item => {
+        if (item.id === "opt-nation-1") {
+            item.textContent = uiTranslations[currentLanguage]["opt-nation-1"];
+        } else {
+            item.textContent = getTranslatedCountry(item.dataset.value, currentLanguage);
+        }
+    });
+
     generateLeaderboard(false);
     generateMiniLeaderboard(false);
   };
@@ -351,11 +401,12 @@ const initLobby = () => {
   nationList.style.overflowY = 'auto';
   nationHeader.tabIndex = 0;
 
-  nationList.innerHTML = '<div class="custom-dropdown-item" id="opt-nation-1">Global</div>';
+  nationList.innerHTML = '<div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>';
   
   Object.keys(countryMapping).forEach(country => {
       const item = document.createElement('div');
-      item.className = 'custom-dropdown-item';
+      item.className = 'custom-dropdown-item nation-item';
+      item.dataset.value = country;
       item.textContent = country;
       nationList.appendChild(item);
   });
@@ -391,22 +442,15 @@ const initLobby = () => {
         
         const rawData = await response.json();
         
-        const nationFilterText = document.getElementById("opt-nation")?.textContent;
+        const nationFilterEl = document.getElementById("opt-nation");
+        const nationFilterValue = nationFilterEl?.dataset.value;
         const timeFilterText = document.getElementById("opt-time")?.textContent;
         const uploadFilterText = document.getElementById("opt-upload")?.textContent;
-
-        const globalTextEN = uiTranslations.en["opt-nation-1"];
-        const globalTextHU = uiTranslations.hu["opt-nation-1"];
-        const defaultNationEN = uiTranslations.en["opt-nation"];
-        const defaultNationHU = uiTranslations.hu["opt-nation"];
         
         let realData = rawData;
 
-        if (nationFilterText !== globalTextEN && 
-            nationFilterText !== globalTextHU && 
-            nationFilterText !== defaultNationEN && 
-            nationFilterText !== defaultNationHU) {
-            realData = rawData.filter(entry => entry.nationality === nationFilterText);
+        if (nationFilterValue && nationFilterValue !== "Global") {
+            realData = rawData.filter(entry => entry.nationality === nationFilterValue);
         }
 
         const newestTextEN = uiTranslations.en["opt-upload-1"];
@@ -433,6 +477,7 @@ const initLobby = () => {
             const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
             const avatarUrl = entry.avatarUrl || "https://katona-konstanti.imgbb.com/";
             const videoLink = entry.videoUrl || entry.url || "#";
+            const translatedCountryName = getTranslatedCountry(entry.nationality, currentLanguage);
 
             const card = document.createElement("div");
             card.className = "leaderboard-card";
@@ -449,7 +494,7 @@ const initLobby = () => {
                 </div>
                 <div class="leaderboard-country">
                     <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
-                    <span class="leaderboard-country-name">${entry.nationality || 'Unknown'}</span>
+                    <span class="leaderboard-country-name">${translatedCountryName}</span>
                 </div>
                 <div class="leaderboard-game">Lumi Dungeon of Dreadspire</div>
                 <div class="leaderboard-datetime">
@@ -479,7 +524,7 @@ const initLobby = () => {
   const navProfileMobileBtn = document.getElementById('nav-profile-mobile');
 
   const switchView = (fromEl, toEl, onStartFadeIn) => {
-      if (fromEl.isAnimating) return;
+      if (fromEl.isAnimating || toEl.isAnimating) return;
       fromEl.isAnimating = true;
       toEl.isAnimating = true;
 
@@ -584,11 +629,13 @@ const initLobby = () => {
             
             const currentUserId = localStorage.getItem('userId'); 
             const isUser = entry.userId === currentUserId;
+            const dummyPlacement = "#99";
 
             const card = document.createElement("div");
             card.className = `leaderboard-card mini-card ${isUser ? 'highlight-user' : ''}`;
             
             card.innerHTML = `
+                <div class="mini-placement">${dummyPlacement}</div>
                 <div class="leaderboard-user-information">
                     <div class="leaderboard-profile-picture" style="background-image: url('${entry.avatarUrl || ''}'); background-size: cover; background-position: center;"></div>
                     <div class="leaderboard-username">${entry.username}</div>
@@ -629,6 +676,13 @@ const initLobby = () => {
               const textDiv = header.querySelector('.dropdown-text');
               if (textDiv) {
                   textDiv.textContent = item.textContent;
+                  if (item.dataset.value) textDiv.dataset.value = item.dataset.value;
+                  
+                  if (item.id) {
+                      textDiv.dataset.selectedId = item.id;
+                  } else {
+                      delete textDiv.dataset.selectedId;
+                  }
               }
               generateLeaderboard(true);
           });
@@ -709,7 +763,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (profileName) profileName.textContent = userData.username || "???";
 
-            if (profileNat) profileNat.textContent = userData.nationality || "???";
+            if (profileNat) {
+                const lang = isHungarian ? 'hu' : 'en'; 
+                profileNat.textContent = getTranslatedCountry(userData.nationality, lang) || "???";
+            }
             
             if (profileImg && userData.avatarUrl) {
                 profileImg.style.backgroundImage = `url('${userData.avatarUrl}')`;

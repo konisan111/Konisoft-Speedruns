@@ -46,6 +46,7 @@
 .grid {
   position: fixed;
   inset: 0;
+  z-index: 0;
   background-image: 
     linear-gradient(to right, var(--grid-vertical-lane) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-horizontal-lane) 1px, transparent 1px);
@@ -381,7 +382,7 @@ nav {
     justify-content: center;
 }
 
-modal-overlay { 
+.modal-overlay { 
     position: fixed; 
     top: 0; left: 0; 
     width: 100%; 
@@ -389,8 +390,114 @@ modal-overlay {
     background: rgba(0,0,0,0.8); 
     display: flex; 
     align-items: center; 
-    justify-content: 
-    center; z-index: 1000; 
+    justify-content: center; 
+    z-index: 1000; 
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--main-background);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--global-border);
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.show .modal-content {
+    transform: scale(1);
+}
+
+#close-upload-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.time-inputs-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 8px;
+}
+
+.time-input-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.time-input-box input {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--secondary-background);
+    border: 1px solid var(--global-border);
+    color: var(--text-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: "Oxanium", sans-serif;
+    font-size: 1rem;
+}
+
+.time-input-box span {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.upload-submit-btn, .cancel-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Oxanium", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+#select-video-btn {
+    transition: transform 0.2s ease;
+}
+
+#select-video-btn:hover, .upload-submit-btn:hover, .cancel-btn:hover {
+    font-size: 1rem !important; 
+    transform: scale(1.01);
+}
+
+.upload-submit-btn {
+    background-color: transparent;
+    border: 1px solid var(--global-border);
+    color: var(--text-color);
+}
+
+.cancel-btn {
+    background-color: #d32f2f;
+    border: 1px solid #b71c1c;
+    color: white;
 }
 
 main {
@@ -403,6 +510,8 @@ main {
     overflow-x: hidden;
     box-sizing: border-box;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 #leaderboard-container {
@@ -691,16 +800,48 @@ main {
 .leaderboard-card:nth-child(odd) { background-color: var(--leaderboard-card-odd-color); }
 .leaderboard-card:nth-child(even) { background-color: var(--leaderboard-card-even-color); }
 
+.mini-card {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.8rem !important;
+}
+
+.mini-placement {
+    font-size: 1.1rem;
+    font-weight: 700;
+    opacity: 0.6;
+    margin-right: 0.2rem;
+    min-width: 1.5rem;
+    text-align: left;
+}
+
+.mini-card .leaderboard-user-information {
+    flex: 1;
+    min-width: 0;
+    gap: 0.3rem;
+}
+
+.mini-card .leaderboard-country {
+    margin-right: 0.5rem;
+    gap: 0.3rem;
+}
+
+.mini-card .leaderboard-time {
+    text-align: right;
+}
+
 .leaderboard-datetime {
     display: contents;
 }
 
 .leaderboard-user-information {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.5rem;
     align-items: center;
     overflow: hidden;
+    min-width: 0;
 }
 
 .leaderboard-username {
@@ -708,7 +849,9 @@ main {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    word-break: break-all;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 1.2;
 }
 
 .leaderboard-profile-picture {
@@ -733,10 +876,14 @@ main {
 }
 
 .leaderboard-game {
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 0.95em;
+    word-break: break-word;
+    line-height: 1.2;
 }
 
 .leaderboard-flag {
@@ -773,6 +920,7 @@ footer {
     padding: 1.5em;
     min-width: 0;
     border-top: 1px solid var(--global-border);
+    z-index: 1;
 }
 
 #footer-logo {
@@ -928,6 +1076,11 @@ footer {
         overflow-x: hidden;
     }
 
+    .mini-card {
+        display: flex !important;
+        padding: 0.5rem 0.8rem !important;
+    }
+
     .leaderboard-datetime {
         display: flex;
         grid-area: datetime;
@@ -958,7 +1111,6 @@ footer {
     .leaderboard-game {
         grid-area: game;
         text-align: right;
-        white-space: normal;
         font-size: 1.25em;
         justify-self: end;
     }
@@ -1037,6 +1189,11 @@ footer {
             "game game"
             "datetime datetime";
         gap: 0.5rem 0.8rem;
+    }
+
+    .mini-card {
+        display: flex !important;
+        padding: 0.5rem 0.8rem !important;
     }
 
     .leaderboard-datetime {
