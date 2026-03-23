@@ -60,102 +60,176 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB!'))
   .catch(err => console.error('MongoDB error:', err));
 
-app.get('/', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="hu">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Konisoft Speedruns Backend</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
-        <style>
-            body {
-                background-color: #000000;
-                margin: 0;
-                padding: 30px;
-                height: 100vh;
-                width: 100vw;
-                font-family: 'Oxanium', sans-serif;
-                overflow: hidden;
-                box-sizing: border-box;
-                position: relative;
-                color: white;
-            }
-
-            body::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: 
-                    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-                background-size: 30px 30px;
-                z-index: 0;
-            }
-
-            .content-wrapper {
-                position: relative;
-                z-index: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
-            }
-
-            .rainbow-text {
-                background: linear-gradient(-45deg, 
-                     #b300ff, #ffff00, #00ff00, #0000ff, #b300ff
-                );
-                background-size: 200% 200%;
-                -webkit-background-clip: text;
-                background-clip: text;
-                color: transparent;
-                animation: rainbowShift 10s linear infinite;
-            }
-
-            pre {
-                font-family: 'Courier New', monospace;
-                font-size: 14px;
-                line-height: 1.1;
-                margin: 0;
-                padding: 0;
-                font-weight: 800;
-            }
-
-            p {
-                font-size: 14px;
-                margin: 0;
-                padding: 0;
-                font-weight: 800;
-            }
-
-            @keyframes rainbowShift {
-                0% { background-position: 0% 50%; }
-                100% { background-position: 200% 50%; }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="content-wrapper rainbow-text">
-            <pre>
- _           _         ___ _   
-| |_ ___ ___|_|___ ___|  _| |_ 
-| '_| . |   | |_ -| . |  _|  _|
-|_,_|___|_|_|_|___|___|_| |_|  
-            </pre>
-            <p>Welcome to Konisoft Speedruns!</p>
-            <p>The backend is live and running... o(*￣▽￣*)o</p>
-        </div>
-    </body>
-    </html>
-  `);
-});
+  const express = require('express');
+  const os = require('os');
+  const app = express();
+  
+  function getProgressBar(percent) {
+      const size = 20;
+      const completed = Math.round(size * (percent / 100));
+      const remaining = size - completed;
+      return '[' + '='.repeat(completed) + ' '.repeat(remaining) + ']';
+  }
+  
+  app.get('/api/stats', (req, res) => {
+      const totalMem = os.totalmem();
+      const freeMem = os.freemem();
+      const usedMem = totalMem - freeMem;
+      const memUsagePercent = ((usedMem / totalMem) * 100).toFixed(1);
+  
+      const cpus = os.cpus();
+      const loadAvg = os.loadavg()[0]; 
+      const cpuUsagePercent = ((loadAvg / cpus.length) * 100).toFixed(1);
+  
+      const uptime = os.uptime();
+      const hours = Math.floor(uptime / 3600);
+      const mins = Math.floor((uptime % 3600) / 60);
+      const secs = Math.floor(uptime % 60);
+  
+      res.json({
+          ram: {
+              percent: memUsagePercent,
+              bar: getProgressBar(memUsagePercent),
+              used: (usedMem / 1024 / 1024 / 1024).toFixed(2),
+              total: (totalMem / 1024 / 1024 / 1024).toFixed(2)
+          },
+          cpu: {
+              percent: cpuUsagePercent,
+              bar: getProgressBar(cpuUsagePercent)
+          },
+          uptime: `${hours}h ${mins}m ${secs}s`
+      });
+  });
+  
+  app.get('/', (req, res) => {
+    res.send(`
+      <!DOCTYPE html>
+      <html lang="hu">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Konisoft Speedruns Backend</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+          <style>
+              body {
+                  background-color: #000000;
+                  margin: 0;
+                  padding: 30px;
+                  height: 100vh;
+                  width: 100vw;
+                  font-family: 'Oxanium', sans-serif;
+                  overflow: hidden;
+                  box-sizing: border-box;
+                  position: relative;
+                  color: white;
+              }
+  
+              body::before {
+                  content: "";
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background-image: 
+                      linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+                  background-size: 30px 30px;
+                  z-index: 0;
+              }
+  
+              .content-wrapper {
+                  position: relative;
+                  z-index: 1;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  text-align: left;
+              }
+  
+              .rainbow-text {
+                  background: linear-gradient(-45deg, 
+                       #cc53ff, #ffff00, #00ff00, #00a6ff, #cc53ff
+                  );
+                  background-size: 200% 200%;
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  color: transparent;
+                  animation: rainbowShift 10s linear infinite;
+              }
+  
+              pre {
+                  font-family: 'Courier New', monospace;
+                  font-size: 14px;
+                  line-height: 1.1;
+                  margin: 0;
+                  padding: 0;
+                  font-weight: 800;
+              }
+  
+              .stats-container {
+                  margin-top: 20px;
+                  font-family: 'Courier New', monospace;
+              }
+  
+              p {
+                  font-size: 14px;
+                  margin: 5px 0;
+                  padding: 0;
+                  font-weight: 800;
+              }
+  
+              @keyframes rainbowShift {
+                  0% { background-position: 0% 50%; }
+                  100% { background-position: 200% 50%; }
+              }
+          </style>
+      </head>
+      <body>
+          <div class="content-wrapper rainbow-text">
+              <pre>
+   _           _         ___ _   
+  | |_ ___ ___|_|___ ___|  _| |_ 
+  | '_| . |   | |_ -| . |  _|  _|
+  |_,_|___|_|_|_|___|___|_| |_|  
+              </pre>
+              <p>Welcome to Konisoft Speedruns!</p>
+              <p>The backend is live and running... o(*￣▽￣*)o</p>
+              <p> </p>
+              
+              <div class="stats-container">
+                  <p>--- RENDER STATISTICS ---</p>
+                  <p id="cpu-stat">CPU LOAD: [                    ] 0%</p>
+                  <p id="ram-stat">RAM USED: [                    ] 0% (0GB/0GB)</p>
+                  <p id="uptime-stat">UPTIME: 0h 0m 0s</p>
+              </div>
+          </div>
+  
+          <script>
+              async function updateStats() {
+                  try {
+                      const response = await fetch('/api/stats');
+                      const data = await response.json();
+                      
+                      document.getElementById('cpu-stat').innerText = \`CPU LOAD: \${data.cpu.bar} \${data.cpu.percent}%\`;
+                      document.getElementById('ram-stat').innerText = \`RAM USED: \${data.ram.bar} \${data.ram.percent}% (\${data.ram.used}GB/\${data.ram.total}GB)\`;
+                      document.getElementById('uptime-stat').innerText = \`UPTIME: \${data.uptime}\`;
+                  } catch (err) {
+                      console.error('Error fetching stats');
+                  }
+              }
+  
+              setInterval(updateStats, 1000);
+              updateStats();
+          </script>
+      </body>
+      </html>
+    `);
+  });
+  
+  app.listen(3000);
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
