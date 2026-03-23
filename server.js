@@ -188,12 +188,12 @@ mongoose.connect(process.env.MONGO_URI)
       </head>
       <body>
           <div class="content-wrapper rainbow-text">
-              <pre>
+          <p>
  _           _         ___ _   
 | |_ ___ ___|_|___ ___|  _| |_ 
 | '_| . |   | |_ -| . |  _|  _|
-|_,_|___|_|_|_|___|___|_| |_|  
-              </pre>
+|_,_|___|_|_|_|___|___|_| |_|
+</p>  
               <p>Welcome to Konisoft Speedruns!</p>
               <p>The backend is live and running... o(*￣▽￣*)o</p>
               
