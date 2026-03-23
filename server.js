@@ -159,7 +159,7 @@ mongoose.connect(process.env.MONGO_URI)
               }
   
               pre {
-                  font-family: 'Courier New', monospace;
+                  font-family: 'Oxanium', sans-serif;
                   font-size: 14px;
                   line-height: 1.1;
                   margin: 0;
@@ -174,6 +174,7 @@ mongoose.connect(process.env.MONGO_URI)
               }
   
               p {
+                  font-family: 'Oxanium', sans-serif;
                   font-size: 14px;
                   margin: 5px 0;
                   padding: 0;
