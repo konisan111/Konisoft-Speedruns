@@ -163,6 +163,7 @@ mongoose.connect(process.env.MONGO_URI)
                     margin: 0;
                     padding: 0;
                     font-weight: 800;
+                    font-size: 10px;
                 }
   
               .stats-container {
@@ -188,10 +189,12 @@ mongoose.connect(process.env.MONGO_URI)
       <body>
           <div class="content-wrapper rainbow-text">
 <pre>
- _           _         ___ _   
-| |_ ___ ___|_|___ ___|  _| |_ 
-| '_| . |   | |_ -| . |  _|  _|
-|_,_|___|_|_|_|___|___|_| |_|
+ __  __     ______     __   __     __     ______     ______     ______   ______  
+/\ \/ /    /\  __ \   /\ "-.\ \   /\ \   /\  ___\   /\  __ \   /\  ___\ /\__  _\ 
+\ \  _"-.  \ \ \/\ \  \ \ \-.  \  \ \ \  \ \___  \  \ \ \/\ \  \ \  __\ \/_/\ \/ 
+ \ \_\ \_\  \ \_____\  \ \_\\"\_\  \ \_\  \/\_____\  \ \_____\  \ \_\      \ \_\ 
+  \/_/\/_/   \/_____/   \/_/ \/_/   \/_/   \/_____/   \/_____/   \/_/       \/_/ 
+                                                                                 
 </pre>
               <p>Welcome to Konisoft Speedruns!</p>
               <p>The backend is live and running... o(*￣▽￣*)o</p>
