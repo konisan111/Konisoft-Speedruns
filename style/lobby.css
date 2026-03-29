@@ -1,3 +1,18 @@
+/* 
+ _           _         ___ _   
+| |_ ___ ___|_|___ ___|  _| |_ 
+| '_| . |   | |_ -| . |  _|  _|
+|_,_|___|_|_|_|___|___|_| |_|
+Konisoft Speedruns Platform
+If you want it, then you'll have to take it.
+
+-----------------------------> LOBBY.CSS
+*/
+
+/* WEBKIT OPTIONS */
+
+
+
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--main-background) }
 ::-webkit-scrollbar-thumb { 
@@ -6,6 +21,10 @@
 }
 
 ::-webkit-scrollbar-thumb:hover { background: rgb(170, 170, 170); }
+
+/* FADING */
+
+
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -43,6 +62,24 @@
     opacity: 0;
 }
 
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.fade-text {
+    transition: color 0.5s ease;
+    color: var(--text-color);
+}
+
+.fade-text.hidden {
+    color: transparent;
+}
+
+/* BACKGROUND GRID */
+
+
+
 .grid {
   position: fixed;
   inset: 0;
@@ -61,83 +98,9 @@
   pointer-events: none;
 }
 
-#gap-for-news {
-    margin-top: 2em;
-}
+/* BASIC HTML ELEMENTS */
 
-#news-line {
-    position: sticky;
-    display: none;
-    background-color: var(--news-color);
-    color: var(--news-text);
-    font-weight: 600;
-    text-align: center;
-    align-items: center;
-    justify-content: space-between;
-    height: 2em;
-    text-decoration: none;
-    border-bottom: 1px solid var(--global-border);
-}
 
-#news-line p {
-    font-size: clamp(12px, 1.9vw, 17px);
-    margin-left: auto; 
-    margin-right: auto;
-}
-
-.fade-in {
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
-}
-
-.fade-text {
-    transition: color 0.5s ease;
-    color: var(--text-color);
-}
-
-.fade-text.hidden {
-    color: transparent;
-}
-
-.text-loading {
-    background-color: var(--secondary-background);
-    border-radius: 2em;
-    color: transparent;
-}
-
-.image-loading { background-color: var(--secondary-background); }
-
-.text-loading, .image-loading {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-
-    --shine-duration: 1.5s;
-    --shine-opacity: .35;
-    --shine-angle: 120deg;
-    --shine-thickness: 50px;
-}
-
-.text-loading::after,
-.image-loading::after {
-    content: "";
-    position: absolute;
-    inset: -30% -50%;
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            var(--shine-angle),
-            rgba(255,255,255,0) calc(50% - (var(--shine-thickness) / 2)),
-            rgba(255,255,255,var(--shine-opacity)) 50%,
-            rgba(255,255,255,0) calc(50% + (var(--shine-thickness) / 2))
-        );
-
-    transform: translateX(-50%) skewX(-20deg);
-    animation: loading-shine var(--shine-duration) ease-in-out infinite;
-    pointer-events: none;
-    will-change: transform;
-}
 
 html {
   scroll-behavior: smooth;
@@ -180,6 +143,10 @@ nav {
     padding: 0 0.25rem 0 0.25rem;
     box-sizing: border-box;
 }
+
+/* NAVBAR */
+
+
 
 .dot{
   width:35px;
@@ -382,6 +349,82 @@ nav {
     justify-content: center;
 }
 
+/* NAVBAR USER PROFILE */
+
+
+
+#nav-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    cursor: pointer;
+    padding: 0.2em 0.9em;
+    border-radius: 2em;
+    transition: transform 0.2s ease, filter 0.2s ease, background-color 0.2s ease;
+}
+
+#nav-user-profile:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+#nav-profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-image: url('../images/pfp_placeholder.webp');
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--global-border);
+}
+
+#nav-username {
+    font-family: "Oxanium", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-color);
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#nav-user-profile-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    padding: 0.8em;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+}
+
+#nav-profile-picture-mobile {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-image: url('../images/pfp_placeholder.webp');
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--global-border);
+}
+
+#nav-username-mobile {
+    font-family: "Oxanium", sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* UPLOADING SCREEN */
+
+
+
 .modal-overlay { 
     position: fixed; 
     top: 0; left: 0; 
@@ -501,6 +544,10 @@ nav {
     color: white;
 }
 
+/* MAIN */
+
+
+
 main {
     display: flex;
     flex: 1;
@@ -514,6 +561,10 @@ main {
     position: relative;
     z-index: 1;
 }
+
+/* ERROR TOASTS */
+
+
 
 .toast.error {
     background-color: rgba(173, 52, 52, 0.3);
@@ -564,6 +615,10 @@ main {
         opacity: 1;
     }
 }
+
+/* LEADERBOARDS */
+
+
 
 #leaderboard-container {
     border-radius: 1.25rem;
@@ -741,6 +796,10 @@ main {
     flex-wrap: wrap;
 }
 
+/* LEADERBOARD DROPDOWNS */
+
+
+
 .custom-dropdown {
     position: relative;
     font-family: "Oxanium", sans-serif;
@@ -816,6 +875,10 @@ main {
     opacity: 0.7;
 }
 
+/* LEADERBOARD TITLEBARS */
+
+
+
 #leaderboard-titlebar, .leaderboard-card {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 85px max-content;
@@ -885,6 +948,10 @@ main {
 .leaderboard-card:nth-child(odd) { background-color: var(--leaderboard-card-odd-color); }
 .leaderboard-card:nth-child(even) { background-color: var(--leaderboard-card-even-color); }
 
+/* MINILEADERBOARD */
+
+
+
 .mini-card {
     display: flex !important;
     justify-content: space-between;
@@ -914,38 +981,6 @@ main {
 
 .mini-card .leaderboard-time {
     text-align: right;
-}
-.video-container {
-    max-width: 800px;
-    width: 90%;
-    background-color: #000;
-    padding: 0;
-    overflow: hidden;
-}
-
-#video-player-wrapper {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-}
-
-#video-player-wrapper iframe, 
-#video-player-wrapper video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-#close-video {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    z-index: 10;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
 }
 
 .leaderboard-datetime {
@@ -1027,6 +1062,10 @@ main {
   transform: translateY(0);
 }
 
+/* FOOTER */
+
+
+
 footer {
     background-color: var(--main-background);
     height: 9em;
@@ -1066,78 +1105,10 @@ footer {
     margin-top: 0.5em;
 }
 
-#footer-text-3 {
+#footer-text-3 {3
     width: 12em;
     height: 1.2em;
     margin-top: 3em;
-}
-
-#nav-user-profile {
-    display: flex;
-    align-items: center;
-    gap: 0.6em;
-    cursor: pointer;
-    padding: 0.2em 0.9em;
-    border-radius: 2em;
-    transition: transform 0.2s ease, filter 0.2s ease, background-color 0.2s ease;
-}
-
-#nav-user-profile:hover {
-    transform: scale(1.05);
-    filter: brightness(1.2);
-}
-
-#nav-profile-picture {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-image: url('../images/pfp_placeholder.webp');
-    background-size: cover;
-    background-position: center;
-    border: 1px solid var(--global-border);
-}
-
-#nav-username {
-    font-family: "Oxanium", sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--text-color);
-    max-width: 120px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#nav-user-profile-mobile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6em;
-    padding: 0.8em;
-    cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
-    transition: background-color 0.2s ease;
-}
-
-#nav-profile-picture-mobile {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-image: url('../images/pfp_placeholder.webp');
-    background-size: cover;
-    background-position: center;
-    border: 1px solid var(--global-border);
-}
-
-#nav-username-mobile {
-    font-family: "Oxanium", sans-serif;
-    font-weight: 600;
-    font-size: 1.2rem;
-    color: var(--text-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 @media (max-width: 900px) {
@@ -1247,6 +1218,10 @@ footer {
         margin-top: -5px;
     }
 }
+
+/* MEDIA - RESPONSIVE LAYOUTS */
+
+
 
 @media (max-width: 680px) {
     main {

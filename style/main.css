@@ -1,3 +1,18 @@
+/* 
+ _           _         ___ _   
+| |_ ___ ___|_|___ ___|  _| |_ 
+| '_| . |   | |_ -| . |  _|  _|
+|_,_|___|_|_|_|___|___|_| |_|
+Konisoft Speedruns Platform
+If you want it, then you'll have to take it.
+
+-----------------------------> MAIN.CSS
+*/
+
+/* WEBKIT OPTIONS */
+
+
+
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--main-background) }
 ::-webkit-scrollbar-thumb { 
@@ -6,6 +21,10 @@
 }
 
 ::-webkit-scrollbar-thumb:hover { background: rgb(170, 170, 170); }
+
+/* FADING */
+
+
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -24,6 +43,24 @@
     opacity: 0;
 }
 
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.fade-text {
+    transition: color 0.5s ease;
+    color: var(--text-color);
+}
+
+.fade-text.hidden {
+    color: transparent;
+}
+
+/* BACKGROUND GRID */
+
+
+
 .grid {
   position: fixed;
   inset: 0;
@@ -41,59 +78,9 @@
   pointer-events: none;
 }
 
-.fade-in {
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
-}
+/* BASIC HTML ELEMENTS */
 
-.fade-text {
-    transition: color 0.5s ease;
-    color: var(--text-color);
-}
 
-.fade-text.hidden {
-    color: transparent;
-}
-
-.text-loading {
-    background-color: var(--secondary-background);
-    border-radius: 2em;
-    color: transparent;
-}
-
-.image-loading { background-color: var(--secondary-background); }
-
-.text-loading, .image-loading {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-
-    --shine-duration: 1.5s;
-    --shine-opacity: .35;
-    --shine-angle: 120deg;
-    --shine-thickness: 50px;
-}
-
-.text-loading::after,
-.image-loading::after {
-    content: "";
-    position: absolute;
-    inset: -30% -50%;
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            var(--shine-angle),
-            rgba(255,255,255,0) calc(50% - (var(--shine-thickness) / 2)),
-            rgba(255,255,255,var(--shine-opacity)) 50%,
-            rgba(255,255,255,0) calc(50% + (var(--shine-thickness) / 2))
-        );
-
-    transform: translateX(-50%) skewX(-20deg);
-    animation: loading-shine var(--shine-duration) ease-in-out infinite;
-    pointer-events: none;
-    will-change: transform;
-}
 
 html {
   scroll-behavior: smooth;
@@ -166,6 +153,11 @@ main {
     transition: none !important;
 }
 
+/* LOGIN SCREEN */
+
+
+
+
 #logo {
     width: 55%;
     background-image: var(--speedruns-logo);
@@ -179,6 +171,11 @@ label {
     width: 90%;
     pointer-events: none; 
 }
+
+/* LABELS */
+
+
+
 
 #username-label, #email-label, #repeat-password-label {
     margin-bottom: 0.5rem;
@@ -204,6 +201,10 @@ label {
 #forgot-password:hover {
     text-decoration: underline;
 }
+
+/* INPUTS */
+
+
 
 input[type="text"], input[type="email"], input[type="password"] {
     -webkit-appearance: none;
@@ -234,6 +235,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     box-shadow: 0 0 0 1px green;
     outline: none;
 }
+
+/* DROPDOWN MENU */
+
+
 
 .custom-dropdown {
     -webkit-appearance: none;
@@ -328,6 +333,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     background-color: var(--global-border);
 }
 
+/* SEPARATORS */
+
+
+
 #login-register-separator {
     width: 90%;
     display: flex;
@@ -347,6 +356,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     color: var(--secondary-text-color);
     font-size: 1.2rem;
 }
+
+/* BUTTONS */
+
+
 
 #back-to-login {
     color: var(--secondary-text-color);
@@ -397,6 +410,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     margin-bottom:1em;
 }
 
+/* GOOGLE */
+
+
+
 #google-logo {
     width: 32px;
     height: 32px;
@@ -408,6 +425,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 #google-text {
     font-size: 1.2rem;
 }
+
+/* LANGUAGE AND THEME */
+
+
 
 #language-and-theme {
     display: flex;
@@ -457,6 +478,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     font-size: 0.9rem;
 }
 
+/* PROFILE PICTURE */
+
+
+
 #pfp-preview {
     width: 150px;
     height: 150px;
@@ -487,6 +512,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 #pfp-upload-container .custom-dropdown {
     margin-bottom: 0;
 }
+
+/* MEDIA - RESPONSIVE LAYOUTS */
+
+
 
 @media (min-width: 470px) {
     #theme-and-settings { gap: 1rem; }
