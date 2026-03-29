@@ -109,6 +109,7 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 <p align="center">
   <img src="https://i.ibb.co/DDGdnjRw/Screenshot-2026-03-30-002555.png" width="100%"><br>
 </p>
+
 ---
 
 <p align="center">
