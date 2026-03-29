@@ -569,7 +569,8 @@ app.get('/mod-leaderboard', async (req, res) => {
                     nationality: user.nationality || "hu",
                     speedrunTime: vid.speedrunTime,
                     videoUrl: vid.videoUrl,
-                    approved: vid.approved
+                    approved: vid.approved,
+                    uploadDate: vid.uploadDate
                 });
             });
         });
