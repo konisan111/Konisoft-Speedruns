@@ -7,10 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style/mod-view.css">
+    <link rel="stylesheet" href="../style/lobby.css">
     <link id="theme-css" rel="stylesheet" href="../style/dark-theme.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script defer src="../scripts/main/mod-view.js"></script>
+    <script type="module" src="../scripts/main/lobby.js"></script>
     <title>Konisoft | Welcome to the official Konisoft website</title>
     <link rel="icon" href="../images/favicon.png" type="image/x-icon" />
     <meta property="og:type" content="website">
@@ -22,16 +22,21 @@
             <div id="header-logo"></div>
             <div id="nav-buttons">
                 <div id="menu-buttons">
-                    <a href="#" class="menu-button" id="nav-home">Home</a>
-                    <div id="nav-split"></div>
                     <a href="#" class="menu-button" id="nav-upload">Upload your time</a>
+                    <div id="nav-split"></div>
+                    <a href="#" class="menu-button" id="nav-home">Leaderboard</a>
                     <div id="nav-split"></div>
                     <a href="#" class="menu-button" id="nav-profile">Profile</a>
                     <div id="nav-split"></div>
-                    <a href="#" class="menu-button" id="nav-logout">Logout</a>
+                    <a href="https://konisoft.hu" class="menu-button" id="nav-profile">Konisoft</a>
                     <div id="nav-split"></div>
                 </div>
                 <div id="theme-and-settings">
+                    <div id="nav-user-profile" class="hidden">
+                        <div id="nav-profile-picture"></div>
+                        <span id="nav-username">username</span>
+                    </div>
+                    <div id="nav-split"></div>
                     <div id="language"></div>
                     <div id="nav-split"></div>
                     <div id="theme-switcher"></div>
@@ -40,33 +45,79 @@
             </div>
         </nav>
         <div id="dropdown-menu">
-            <a href="#" class="dropdown-menu-button" id="nav-home-mobile">Home</a>
             <a href="#" class="dropdown-menu-button" id="nav-upload-mobile">Upload your time</a>
+            <a href="#" class="dropdown-menu-button" id="nav-home-mobile">Leaderboard</a>
             <a href="#" class="dropdown-menu-button" id="nav-profile-mobile">Profile</a>
-            <a href="#" class="dropdown-menu-button" id="nav-logout-mobile">Logout</a>
+            <a href="https://konisoft.hu" class="dropdown-menu-button" id="nav-home-mobile">Konisoft</a>
             <div id="dropdown-menu-icons">
                 <div id="language-mobile"></div>
                 <div id="theme-switcher-mobile"></div>
             </div>
         </div>
     </header>
-
+    <div class="grid"></div>
     <main>
+        <div id="upload-modal" class="modal-overlay">
+            <div class="modal-content">
+                <button id="close-upload-modal">×</button>
+                <h2 id="upload-modal-title" class="rainbow-text" style="font-weight: 800; margin-top: 0;">Upload Speedrun</h2>
+                
+                <div class="upload-area" style="margin-bottom: 15px;">
+                    <input type="file" id="video-file-input" accept="video/mp4,video/x-m4v,video/*" hidden>
+                    <button id="select-video-btn" class="menu-button" style="width: 100%; padding: 14px; background: var(--secondary-background); border: 1px solid var(--global-border); border-radius: 8px; cursor: pointer;">Select video file</button>
+                    <p id="selected-file-name" style="font-size: 12px; margin-top: 5px; text-align: center;"></p>
+                </div>
+
+                <div class="input-group">
+                    <label id="upload-time-label" style="font-size: 14px; font-weight: 600; color: var(--text-color);">Speedrun Time:</label>
+                    <div class="time-inputs-container">
+                        <div class="time-input-box">
+                            <input type="number" id="time-minutes" placeholder="00" min="0">
+                            <span id="upload-time-min">min</span>
+                        </div>
+                        <div class="time-input-box">
+                            <input type="number" id="time-seconds" placeholder="00" min="0" max="59">
+                            <span id="upload-time-sec">sec</span>
+                        </div>
+                        <div class="time-input-box">
+                            <input type="number" id="time-milliseconds" placeholder="000" min="0" max="999">
+                            <span id="upload-time-ms">ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-buttons">
+                    <button id="start-upload-btn" class="menu-button upload-submit-btn">Upload</button>
+                    <button id="cancel-upload-btn" class="menu-button cancel-btn">Cancel</button>
+                </div>
+                
+                <div id="upload-progress-bar" style="width: 0%; height: 5px; background: cyan; margin-top: 15px; transition: width 0.3s; border-radius: 5px;"></div>
+            </div>
+        </div>
+        
         <div id="leaderboard-container">
             <div id="leaderboard-top-header">
                 <div id="leaderboard-main-title-container">
                     <h1 id="leaderboard-main-title">Leaderboard</h1>
-                    <span id="leaderboard-scope">global</span>
                 </div>
                 <div id="leaderboard-filters">
                     <div class="custom-dropdown">
                         <button class="custom-dropdown-header">
                             <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-nation">by nation</div>
+                            <div class="dropdown-text" id="opt-nation" data-value="Global">by nation</div>
+                        </button>
+                        <div class="custom-dropdown-list" id="nation-dropdown-list">
+                            <div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>
+                        </div>
+                    </div>
+                    <div class="custom-dropdown">
+                        <button class="custom-dropdown-header">
+                            <div class="dropdown-icon">▼</div>
+                            <div class="dropdown-text" id="opt-upload">by upload date</div>
                         </button>
                         <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-nation-1">Global</div>
-                            <div class="custom-dropdown-item" id="opt-nation-2">Hungary</div>
+                            <div class="custom-dropdown-item" id="opt-upload-1">Newest</div>
+                            <div class="custom-dropdown-item" id="opt-upload-2">Oldest</div>
                         </div>
                     </div>
                     <div class="custom-dropdown">
@@ -75,8 +126,8 @@
                             <div class="dropdown-text" id="opt-time">by time</div>
                         </button>
                         <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-time-1">All Time</div>
-                            <div class="custom-dropdown-item" id="opt-time-2">Monthly</div>
+                            <div class="custom-dropdown-item" id="opt-time-1">Shortest Time</div>
+                            <div class="custom-dropdown-item" id="opt-time-2">Longest Time</div>
                         </div>
                     </div>
                     <div class="custom-dropdown">
@@ -95,8 +146,10 @@
             <div id="leaderboard-titlebar">
                 <div id="leaderboard-profile-title">Profile</div>
                 <div id="leaderboard-country-title">Country</div>
-                <div id="leaderboard-footage-title">Footage</div>
-                <div id="leaderboard-action-title">Review</div>
+                <div id="leaderboard-game-title">Game</div>
+                <div id="leaderboard-date-title">Date</div>
+                <div id="leaderboard-time-title">Time</div>
+                <div id="leaderboard-recordings-title">Recordings</div>
             </div>
 
             <div id="leaderboard-card-container">

@@ -29,7 +29,11 @@ loginBtn.addEventListener('click', async () => {
             localStorage.setItem('token', result.token);
             showToast(isHungarian ? "Sikeres bejelentkezés!" : "Login was successful!", "success");
             await new Promise(resolve => setTimeout(resolve, 1000));
-            window.location.href = '../sites/lobby.html';
+            if (result.modeViewEnabled === true) {
+                window.location.href = '../sites/mod-view.html';
+            } else {
+                window.location.href = '../sites/lobby.html';
+            }
         } else {
             showToast(isHungarian ? "Sikertelen bejelentkezés!" : "Login was unsuccessful!", "error");
         }
