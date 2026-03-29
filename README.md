@@ -26,9 +26,9 @@
 
 ## 📍 A Platform Funkciói
 
-* **Globális Ranglisták:** Kövesd nyomon, ki a leggyorsabb a különböző kategóriákban.
-* **Játék Specifikus Bontás:** Külön leaderboardok minden Konisoft játékhoz.
-* **Felhasználói és Moderátori nézet** A felvételeket megvizsgálás után a moderátorok elfogadhatják amelyeket a játékosok látni fognak.
+- **Globális Ranglisták:** Kövesd nyomon, ki a leggyorsabb a különböző kategóriákban.
+- **Játék Specifikus Bontás:** Külön leaderboardok minden Konisoft játékhoz.
+- **Felhasználói és Moderátori nézet** A felvételeket megvizsgálás után a moderátorok elfogadhatják amelyeket a játékosok látni fognak.
 
 ---
 
@@ -47,22 +47,22 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 
 ## 👥 Csapatfelépítés
 
-| Szerepkör | Felelősségi kör | Tagok |
-| :--- | :--- | :--- |
-| **Project Leader** | Projektmenedzsment, koncepció és irányítás | Katona Konstantin |
-| **Frontend Developer** | UI/UX design, webes felület fejlesztése (HTML/CSS/JS) | Orvos Tamás |
-| **Backend & DB** | Szerveroldali logika, adatbázis és hitelesítés | Katona Konstantin |
-| **QA / Tester** | Speedrun mechanikák tesztelése, bugvadászat | Orvos Tamás |
+| Szerepkör              | Felelősségi kör                                       | Tagok             |
+| :--------------------- | :---------------------------------------------------- | :---------------- |
+| **Project Leader**     | Projektmenedzsment, koncepció és irányítás            | Katona Konstantin |
+| **Frontend Developer** | UI/UX design, webes felület fejlesztése (HTML/CSS/JS) | Orvos Tamás       |
+| **Backend & DB**       | Szerveroldali logika, adatbázis és hitelesítés        | Katona Konstantin |
+| **QA / Tester**        | Speedrun mechanikák tesztelése, bugvadászat           | Orvos Tamás       |
 
 ---
 
 ## 👾 Technológiák & Állapot
 
-| Terület | Eszközök | Állapot |
-| :--- | :--- | :--- |
-| **Frontend** | HTML5 🟠 CSS3 🔵 JavaScript 🟡 | 📌 Login-Register készen, lobby fejlesztés alatt |
-| **Backend** | REST API ☁️ Node.js (tervezett) / Render | ✔ Elkészült, Render Szerver |
-| **Adatbázis** | MongoDB 🌐 Cloudflare R2 🟠 | ✔ Készen állnak |
+| Terület       | Eszközök                                 | Állapot                      |
+| :------------ | :--------------------------------------- | :--------------------------- |
+| **Frontend**  | HTML5 🟠 CSS3 🔵 JavaScript 🟡           | 📌 Mod View fejlesztés alatt |
+| **Backend**   | REST API ☁️ Node.js (tervezett) / Render | ✔ Elkészült, Render Szerver  |
+| **Adatbázis** | MongoDB 🌐 Cloudflare R2 🟠              | ✔ Készen állnak              |
 
 ---
 
@@ -70,29 +70,52 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 
 A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táblázat foglalja össze a tervezett mérföldköveket és azok aktuális állapotát.
 
-| Fázis | Feladat megnevezése | Leadandó / Kimenet (Output) | Állapot |
-| :--- | :--- | :--- | :---: |
-| **1. Tervezés** | Csapatalkotás és szerepkörök (2-3 fő) | Munkamegosztási terv | ✔ |
-| | Problémafelvetés és funkcionális terv | Szoftver céljának leírása | ✔ |
-| | Technológiai stack kiválasztása | Rendszerarchitektúra vázlat | ✔ |
-| | **Adatbázis tervezése** | **Adatbázismodell-diagram (ER)** | ❌ |
-| **2. Fejlesztés** | **RESTful szerver** (API) megvalósítása | Szerveroldali forráskód | ✔ |
-| | **Kliensoldali fejlesztés** (Web/Mobil) | Kliensoldali forráskód | ✔ |
-| | CRUD funkciók és adattárolás | Működő szoftveralkalmazás | ✔ |
-| | Clean Code felülvizsgálat | Tiszta, dokumentált kód | ❌ |
-| | Lumi Technikusi verzió | Debuggolt, értékelésre elkészített kód | ❌ |
-| **3. Tesztelés** | Egység- és integrációs tesztelés | **Tesztek kódja** | ❌ |
-| | Teszteredmények kiértékelése | **Teszteredmények dokumentációja** | ❌ |
-| **4. Dokumentálás** | Műszaki és felhasználói leírás | **Szoftveralkalmazás dokumentációja** | ❌ |
-| | Adatbázis exportálása | **Adatbázis dump (.sql)** | ❌ |
-| | Telepítőkészlet generálása | Natív asztali telepítő (opcionális) | ❌ |
-| **5. Vizsga** | Magyar nyelvű szakmai bemutató | Projektbemutató / Demó | ❌ |
-| | **Angol nyelvű összefoglaló** | Angol nyelvű pitch (3-5 perc) | ❌ |
+| Fázis               | Feladat megnevezése                     | Leadandó / Kimenet (Output)            | Állapot |
+| :------------------ | :-------------------------------------- | :------------------------------------- | :-----: |
+| **1. Tervezés**     | Csapatalkotás és szerepkörök (2-3 fő)   | Munkamegosztási terv                   |    ✔    |
+|                     | Problémafelvetés és funkcionális terv   | Szoftver céljának leírása              |    ✔    |
+|                     | Technológiai stack kiválasztása         | Rendszerarchitektúra vázlat            |    ✔    |
+|                     | **Adatbázis tervezése**                 | **Adatbázismodell-diagram (ER)**       |   ❌    |
+| **2. Fejlesztés**   | **RESTful szerver** (API) megvalósítása | Szerveroldali forráskód                |    ✔    |
+|                     | **Kliensoldali fejlesztés** (Web/Mobil) | Kliensoldali forráskód                 |    ✔    |
+|                     | CRUD funkciók és adattárolás            | Működő szoftveralkalmazás              |    ✔    |
+|                     | Clean Code felülvizsgálat               | Tiszta, dokumentált kód                |   ❌    |
+|                     | Lumi Technikusi verzió                  | Debuggolt, értékelésre elkészített kód |    ✔    |
+| **3. Tesztelés**    | Egység- és integrációs tesztelés        | **Tesztek kódja**                      |   ❌    |
+|                     | Teszteredmények kiértékelése            | **Teszteredmények dokumentációja**     |   ❌    |
+| **4. Dokumentálás** | Műszaki és felhasználói leírás          | **Szoftveralkalmazás dokumentációja**  |   ❌    |
+|                     | Adatbázis exportálása                   | **Adatbázis dump (.sql)**              |   ❌    |
+|                     | Telepítőkészlet generálása              | Natív asztali telepítő (opcionális)    |   ❌    |
 
 ---
 
 <p align="center">
+  <img src="https://i.ibb.co/twNrWB14/lumi-github-banner.png" width="100%"><br>
+</p>
+
+<h1 align="left">Lumi Dungeon Of Dreadspire</h1>
+
+A **Lumi: Dungeon of Dreadspire** a Konisoft Speedruns elsődlegesen támogatott játéka. Egy fokozatosan nehezedő puzzle-platformer, ahol a logikádra és a gyorsaságodra is szükséged lesz.
+
+## 🎮 Játékmenet & Irányítás
+
+- **Cél:** Lumi barátainak kiszabadítása a dungeonökből.
+- **Irányítás:** WASD vagy Nyílbillentyűk.
+- **Controller Support:** Teljes körű kontroller támogatás a még gördülékenyebb élményért.
+
+## 📥 Letöltés és Forráskód
+
+A fájlok mérete (3GB) miatt a forráskód külső tárhelyen érhető el.
+
+- **Játék letöltése (Build):** [GitHub Releases](https://github.com/konisan111/Konisoft-Speedruns/releases)
+- **Forráskód (3GB):** [Google Drive Link](https://drive.google.com/drive/folders/1nxTFdSdkzDtbkNJnvbn2wdBU1tyzj3o2?usp=sharing)
+
+---
+
+Jó szórakozást a játékhoz! 🥳 (meg kitartást, kelleni fog 🥹)
+
+<p align="center">
   <img src="https://i.ibb.co/gZ7HPdTS/Konisoft-Speedruns-Outlined-Logo.png" width="120"><br>
-  <sub><i>Frissítve: 2026. március 19.</i></sub><br>
+  <sub><i>Frissítve: 2026. március 29.</i></sub><br>
   <b>Konisoft 2024-2026</b>
 </p>
