@@ -198,7 +198,7 @@
 
   export const translations = {
     en: {  
-      "email-label": "Email or username",
+      "email-label": "Email address",
       "email-label-register": "Email",
       "email-input": "example@speedruns.com",
       "password-label": "Password",
@@ -217,10 +217,11 @@
       "pfp-text": "Upload your profile picture",
       "pfp-upload-button": "Select Image",
       "pfp-send-button": "Next",
-      "country-selected-text": "Select your country"
+      "country-selected-text": "Select your country",
+      "watch-text" : "WATCH VIDEO"
     },
     hu: {
-      "email-label": "E-mail vagy felhasználónév",
+      "email-label": "E-mail cím",
       "email-label-register": "E-mail",
       "email-input": "pelda@speedruns.com",
       "password-label": "Jelszó",
@@ -239,6 +240,7 @@
       "pfp-text": "Töltsd fel a profilképedet",
       "pfp-upload-button": "Kép kiválasztása",
       "pfp-send-button": "Tovább",
-      "country-selected-text": "Válassz országot"
+      "country-selected-text": "Válassz országot",
+      "watch-text" : "VIDEÓ MEGTEKINTÉSE"
     }
   };

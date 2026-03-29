@@ -1,6 +1,7 @@
 export function pfpSendButtonFunction (
     customCountryDropdown,
     hiddenCountryInput,
+    showToast
     ) {
         
     let isValid = true;
@@ -9,7 +10,7 @@ export function pfpSendButtonFunction (
 
       if (hiddenCountryInput.value === "") {
           customCountryDropdown.classList.add('input-error');
-          errors.push(isHungarian ? "Kérlek válassz egy országot." : "Please select a country.");
+          showToast(isHungarian ? "Kérlek válassz egy országot." : "Please select a country.", "error");
           isValid = false;
       }
 

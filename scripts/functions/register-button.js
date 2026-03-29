@@ -6,7 +6,7 @@ export function registerButtonFunction(
     passwordInput, 
     repeatPasswordInput, 
     isHungarian, 
-    showToastError
+    showToast
 ) {
     if (!isRegistering) {
         toggleUI();
@@ -46,22 +46,19 @@ export function registerButtonFunction(
     }
 
     if (hasError) {
-        showToastError(isHungarian ? "Kérjük, töltsön ki minden mezőt!" : "Please fill in all fields!");
+        showToast(isHungarian ? "Kérjük, töltsön ki minden mezőt!" : "Please fill in all fields!", "error");
         return;
     }
 
     if (password !== repeatPassword) {
         passwordInput.classList.add('input-error');
         repeatPasswordInput.classList.add('input-error');
-        showToastError(isHungarian ? "A jelszavak nem egyeznek!" : "Passwords do not match!");
+        showToast(isHungarian ? "A jelszavak nem egyeznek!" : "Passwords do not match!", "error");
         return;
     }
 
-    console.log("Credentials valid. Moving to PFP screen for user:", username);
 
     if (typeof window.showPfpUploadScreen === "function") {
         window.showPfpUploadScreen();
-    } else {
-        console.error("showPfpUploadScreen is not defined on the window object.");
     }
 }

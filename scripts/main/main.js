@@ -1,6 +1,6 @@
 import { updateGoogleButton } from '../authentication/google-id.js';
 import { countries, translations } from '../data/translations.js';
-import { showToastError } from '../elements/toast-error.js';
+import { showToast } from '../elements/toast-error.js';
 import { pfpFileInputFunction } from '../functions/pfp-file-input.js';
 import { registerButtonFunction } from '../functions/register-button.js';
 import { loginButtonFunction } from '../functions/login-button.js';
@@ -23,6 +23,7 @@ import {
 } from '../elements/html-elements.js';
 
 const THEME_FILES = { light: "../style/light-theme.css", dark: "../style/dark-theme.css" };
+
 let isHungarian = false;
 
 window.addEventListener('load', async () => {
@@ -69,8 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!countryOptions) return;
 
-    const langKey = isHungarian ? 'hu' : 'en';
-    
+    const langKey = isHungarian ? 'hu' : 'en';    
     const sortedCountries = [...countries].sort((a, b) => a[langKey].localeCompare(b[langKey], langKey));
     
     countryOptions.innerHTML = '';
@@ -255,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const handleLanguageSwitch = () => {
     currentLanguage = currentLanguage === "en" ? "hu" : "en";
     isHungarian = currentLanguage === "hu";
+    localStorage.setItem('language', isHungarian ? 'hu' : 'en');
     updateFlags();
     updateTexts();
 
@@ -355,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
           emailInput,
           passwordInput,
           isHungarian,
-          showToastError
+          showToast
       );
   });
 
@@ -370,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
           passwordInput, 
           repeatPasswordInput, 
           isHungarian, 
-          showToastError
+          showToast
       );
   });
 

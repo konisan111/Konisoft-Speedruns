@@ -26,7 +26,9 @@
                     <div id="nav-split"></div>
                     <a href="#" class="menu-button" id="nav-home">Leaderboard</a>
                     <div id="nav-split"></div>
-                    <a href="#" class="menu-button" id="nav-profile">Konisoft</a>
+                    <a href="#" class="menu-button" id="nav-profile">Profile</a>
+                    <div id="nav-split"></div>
+                    <a href="https://konisoft.hu" class="menu-button" id="nav-profile">Konisoft</a>
                     <div id="nav-split"></div>
                 </div>
                 <div id="theme-and-settings">
@@ -45,7 +47,8 @@
         <div id="dropdown-menu">
             <a href="#" class="dropdown-menu-button" id="nav-upload-mobile">Upload your time</a>
             <a href="#" class="dropdown-menu-button" id="nav-home-mobile">Leaderboard</a>
-            <a href="#" class="dropdown-menu-button" id="nav-profile-mobile">Konisoft</a>
+            <a href="#" class="dropdown-menu-button" id="nav-profile-mobile">Profile</a>
+            <a href="https://konisoft.hu" class="dropdown-menu-button" id="nav-home-mobile">Konisoft</a>
             <div id="dropdown-menu-icons">
                 <div id="language-mobile"></div>
                 <div id="theme-switcher-mobile"></div>
@@ -101,11 +104,10 @@
                     <div class="custom-dropdown">
                         <button class="custom-dropdown-header">
                             <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-nation">by nation</div>
+                            <div class="dropdown-text" id="opt-nation" data-value="Global">by nation</div>
                         </button>
-                        <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-nation-1">Global</div>
-                            <div class="custom-dropdown-item" id="opt-nation-2">Hungary</div>
+                        <div class="custom-dropdown-list" id="nation-dropdown-list">
+                            <div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>
                         </div>
                     </div>
                     <div class="custom-dropdown">
@@ -147,6 +149,7 @@
                 <div id="leaderboard-game-title">Game</div>
                 <div id="leaderboard-date-title">Date</div>
                 <div id="leaderboard-time-title">Time</div>
+                <div id="leaderboard-recordings-title">Recordings</div>
             </div>
 
             <div id="leaderboard-card-container">

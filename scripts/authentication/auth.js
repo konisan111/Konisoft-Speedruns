@@ -1,7 +1,8 @@
-const registerBtn = document.getElementById('register-button');
+import { showToast } from '../elements/toast-error.js';
+
 const loginBtn = document.getElementById('login-button');
 const uploadPfpBtn = document.getElementById('pfp-send-button');
-const googleLoginBtn = document.getElementById('google-login');
+const isHungarian = localStorage.getItem('language') === 'hu';
 
 const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -26,19 +27,19 @@ loginBtn.addEventListener('click', async () => {
         const result = await response.json();
         if (response.ok) {
             localStorage.setItem('token', result.token);
-            console.log("Login successful! Token saved.");
+            showToast(isHungarian ? "Sikeres bejelentkezés!" : "Login was successful!", "success");
+            await new Promise(resolve => setTimeout(resolve, 1000));
             window.location.href = '../sites/lobby.html';
         } else {
-            console.error("Login failed:", result.error);
+            showToast(isHungarian ? "Sikertelen bejelentkezés!" : "Login was unsuccessful!", "error");
         }
     } catch (err) {
-        console.error("Network error during login:", err);
+        showToast(isHungarian ? "Hálózati hiba lépett fel!" : "There was a networking issue!", "error");
     }
 });
 
 window.isGoogleAuthSetup = false;
 
-// Helper to decode the Google JWT token
 function decodeJwtResponse(token) {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -75,16 +76,15 @@ window.handleGoogleResponse = async (googleResponse) => {
                     window.showPfpUploadScreen();
                 }
             } else {
-                console.log("Sikeres bejelentkezés (Létező felhasználó):", result);
-                alert("Sikeresen bejelentkeztél mint " + (result.username || "felhasználó") + "!");
+                showToast(isHungarian ? `Sikeresen bejelentkeztél mint ${result.username}!` : `You successfuly logged in as ${result.username}!`, "success");
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 window.location.href = '../sites/lobby.html';
             }
         } else {
-            console.error("Szerver hiba:", result.error);
-            alert("Hiba a bejelentkezés során: " + result.error);
+            showToast(isHungarian ? `Hiba a bejelentkezés során: ${result.error}` : `There was an error while logging in: ${result.error}`, "error");
         }
     } catch (err) {
-        console.error("Hálózati hiba:", err);
+        showToast(isHungarian ? "Hálózati hiba lépett fel!" : "There was a networking issue!", "error");
     }
 };
 
@@ -120,13 +120,12 @@ uploadPfpBtn.addEventListener('click', async () => {
 
             const result = await response.json();
             if (response.ok) {
-                console.log("Google profil sikeresen kiegészítve!");
                 window.location.href = '../sites/lobby.html';
             } else {
-                alert(result.error);
+                showToast(isHungarian ? `${result.error}` : `${result.error}`, "error");
             }
         } catch (err) {
-            console.error("Hiba a Google profil kiegészítésekor:", err);
+            showToast(isHungarian ? "Hiba a Google profil befejezésénél!" : "Completing Google profile failed!", "error");
         }
     } else {
         const username = document.getElementById('username-input').value;
@@ -134,7 +133,7 @@ uploadPfpBtn.addEventListener('click', async () => {
         const password = document.getElementById('password-input').value;
 
         if (!username || !email || !password) {
-            console.error("Hiányzó adatok a sima regisztrációhoz!");
+            showToast(isHungarian ? `Nincsenek a szükséges adatok megadva!` : `${result.error}`, "error");
             return;
         }
 
@@ -149,14 +148,15 @@ uploadPfpBtn.addEventListener('click', async () => {
 
             const result = await response.json();
             if (response.ok) {
-                console.log("Sima regisztráció sikeres!");
+                showToast(isHungarian ? `Sikeres regisztráció!` : `Successful registration!`, "success");
                 localStorage.setItem('token', result.token);
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 window.location.href = '../sites/lobby.html';
             } else {
-                alert(result.error);
+                showToast(isHungarian ? `${result.error}` : `${result.error}`, "error");
             }
         } catch (err) {
-            console.error("Hiba a regisztráció során:", err);
+            showToast(isHungarian ? `Hiba a regisztráció során: ${err}` : `Error during registration: ${err}`, "error");        
         }
     }
 });

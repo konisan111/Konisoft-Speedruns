@@ -3,7 +3,7 @@ export function loginButtonFunction(
     emailInput,
     passwordInput,
     isHungarian,
-    showToastError
+    showToast
 ) {
     if (isRegistering) {
         return;
@@ -28,9 +28,7 @@ export function loginButtonFunction(
     }
 
     if (hasError) {
-        showToastError(isHungarian ? "Kérjük, töltsön ki minden mezőt!" : "Please fill in all fields!");
+        showToast(isHungarian ? "Kérjük, töltsön ki minden mezőt!" : "Please fill in all fields!", "error");
         return;
     }
-
-    console.log("Login credentials valid. Proceeding with login for:", email);
 }

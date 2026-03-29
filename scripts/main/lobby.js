@@ -1,8 +1,9 @@
 import { getCountryCode, countryMapping} from "../flagcdn-api/get-country.js";
-import { showToastError } from "../elements/toast-error.js";
+import { showToast } from "../elements/toast-error.js";
 import { countries } from "../data/translations.js";
 
 let isHungarian = false;
+let currentProfileData = null;
 
 const getTranslatedCountry = (englishName, lang) => {
     if (!englishName || englishName === "Unknown") return "Unknown";
@@ -55,7 +56,7 @@ startUploadBtn?.addEventListener('click', async () => {
     const token = localStorage.getItem('token');
 
     if (!file || totalMs <= 0) {
-        showToastError(isHungarian ? "Kérjük, válasszon egy fájlt, és adjon meg érvényes időt!" : "Please select a file and enter a valid time!");
+        showToast(isHungarian ? "Kérjük, válasszon egy fájlt, és adjon meg érvényes időt!" : "Please select a file and enter a valid time!", "error");
         return;
     }
 
@@ -74,14 +75,13 @@ startUploadBtn?.addEventListener('click', async () => {
         });
 
         if (response.ok) {
-            alert(isHungarian ? "Feltöltés sikeres! o(*￣▽￣*)o Várakozás az adminisztrátori jóváhagyásra." : "Upload successful! o(*￣▽￣*)o Waiting for admin approval.");
+            showToast(isHungarian ? "Feltöltés sikeres! Várakozás az adminisztrátori jóváhagyásra." : "Upload successful! Waiting for admin approval.", "success");
             uploadModal.classList.remove('show');
-            location.reload();
         } else {
-            showToastError(isHungarian ? "Sikertelen feltöltés! (´;ω;`) Próbálja újra később." : "Upload failed! (´;ω;`) Try again later.");
+            showToast(isHungarian ? "Sikertelen feltöltés! Próbálja újra később." : "Upload failed! Try again later.", "error");
         }
     } catch (err) {
-        showToastError(isHungarian ? "Szerverhiba a feltöltés során." : "Server error during upload.");
+        showToast(isHungarian ? "Szerverhiba a feltöltés során." : "Server error during upload.", "error");
     } finally {
         startUploadBtn.disabled = false;
         startUploadBtn.textContent = isHungarian ? "Feltöltés" : "Upload";
@@ -238,38 +238,31 @@ const initLobby = () => {
       "nav-home-mobile": "Leaderboard",
       "nav-upload-mobile": "Upload your time",
       "nav-logout-mobile": "Logout",
-      
       "leaderboard-main-title": "Leaderboard",
+      "leaderboard-recordings-title": "Recordings",
       "leaderboard-scope": "global",
-      
       "opt-nation": "By Nation",
       "opt-time": "By Time",
       "opt-game": "By Game",
-      
       "opt-nation-1": "Global",
       "opt-time-1": "Shortest Time",
       "opt-time-2": "Longest Time",
       "opt-game-1": "All Games",
       "opt-game-2": "Lumi Dungeon of Dreadspire",
-      
       "leaderboard-profile-title": "Profile",
       "leaderboard-country-title": "Country",
       "leaderboard-game-title": "Game",
       "leaderboard-date-title": "Date",
       "leaderboard-time-title": "Time",
-      
       "profile-member-since": "Member since:",
-      "profile-country-name-static": "Hungary",
       "profile-mini-title": "Leaderboard",
       "profile-logout-button": "Logout",
-      
       "footer-text-1": "Konisoft Indie Game Studio",
       "footer-text-2": "info@konisoft.hu",
       "footer-text-3": "All rights reserved.",
       "opt-upload": "By Upload date",
       "opt-upload-1": "Newest",
       "opt-upload-2": "Oldest",
-
       "upload-modal-title": "Upload Time",
       "select-video-btn": "Select video file",
       "upload-time-label": "Speedrun Time:",
@@ -277,7 +270,8 @@ const initLobby = () => {
       "upload-time-sec": "sec",
       "upload-time-ms": "ms",
       "start-upload-btn": "Upload",
-      "cancel-upload-btn": "Cancel"
+      "cancel-upload-btn": "Cancel",
+      "watch-text" : "WATCH VIDEO"
     },
     hu: {
       "nav-home": "Ranglista",
@@ -286,38 +280,31 @@ const initLobby = () => {
       "nav-home-mobile": "Ranglista",
       "nav-upload-mobile": "Idő feltöltése",
       "nav-logout-mobile": "Kijelentkezés",
-      
       "leaderboard-main-title": "Ranglista",
+      "leaderboard-recordings-title": "Felvételek",
       "leaderboard-scope": "globális",
-      
       "opt-nation": "Nemzet szerint",
       "opt-time": "Idő szerint",
       "opt-game": "Játék szerint",
-      
       "opt-nation-1": "Globális",
       "opt-time-1": "Legrövidebb idő",
       "opt-time-2": "Leghosszabb idő",
       "opt-game-1": "Összes játék",
       "opt-game-2": "Lumi Dungeon of Dreadspire",
-      
       "leaderboard-profile-title": "Profil",
       "leaderboard-country-title": "Ország",
       "leaderboard-game-title": "Játék",
       "leaderboard-date-title": "Dátum",
       "leaderboard-time-title": "Idő",
-      
       "profile-member-since": "Fiók létrehozva:",
-      "profile-country-name-static": "Magyarország",
       "profile-mini-title": "Ranglista",
       "profile-logout-button": "Kijelentkezés",
-      
       "footer-text-1": "Konisoft Indie Játék Stúdió",
       "footer-text-2": "info@konisoft.hu",
       "footer-text-3": "Minden jog fenntartva.",
       "opt-upload": "Dátum szerint",
       "opt-upload-1": "Legújabb",
       "opt-upload-2": "Legrégebbi",
-
       "upload-modal-title": "Idő Feltöltése",
       "select-video-btn": "Videófájl kiválasztása",
       "upload-time-label": "Speedrun Idő:",
@@ -325,7 +312,8 @@ const initLobby = () => {
       "upload-time-sec": "mp",
       "upload-time-ms": "ms",
       "start-upload-btn": "Feltöltés",
-      "cancel-upload-btn": "Mégse"
+      "cancel-upload-btn": "Mégse",
+      "watch-text" : "VIDEÓ MEGTEKINTÉSE"
     }
   };
 
@@ -338,15 +326,21 @@ const initLobby = () => {
       if (el) el.textContent = uiTranslations[lang][id];
     });
 
-    const profileCreationEl = document.getElementById("profile-creation-date");
-    if (profileCreationEl) {
-      const userCreationDate = "2024.01.15";
-      const dateParts = userCreationDate.split('.');
-      const formattedDate = lang === 'en' 
-          ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` 
-          : userCreationDate;
-      
-      profileCreationEl.innerHTML = `<span id="profile-member-since">${uiTranslations[lang]["profile-member-since"]}</span> ${formattedDate}`;
+    if (currentProfileData) {
+      const profileNat = document.getElementById('profile-country-name-static');
+      if (profileNat) {
+        profileNat.textContent = getTranslatedCountry(currentProfileData.nationality, lang);
+      }
+
+      const profileDate = document.getElementById('profile-creation-date');
+      if (profileDate && currentProfileData.accountCreation) {
+        const dateObj = new Date(currentProfileData.accountCreation);
+        const formattedDate = lang === 'en' 
+            ? dateObj.toLocaleDateString('en-US') 
+            : dateObj.toLocaleDateString('hu-HU');
+        
+        profileDate.innerHTML = `<span id="profile-member-since">${uiTranslations[lang]["profile-member-since"]}</span> ${formattedDate}`;
+      }
     }
   };
 
@@ -383,6 +377,9 @@ const initLobby = () => {
     generateMiniLeaderboard(false);
   };
 
+  window.handleLanguageSwitchExternal = handleLanguageSwitch;
+  window.updateTextsExternal = updateTexts;
+
   languageButtons.forEach(btn => {
     if (!btn) return;
     btn.addEventListener("click", () => {
@@ -392,42 +389,6 @@ const initLobby = () => {
         btn.style.opacity = 1;
       }, 300);
     });
-  });
-
-  const nationHeader = document.querySelector('#opt-nation').closest('.custom-dropdown');
-  const nationList = nationHeader.querySelector('.custom-dropdown-list');
-  
-  nationList.style.maxHeight = '300px';
-  nationList.style.overflowY = 'auto';
-  nationHeader.tabIndex = 0;
-
-  nationList.innerHTML = '<div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>';
-  
-  Object.keys(countryMapping).forEach(country => {
-      const item = document.createElement('div');
-      item.className = 'custom-dropdown-item nation-item';
-      item.dataset.value = country;
-      item.textContent = country;
-      nationList.appendChild(item);
-  });
-
-  let searchTimeout;
-  let searchString = "";
-
-  nationHeader.addEventListener('keydown', (e) => {
-      if (nationHeader.classList.contains('open') && e.key.length === 1 && e.key.match(/[a-z]/i)) {
-          searchString += e.key.toLowerCase();
-          
-          clearTimeout(searchTimeout);
-          searchTimeout = setTimeout(() => searchString = "", 1000);
-
-          const items = Array.from(nationList.querySelectorAll('.custom-dropdown-item'));
-          const match = items.find(item => item.textContent.toLowerCase().startsWith(searchString));
-          
-          if (match) {
-              match.scrollIntoView({ block: "nearest" });
-          }
-      }
   });
 
   const generateLeaderboard = async (animate = true) => {
@@ -471,6 +432,8 @@ const initLobby = () => {
             realData.sort((a, b) => a.speedrunTime - b.speedrunTime);
         }
 
+        const currentUser = document.getElementById('profile-username')?.textContent || "";
+
         realData.forEach((entry, index) => {
             const formattedTime = formatSpeedrunTime(entry.speedrunTime);
             const countryCode = getCountryCode(entry.nationality);
@@ -478,9 +441,12 @@ const initLobby = () => {
             const avatarUrl = entry.avatarUrl || "https://katona-konstanti.imgbb.com/";
             const videoLink = entry.videoUrl || entry.url || "#";
             const translatedCountryName = getTranslatedCountry(entry.nationality, currentLanguage);
+            
+            const placement = index + 1;
+            const isUser = entry.username === currentUser;
 
             const card = document.createElement("div");
-            card.className = "leaderboard-card";
+            card.className = `leaderboard-card ${isUser ? 'highlight-user' : ''}`;
             
             if (animate) {
                 card.style.opacity = '0';
@@ -489,6 +455,7 @@ const initLobby = () => {
             
             card.innerHTML = `
                 <div class="leaderboard-user-information">
+                    <div class="leaderboard-placement" style="font-weight: 800; margin-right: 10px; min-width: 25px; ${isUser ? 'color: red;' : ''}">#${placement}</div>
                     <div class="leaderboard-profile-picture" style="background-image: url('${avatarUrl}'); background-size: cover; background-position: center;"></div>
                     <div class="leaderboard-username">${entry.username}</div>
                 </div>
@@ -501,16 +468,15 @@ const initLobby = () => {
                     <div class="leaderboard-date">${entry.uploadDate ? new Date(entry.uploadDate).toLocaleDateString() : new Date().toLocaleDateString()}</div>
                     <div class="leaderboard-time">${formattedTime}</div>
                 </div>
-                <a href="${videoLink}" target="_blank" style="color: cyan; text-decoration: none; font-size: 12px; margin-top: 5px;">WATCH VIDEO</a>
+                <a href="${videoLink}" target="_blank" class="leaderboard-watch-link">${uiTranslations[currentLanguage]["watch-text"]}</a>
             `;
             wrapper.appendChild(card);
         });
     } catch (err) {
-        console.error("Nem sikerült betölteni a ranglistát:", err);
+        showToast(isHungarian ? "Nem sikerült betölteni a ranglistát!" : "Loading the leaderboard was unsuccessful!", "error");
         wrapper.innerHTML = "<p style='color: red;'>Hiba történt a ranglista betöltésekor.</p>";
     }
   };
-
   updateTexts();
   updateFlags();
   generateLeaderboard(true);
@@ -580,9 +546,10 @@ const initLobby = () => {
       });
   };
 
-  const openProfileView = () => {
+  const openProfileView = async () => {
       if (!profileContainer.classList.contains('hidden')) return;
-      generateMiniLeaderboard();
+      
+      await generateMiniLeaderboard();
       
       switchView(leaderboardContainer, profileContainer, () => {
           const userCard = document.querySelector('#mini-leaderboard-cards .highlight-user');
@@ -611,7 +578,7 @@ const initLobby = () => {
   if (navHomeBtn) navHomeBtn.addEventListener('click', openHomeView);
   if (navHomeMobileBtn) navHomeMobileBtn.addEventListener('click', openHomeView);
 
-  const generateMiniLeaderboard = async () => {
+ const generateMiniLeaderboard = async () => {
     const miniWrapper = document.getElementById("mini-leaderboard-cards");
     if (!miniWrapper) return;
     miniWrapper.innerHTML = "";
@@ -621,21 +588,24 @@ const initLobby = () => {
         if (!response.ok) throw new Error("Failed to fetch");
         
         const miniData = await response.json();
+        
+        miniData.sort((a, b) => a.speedrunTime - b.speedrunTime);
 
-        miniData.forEach(entry => {
+        const currentUser = document.getElementById('profile-username').textContent;
+
+        miniData.forEach((entry, index) => {
             const formattedTime = formatSpeedrunTime(entry.speedrunTime);
             const countryCode = getCountryCode(entry.nationality);
             const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
             
-            const currentUserId = localStorage.getItem('userId'); 
-            const isUser = entry.userId === currentUserId;
-            const dummyPlacement = "#99";
+            const isUser = entry.username === currentUser;
+            const placement = index + 1;
 
             const card = document.createElement("div");
             card.className = `leaderboard-card mini-card ${isUser ? 'highlight-user' : ''}`;
             
             card.innerHTML = `
-                <div class="mini-placement">${dummyPlacement}</div>
+                <div class="mini-placement" ${isUser ? 'style="color: red;"' : ''}>#${placement}</div>
                 <div class="leaderboard-user-information">
                     <div class="leaderboard-profile-picture" style="background-image: url('${entry.avatarUrl || ''}'); background-size: cover; background-position: center;"></div>
                     <div class="leaderboard-username">${entry.username}</div>
@@ -648,10 +618,24 @@ const initLobby = () => {
             miniWrapper.appendChild(card);
         });
     } catch (err) {
-        console.error("Error loading mini leaderboard:", err);
         miniWrapper.innerHTML = "<p>Error loading data.</p>";
     }
   };
+
+  const populateCountries = () => {
+      const nationList = document.getElementById('nation-dropdown-list');
+      if (!nationList) return;
+
+      countries.forEach(country => {
+          const item = document.createElement('div');
+          item.className = 'custom-dropdown-item nation-item';
+          item.dataset.value = country.en;
+          item.textContent = currentLanguage === 'hu' ? country.hu : country.en;
+          nationList.appendChild(item);
+      });
+  };
+
+  populateCountries();
 
   const customDropdowns = document.querySelectorAll('.custom-dropdown');
   
@@ -746,7 +730,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const profileDate = document.getElementById('profile-creation-date');
             const logoutBtn = document.getElementById('profile-logout-button');
             const countryName = userData.nationality
-
             if (profileFlag && countryName) {
                 const code = getCountryCode(countryName);
                 profileFlag.style.backgroundImage = `url('https://flagcdn.com/w80/${code}.png')` || "https://i.ibb.co/20fL10wk/no-pfp.png";
@@ -764,12 +747,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (profileName) profileName.textContent = userData.username || "???";
 
             if (profileNat) {
-                const lang = isHungarian ? 'hu' : 'en'; 
-                profileNat.textContent = getTranslatedCountry(userData.nationality, lang) || "???";
-            }
+    const currentLang = isHungarian ? 'hu' : 'en'; 
+    profileNat.textContent = getTranslatedCountry(userData.nationality, currentLang) || "???";
+    
+    currentProfileData = userData; 
+}
             
             if (profileImg && userData.avatarUrl) {
                 profileImg.style.backgroundImage = `url('${userData.avatarUrl}')`;
+            }
+
+            if (typeof window.updateTextsExternal === 'function') {
+                window.updateTextsExternal();
             }
 
             const navUserProfile = document.getElementById('nav-user-profile');
@@ -857,10 +846,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
         } else {
-            console.error("Nem sikerült lekérni a profiladatokat");
+            showToast(isHungarian ? "Nem sikerült lekérni az adatokat!" : "There was an error while getting information!", "error");
         }
     } catch (err) {
-        console.error("Hiba:", err);
+        showToast(isHungarian ? "Hiba történt!" : "There was an error!", "error");
     }
 
     const loadLeaderboard = async () => {
@@ -895,12 +884,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="speedrun-time">${formatSpeedrunTime(entry.speedrunTime)}</div>
                     <a href="${entry.videoUrl}" target="_blank" class="watch-video-btn">Watch</a>
                 `;
-                console.log(entry.videoUrl);
                 leaderboardContainer.appendChild(playerRow);
             });
         }
     } catch (err) {
-        console.error("Hiba a ranglista betöltésekor:", err);
+        showToast(isHungarian ? "Hiba a ranglista lekérésekor!" : "There was an error while getting the leaderboard!", "error");
     }
     };
 });

@@ -37,7 +37,8 @@ const userSchema = new mongoose.Schema({
         speedrunTime: { type: Number },
         uploadDate: { type: Date, default: Date.now }
     }],
-    accountCreation: { type: Date, default: Date.now }
+    accountCreation: { type: Date, default: Date.now },
+    modViewEnabled: { type: Boolean, default: false }
 });
 const User = mongoose.model('User', userSchema);
 
