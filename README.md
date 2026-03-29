@@ -27,7 +27,6 @@
 ## 📍 A Platform Funkciói
 
 - **Globális Ranglisták:** Kövesd nyomon, ki a leggyorsabb a különböző kategóriákban.
-- **Játék Specifikus Bontás:** Külön leaderboardok minden Konisoft játékhoz.
 - **Felhasználói és Moderátori nézet** A felvételeket megvizsgálás után a moderátorok elfogadhatják amelyeket a játékosok látni fognak.
 
 ---
