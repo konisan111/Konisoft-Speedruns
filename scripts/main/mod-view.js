@@ -398,7 +398,7 @@ const initLobby = () => {
     wrapper.innerHTML = "";
 
     try {
-        const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
+        const response = await fetch('https://konisoftspeedruns.onrender.com/mod-leaderboard');
         if (!response.ok) throw new Error("Hiba a letöltéskor");
         
         const rawData = await response.json();
@@ -597,7 +597,7 @@ const initLobby = () => {
     miniWrapper.innerHTML = "";
 
     try {
-        const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
+        const response = await fetch('https://konisoftspeedruns.onrender.com/mod-leaderboard');
         if (!response.ok) throw new Error("Failed to fetch");
         
         const miniData = await response.json();
@@ -867,7 +867,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const loadLeaderboard = async () => {
     try {
-        const response = await fetch('https://konisoftspeedruns.onrender.com/leaderboard');
+        const response = await fetch('https://konisoftspeedruns.onrender.com/mod-leaderboard');
         
         if (response.ok) {
             const leaderboardData = await response.json();

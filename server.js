@@ -540,16 +540,23 @@ app.post('/verify-video', async (req, res) => {
     const { email, videoUrl, approved } = req.body;
 
     try {
-        const user = await User.findOne({ email });
-        if (!user) return res.status(404).json({ error: "Felhasználó nem található" });
+        if (approved === false) {
+            await User.findOneAndUpdate(
+                { email },
+                { $pull: { videos: { videoUrl: videoUrl } } }
+            );
+            return res.status(200).json({ message: "Videó törölve" });
+        } else {
+            const user = await User.findOne({ email });
+            if (!user) return res.status(404).json({ error: "Felhasználó nem található" });
 
-        const video = user.videos.find(v => v.videoUrl === videoUrl);
-        if (!video) return res.status(404).json({ error: "Videó nem található" });
+            const video = user.videos.find(v => v.videoUrl === videoUrl);
+            if (!video) return res.status(404).json({ error: "Videó nem található" });
 
-        video.approved = approved;
-        await user.save();
-
-        res.status(200).json({ message: approved ? "Videó elfogadva" : "Videó elutasítva" });
+            video.approved = true;
+            await user.save();
+            return res.status(200).json({ message: "Videó elfogadva" });
+        }
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
