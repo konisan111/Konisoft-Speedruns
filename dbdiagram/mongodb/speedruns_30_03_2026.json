@@ -1,0 +1,90 @@
+{
+  "collections": {
+    "speedruns.users": {
+      "ns": "speedruns.users",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "__v",
+          "accountCreation",
+          "avatarUrl",
+          "email",
+          "modViewEnabled",
+          "nationality",
+          "password",
+          "userId",
+          "username",
+          "videos"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "__v": {
+            "bsonType": "int"
+          },
+          "accountCreation": {
+            "bsonType": "date"
+          },
+          "avatarUrl": {
+            "bsonType": "string"
+          },
+          "email": {
+            "bsonType": "string"
+          },
+          "modViewEnabled": {
+            "bsonType": "bool"
+          },
+          "nationality": {
+            "bsonType": "string"
+          },
+          "password": {
+            "bsonType": "string"
+          },
+          "userId": {
+            "bsonType": "string"
+          },
+          "username": {
+            "bsonType": "string"
+          },
+          "videos": {
+            "bsonType": "array",
+            "items": {
+              "bsonType": "object",
+              "properties": {
+                "_id": {
+                  "bsonType": "objectId"
+                },
+                "approved": {
+                  "bsonType": "bool"
+                },
+                "speedrunTime": {
+                  "bsonType": "int"
+                },
+                "uploadDate": {
+                  "bsonType": "date"
+                },
+                "videoId": {
+                  "bsonType": "string"
+                },
+                "videoUrl": {
+                  "bsonType": "string"
+                }
+              },
+              "required": [
+                "_id",
+                "approved",
+                "speedrunTime",
+                "uploadDate",
+                "videoId",
+                "videoUrl"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "relationships": []
+}
