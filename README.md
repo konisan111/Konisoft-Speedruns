@@ -46,22 +46,25 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 
 ## 👥 Csapatfelépítés
 
-| Szerepkör              | Felelősségi kör                                       | Tagok             |
-| :--------------------- | :---------------------------------------------------- | :---------------- |
-| **Project Leader**     | Projektmenedzsment, koncepció és irányítás            | Katona Konstantin |
-| **Frontend Developer** | UI/UX design, webes felület fejlesztése (HTML/CSS/JS) | Orvos Tamás       |
-| **Backend & DB**       | Szerveroldali logika, adatbázis és hitelesítés        | Katona Konstantin |
-| **QA / Tester**        | Speedrun mechanikák tesztelése, bugvadászat           | Orvos Tamás       |
+| Szerepkör                    | Felelősségi kör                                       | Tagok                          |
+| :--------------------------- | :---------------------------------------------------- | :----------------------------- |
+| **Project Leader**           | Projektmenedzsment, koncepció és irányítás            | Katona Konstantin              |
+| **Frontend Developer**       | UI/UX design, webes felület fejlesztése (HTML/CSS/JS) | Orvos Tamás                    |
+| **Backend & DB**             | Szerveroldali logika, adatbázis és hitelesítés        | Katona Konstantin              |
+| **QA / Tester**              | Speedrun mechanikák tesztelése, bugvadászat           | Orvos Tamás                    |
+| **Design és Grafika (Lumi)** | Pixelartok, UI, Grafikai Elemek, Shaderek             | Katona Konstantin              |
+| **Kódolás (Lumi)**           | C# Scripting                                          | Katona Konstantin, Orvos Tamás |
 
 ---
 
 ## 👾 Technológiák & Állapot
 
-| Terület       | Eszközök                                 | Állapot                      |
-| :------------ | :--------------------------------------- | :--------------------------- |
-| **Frontend**  | HTML5 🟠 CSS3 🔵 JavaScript 🟡           | 📌 Mod View fejlesztés alatt |
-| **Backend**   | REST API ☁️ Node.js (tervezett) / Render | ✔ Elkészült, Render Szerver  |
-| **Adatbázis** | MongoDB 🌐 Cloudflare R2 🟠              | ✔ Készen állnak              |
+| Terület                        | Eszközök                                 | Állapot                      |
+| :----------------------------- | :--------------------------------------- | :--------------------------- |
+| **Frontend**                   | HTML5 🟠 CSS3 🔵 JavaScript 🟡           | 📌 Mod View fejlesztés alatt |
+| **Backend**                    | REST API ☁️ Node.js (tervezett) / Render | ✔ Elkészült, Render Szerver  |
+| **Adatbázis**                  | MongoDB 🌐 Cloudflare R2 🟠              | ✔ Készen állnak              |
+| **Lumi Dungeon Of Dreadspire** | Unity Engine, Pixilart, Soundtrap        | ✔ A Build Kész!              |
 
 ---
 
@@ -84,7 +87,6 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 |                     | Teszteredmények kiértékelése            | **Teszteredmények dokumentációja**     |   ❌    |
 | **4. Dokumentálás** | Műszaki és felhasználói leírás          | **Szoftveralkalmazás dokumentációja**  |   ❌    |
 |                     | Adatbázis exportálása                   | **Adatbázis dump (.sql)**              |   ❌    |
-|                     | Telepítőkészlet generálása              | Natív asztali telepítő (opcionális)    |   ❌    |
 
 ---
 
