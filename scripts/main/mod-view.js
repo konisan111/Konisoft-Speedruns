@@ -1,4 +1,4 @@
-import { getCountryCode, countryMapping} from "../flagcdn-api/get-country.js";
+import { getCountryCode } from "../flagcdn-api/get-country.js";
 import { showToast } from "../elements/toast-error.js";
 import { countries } from "../data/translations.js";
 
@@ -87,14 +87,6 @@ startUploadBtn?.addEventListener('click', async () => {
         startUploadBtn.textContent = isHungarian ? "Feltöltés" : "Upload";
     }
 });
-
-const themes = {
-    light: "../style/light-theme.css",
-    dark: "../style/dark-theme.css",
-};
-
-const timeForImage = 5;
-let currentImageIndex = 0;
 
 let settingsMobile = document.getElementById('settings-mobile');
 const menuButtons = document.querySelectorAll('.menu-button');
@@ -448,11 +440,10 @@ const initLobby = () => {
     const card = document.createElement("div");
     card.className = `leaderboard-card ${isUser ? 'highlight-user' : ''}`;
     
-    // Színezés az approved állapot alapján
     if (entry.approved) {
-        card.style.backgroundColor = "rgba(0, 100, 0, 0.4)"; // Sötétzöld
+        card.style.backgroundColor = "rgba(0, 100, 0, 0.4)";
     } else {
-        card.style.backgroundColor = "rgba(139, 0, 0, 0.4)"; // Sötétvörös
+        card.style.backgroundColor = "rgba(139, 0, 0, 0.4)";
     }
 
     if (animate) {
@@ -864,66 +855,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (err) {
         showToast(isHungarian ? "Hiba történt!" : "There was an error!", "error");
     }
-
-    const loadLeaderboard = async () => {
-    try {
-        const response = await fetch('https://konisoftspeedruns.onrender.com/mod-leaderboard');
-        
-        if (response.ok) {
-            const leaderboardData = await response.json();
-            const leaderboardContainer = document.getElementById('leaderboard-container');
-            
-            if (!leaderboardContainer) return;
-
-            leaderboardContainer.innerHTML = '';
-
-            leaderboardData.forEach((entry, index) => {
-                const formattedTime = formatSpeedrunTime(entry.speedrunTime);
-                const countryCode = getCountryCode(entry.nationality);
-                const flagUrl = entry.nationality !== "Unknown" 
-                    ? `https://flagcdn.com/w40/${entry.nationality.toLowerCase()}.png` 
-                    : "../images/default-flag.png";                
-                const avatar = entry.avatarUrl ? entry.avatarUrl : 'default-avatar.png';
-
-                const playerRow = document.createElement('div');
-                
-                playerRow.className = 'leaderboard-row';
-                playerRow.innerHTML = `
-                    <div class="player-info">
-                        <div class="player-pfp" style="background-image: url('${entry.avatarUrl || '../images/default-pfp.png'}')"></div>
-                        <div class="player-flag" style="background-image: url('${flagUrl}')"></div>
-                        <span class="player-name">${entry.username}</span>
-                    </div>
-                    <div class="speedrun-time">${formatSpeedrunTime(entry.speedrunTime)}</div>
-                    <a href="${entry.videoUrl}" target="_blank" class="watch-video-btn">Watch</a>
-                `;
-                leaderboardContainer.appendChild(playerRow);
-            });
-        }
-    } catch (err) {
-        showToast(isHungarian ? "Hiba a ranglista lekérésekor!" : "There was an error while getting the leaderboard!", "error");
-    }
-    };
 });
-
-function setAnchorDisabled(a, disabled) {
-  if (!a) return;
-  if (disabled) {
-    if (!a.dataset.originalHref) a.dataset.originalHref = a.getAttribute("href") || "";
-    a.removeAttribute("href");
-    a.setAttribute("aria-disabled", "true");
-    a.setAttribute("tabindex", "-1");
-    a.style.pointerEvents = "none";
-    a.style.cursor = "not-allowed";
-  } else {
-    const href = a.dataset.originalHref || a.getAttribute("href");
-    if (href) a.setAttribute("href", href);
-    a.removeAttribute("aria-disabled");
-    a.removeAttribute("tabindex");
-    a.style.pointerEvents = "";
-    a.style.cursor = "";
-  }
-}
 
 const formatSpeedrunTime = (ms) => {
     const minutes = Math.floor(ms / 60000);
@@ -943,9 +875,9 @@ window.verifyVideo = async (email, videoUrl, approved) => {
 
         if (response.ok) {
             showToast(isHungarian ? "Állapot frissítve!" : "Status updated!", "success");
-            fetchLeaderboard(); // Lista frissítése
+            location.reload();
         }
     } catch (err) {
-        showToast("Hiba!", "error");
+        console.log(err);
     }
 };

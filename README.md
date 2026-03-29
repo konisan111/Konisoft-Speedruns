@@ -63,12 +63,12 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 
 ## 👾 Technológiák & Állapot
 
-| Terület                        | Eszközök                                 | Állapot                      |
-| :----------------------------- | :--------------------------------------- | :--------------------------- |
-| **Frontend**                   | HTML5 🟠 CSS3 🔵 JavaScript 🟡           | 📌 Mod View fejlesztés alatt |
-| **Backend**                    | REST API ☁️ Node.js (tervezett) / Render | ✔ Elkészült, Render Szerver  |
-| **Adatbázis**                  | MongoDB 🌐 Cloudflare R2 🟠              | ✔ Készen állnak              |
-| **Lumi Dungeon Of Dreadspire** | Unity Engine, Pixilart, Soundtrap        | ✔ A Build Kész!              |
+| Terület                        | Eszközök                                 | Állapot      |
+| :----------------------------- | :--------------------------------------- | :----------- |
+| **Frontend**                   | HTML5 🟠 CSS3 🔵 JavaScript 🟡           | ✔ Elkészült! |
+| **Backend**                    | REST API ☁️ Node.js (tervezett) / Render | ✔ Elkészült! |
+| **Adatbázis**                  | MongoDB 🌐 Cloudflare R2 🟠              | ✔ Elkészült! |
+| **Lumi Dungeon Of Dreadspire** | Unity Engine, Pixilart, Soundtrap        | ✔ Elkészült! |
 
 ---
 
@@ -87,11 +87,28 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 |                     | CRUD funkciók és adattárolás            | Működő szoftveralkalmazás              |    ✔    |
 |                     | Clean Code felülvizsgálat               | Tiszta, dokumentált kód                |   ❌    |
 |                     | Lumi Technikusi verzió                  | Debuggolt, értékelésre elkészített kód |    ✔    |
-| **3. Tesztelés**    | Egység- és integrációs tesztelés        | **Tesztek kódja**                      |   ❌    |
-|                     | Teszteredmények kiértékelése            | **Teszteredmények dokumentációja**     |   ❌    |
-| **4. Dokumentálás** | Műszaki és felhasználói leírás          | **Szoftveralkalmazás dokumentációja**  |   ❌    |
+| **3. Dokumentálás** | Műszaki és felhasználói leírás          | **Szoftveralkalmazás dokumentációja**  |   ❌    |
 |                     | Adatbázis exportálása                   | **Adatbázis dump (.sql)**              |   ❌    |
 
+---
+
+## 📸 Frontend Screenshotok a Projetből
+
+<p align="center">
+  <img src="https://i.ibb.co/7tCYzFzJ/Screenshot-2026-03-30-002820.png" width="100%"><br>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/9HGfBw57/Screenshot-2026-03-30-002849.png" width="100%"><br>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/6c3FCMvr/Screenshot-2026-03-30-002936.png" width="100%"><br>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/99tvTjc3/Screenshot-2026-03-30-002432.png" width="100%"><br>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/DDGdnjRw/Screenshot-2026-03-30-002555.png" width="100%"><br>
+</p>
 ---
 
 <p align="center">
@@ -117,6 +134,7 @@ A fájlok mérete (3GB) miatt a forráskód külső tárhelyen érhető el.
 
 ---
 
+Mivel a Unity Engine projektfájlok hatalmasak, nem lehetséges Githubon nyomonkövetni verziókezeléssel, ezért csak a böngészős Speedruns Platformot tudtuk itt megjeleníteni! Megértésüket köszönjük!
 Jó szórakozást a játékhoz! 🥳 (meg kitartást, kelleni fog 🥹)
 
 <p align="center">
