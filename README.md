@@ -46,6 +46,10 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 
 ## 👥 Csapatfelépítés
 
+<p align="center">
+<img src="https://i.ibb.co/r28zSkJS/profiles.png" width="600">
+</p>
+
 | Szerepkör                    | Felelősségi kör                                       | Tagok                          |
 | :--------------------------- | :---------------------------------------------------- | :----------------------------- |
 | **Project Leader**           | Projektmenedzsment, koncepció és irányítás            | Katona Konstantin              |
