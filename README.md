@@ -97,7 +97,7 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 |                     | Clean Code felülvizsgálat             | Tiszta, dokumentált kód                |    ✔    |
 |                     | Lumi Technikusi verzió                | Debuggolt, értékelésre elkészített kód |    ✔    |
 | **3. Dokumentálás** | Műszaki és felhasználói leírás        | **Szoftveralkalmazás dokumentációja**  |   ❌    |
-|                     | Adatbázis exportálása                 | **Adatbázis dump (.sql)**              |   ❌    |
+|                     | Adatbázis exportálása                 | **Adatbázis dump (.sql)**              |   ✔    |
 
 ---
 
