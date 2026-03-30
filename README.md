@@ -1,16 +1,26 @@
 <p align="center">
   <img src="https://i.ibb.co/gZ7HPdTS/Konisoft-Speedruns-Outlined-Logo.png" width="600"><br>
+  
   <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
   <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
   <img src="https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
   <img src="https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white" alt="Unity">
   <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code">
+  
   <img src="https://img.shields.io/badge/REST%20API-02303A?style=for-the-badge&logo=insomnia&logoColor=white" alt="REST API">
   <img src="https://img.shields.io/badge/Cloudflare%20R2-F38020?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Cloudflare R2">
   <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render">
   <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
   <img src="https://img.shields.io/badge/Konisoft-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white" alt="Konisoft">
-<br>
+
+  <br>
+
+  <img src="https://img.shields.io/badge/Pixilart-FF0000?style=for-the-badge&logo=heart&logoColor=white" alt="Pixilart">
+  <img src="https://img.shields.io/badge/Soundtrap-FF0000?style=for-the-badge&logo=heart&logoColor=white" alt="Soundtrap">
+  <img src="https://img.shields.io/badge/Doxygen-FF0000?style=for-the-badge&logo=heart&logoColor=white" alt="Doxygen">
+
+  <br>
   <img src="https://img.shields.io/github/commit-activity/m/konisan111/Konisoft-Speedruns?label=COMMITS&style=flat-square&color=orange" alt="Commits">
 </p>
 
@@ -92,22 +102,18 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 
 ---
 
-## 📸 Frontend Screenshotok a Projetből
+## 📸 Frontend Screenshotok
 
 <p align="center">
-  <img src="https://i.ibb.co/7tCYzFzJ/Screenshot-2026-03-30-002820.png" width="100%"><br>
+  <img src="https://i.ibb.co/7tCYzFzJ/Screenshot-2026-03-30-002820.png" width="48%">
+  <img src="https://i.ibb.co/9HGfBw57/Screenshot-2026-03-30-002849.png" width="48%">
 </p>
 <p align="center">
-  <img src="https://i.ibb.co/9HGfBw57/Screenshot-2026-03-30-002849.png" width="100%"><br>
+  <img src="https://i.ibb.co/6c3FCMvr/Screenshot-2026-03-30-002936.png" width="48%">
+  <img src="https://i.ibb.co/99tvTjc3/Screenshot-2026-03-30-002432.png" width="48%">
 </p>
 <p align="center">
-  <img src="https://i.ibb.co/6c3FCMvr/Screenshot-2026-03-30-002936.png" width="100%"><br>
-</p>
-<p align="center">
-  <img src="https://i.ibb.co/99tvTjc3/Screenshot-2026-03-30-002432.png" width="100%"><br>
-</p>
-<p align="center">
-  <img src="https://i.ibb.co/DDGdnjRw/Screenshot-2026-03-30-002555.png" width="100%"><br>
+  <img src="https://i.ibb.co/DDGdnjRw/Screenshot-2026-03-30-002555.png" width="97%">
 </p>
 
 ---
@@ -115,10 +121,17 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 ## 🌐 Adatbázis (ER) Diagramm és Architektúra
 
 <p align="center">
-  <img src="https://i.ibb.co/8DnWWHq7/mongodb.png" width="100%"><br>
+  <img src="https://i.ibb.co/8DnWWHq7/mongodb.png" width="48%">
+  <img src="https://i.ibb.co/pjYGCZ6P/systemarchitecture.png" width="48%">
 </p>
+
+---
+
+## 🟠 Cloudflare R2
+
 <p align="center">
-  <img src="https://i.ibb.co/pjYGCZ6P/systemarchitecture.png" width="100%"><br>
+  <img src="https://i.ibb.co/v6P1QK52/Screenshot-2026-03-30-141800.png" width="48%">
+  <img src="https://i.ibb.co/vCYdScXV/image.png" width="48%">
 </p>
 
 ---
