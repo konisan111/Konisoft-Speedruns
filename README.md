@@ -169,6 +169,13 @@ A repositoryban létrehoztunk egy teljes doxygen diagramm generálást a Lumi Du
 
 > Érdemes a Doxygen-t az index.html-el elindítani a `.\doxygen\` mappából, innen már mindent látni fognak.
 
+<p align="center">
+  <img src="https://i.ibb.co/hFTv2BKk/Screenshot-2026-03-30-143134.png">
+  <img src="https://i.ibb.co/Hfm0bCfG/Screenshot-2026-03-30-143152.png">
+  <img src="https://i.ibb.co/HLKpJFby/Screenshot-2026-03-30-143206.png">
+  <img src="https://i.ibb.co/mFcMyh8J/Screenshot-2026-03-30-143223.png">
+</p>
+
 ---
 
 Mivel a Unity Engine projektfájlok hatalmasak, nem lehetséges Githubon nyomonkövetni verziókezeléssel, ezért csak a böngészős Speedruns Platformot tudtuk itt megjeleníteni! Megértésüket köszönjük!
