@@ -170,19 +170,22 @@ A repositoryban létrehoztunk egy teljes doxygen diagramm generálást a Lumi Du
 > Érdemes a Doxygen-t az index.html-el elindítani a `.\doxygen\` mappából, innen már mindent látni fognak.
 
 <p align="center">
-  <img src="https://i.ibb.co/hFTv2BKk/Screenshot-2026-03-30-143134.png">
-  <img src="https://i.ibb.co/Hfm0bCfG/Screenshot-2026-03-30-143152.png">
-  <img src="https://i.ibb.co/HLKpJFby/Screenshot-2026-03-30-143206.png">
-  <img src="https://i.ibb.co/mFcMyh8J/Screenshot-2026-03-30-143223.png">
+  <img src="https://i.ibb.co/hFTv2BKk/Screenshot-2026-03-30-143134.png" width="48%">
+  <img src="https://i.ibb.co/Hfm0bCfG/Screenshot-2026-03-30-143152.png" width="48%">
+  <img src="https://i.ibb.co/HLKpJFby/Screenshot-2026-03-30-143206.png" width="48%">
+  <img src="https://i.ibb.co/mFcMyh8J/Screenshot-2026-03-30-143223.png" width="48%">
 </p>
 
 ---
 
-Mivel a Unity Engine projektfájlok hatalmasak, nem lehetséges Githubon nyomonkövetni verziókezeléssel, ezért csak a böngészős Speedruns Platformot tudtuk itt megjeleníteni! Megértésüket köszönjük!
+# ⚠️ FONTOS MEGJEGYZÉS!
+
+Mivel a Unity Engine projektfájlok hatalmasak, **nem lehetséges Githubon nyomonkövetni verziókezeléssel**, ezért csak a böngészős Speedruns Platformot tudtuk itt megjeleníteni!
+**Megértésüket köszönjük!**
 Jó szórakozást a játékhoz! 🥳 (meg kitartást, kelleni fog 🥹)
 
 <p align="center">
-  <img src="https://i.ibb.co/gZ7HPdTS/Konisoft-Speedruns-Outlined-Logo.png" width="120"><br>
+  <img src="https://i.ibb.co/gZ7HPdTS/Konisoft-Speedruns-Outlined-Logo.png" width="200"><br>
   <sub><i>Frissítve: 2026. március 29.</i></sub><br>
   <b>Konisoft 2024-2026</b>
 </p>
