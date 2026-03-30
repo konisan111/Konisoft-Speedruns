@@ -126,7 +126,9 @@ window.handleGoogleResponse = async (googleResponse) => {
           "success",
         );
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        window.location.href = "../sites/lobby.html";
+        window.location.href = result.modViewEnabled
+        ? "../sites/mod-view.html"
+        : "../sites/lobby.html";
       }
     } else {
       showToast(
@@ -150,6 +152,16 @@ window.handleGoogleResponse = async (googleResponse) => {
 uploadPfpBtn?.addEventListener("click", async () => {
   const nationality = document.getElementById("country-input").value;
   const pfpFileInput = document.getElementById("pfp-file-input");
+
+  if (!nationality || nationality.trim() === "") {
+      showToast(
+        isHungarian ? "Kérlek, válassz egy országot!" : "Please select a country!",
+        "error"
+      );
+      const dropdown = document.getElementById("custom-country-dropdown");
+      if (dropdown) dropdown.classList.add("input-error");
+      return;
+    }
 
   let imageData = null;
   let fileName = null;

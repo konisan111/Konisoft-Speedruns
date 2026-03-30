@@ -462,4 +462,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateTexts();
   updateFlags();
+  updateGoogleButton(currentLanguage);
 });

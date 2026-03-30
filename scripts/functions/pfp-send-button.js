@@ -26,7 +26,7 @@ export function pfpSendButtonFunction(
   isHungarian,
   showToast,
 ) {
-  let isValid = true;
+  let isValid = false;
 
   // Reset previous error states
   customCountryDropdown.classList.remove("input-error");
@@ -40,9 +40,9 @@ export function pfpSendButtonFunction(
     );
     isValid = false;
   }
+  else { isValid = true; }
 
   if (isValid) {
-    // Validation passed; additional submission logic can be added here
     console.log("Registration complete! Valid country selected.");
   }
 }
