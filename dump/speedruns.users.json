@@ -1,0 +1,257 @@
+[{
+  "_id": {
+    "$oid": "69ca75b4aa1aa37c7ce1ff8b"
+  },
+  "username": "Koni",
+  "email": "konisan1111@gmail.com",
+  "password": "$2b$10$KvAO2zRYW2umr8frIPBucubKZi1Zsa1xKIaWq7cuFPQ9bZbcIhPK.",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774876083837-26e13fdb8c2f93d4e6a4bbd4d23aaa69.jpg",
+  "nationality": "Hungary",
+  "userId": "b6a451e2-f084-4ea4-ac24-4690a155c0c5",
+  "modViewEnabled": true,
+  "videos": [],
+  "accountCreation": {
+    "$date": "2026-03-30T13:08:04.656Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ca75ecaa1aa37c7ce1ff94"
+  },
+  "username": "Denji",
+  "email": "denji@denji.denji",
+  "password": "$2b$10$PXkoqPkYpMzI11aB9F/mNeumE5vJoEu3zLiwImAKOEMz.hIY8Sg9K",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774876139728-images (1).jpg",
+  "nationality": "Iceland",
+  "userId": "64125dd1-b34c-4acc-96ac-b5c50182e419",
+  "modViewEnabled": false,
+  "videos": [
+    {
+      "videoId": "217ff73c-e488-4052-86e4-807a26381390",
+      "videoUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/217ff73c-e488-4052-86e4-807a26381390.mp4",
+      "approved": false,
+      "speedrunTime": 100480,
+      "uploadDate": {
+        "$date": "2026-03-30T13:21:15.662Z"
+      },
+      "_id": {
+        "$oid": "69ca78cb6b96da376e381b64"
+      }
+    }
+  ],
+  "accountCreation": {
+    "$date": "2026-03-30T13:09:00.118Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ca799d6b96da376e381b68"
+  },
+  "username": "Miku",
+  "email": "miku@miku.com",
+  "password": "$2b$10$1wij8WAyJmzl0CuVIF58vOfWoSfKKyFtKxNCNHlY5mIoHr0IuMNaC",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774877084591-8a94e81f1b78980e49872e8261d8e6f3.jpg",
+  "nationality": "Iceland",
+  "userId": "eaf37b77-243a-4fed-ada0-8503bd96678a",
+  "modViewEnabled": false,
+  "videos": [
+    {
+      "videoId": "e084e921-679d-4412-9d0a-e4cd8e37e6a1",
+      "videoUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/e084e921-679d-4412-9d0a-e4cd8e37e6a1.mp4",
+      "approved": true,
+      "speedrunTime": 96450,
+      "uploadDate": {
+        "$date": "2026-03-30T13:26:17.354Z"
+      },
+      "_id": {
+        "$oid": "69ca79f96b96da376e381b6d"
+      }
+    }
+  ],
+  "accountCreation": {
+    "$date": "2026-03-30T13:24:45.046Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ca7a206b96da376e381b72"
+  },
+  "username": "Rei",
+  "email": "rei@rei.com",
+  "password": "$2b$10$MrXPxmE.wYSFu5wJzQ8j5u1QlDLm7VxV8pEwUKu6kdh23K6n6T1uy",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774877215788-56884.jpg",
+  "nationality": "Hungary",
+  "userId": "304571ee-7a7e-4dd4-a735-713eee70282d",
+  "modViewEnabled": false,
+  "videos": [
+    {
+      "videoId": "d4e43cad-fd15-423a-9d6c-26e5aa27ef4e",
+      "videoUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/d4e43cad-fd15-423a-9d6c-26e5aa27ef4e.mp4",
+      "approved": true,
+      "speedrunTime": 99430,
+      "uploadDate": {
+        "$date": "2026-03-30T13:28:36.768Z"
+      },
+      "_id": {
+        "$oid": "69ca7a846b96da376e381b78"
+      }
+    }
+  ],
+  "accountCreation": {
+    "$date": "2026-03-30T13:26:56.260Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ca7aec6b96da376e381b7e"
+  },
+  "username": "eva-01",
+  "email": "eva@eva.com",
+  "password": "$2b$10$Ynz5XQfpLv7NZ9BJne5JNuUNQtE8XdmtK0pU4nTPruQjoH7CJYVhG",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774877420490-arda-hamamcioglu-image.jpg",
+  "nationality": "Poland",
+  "userId": "4adeee9c-c0f3-4e60-864a-0ec2c76a2e3b",
+  "modViewEnabled": false,
+  "videos": [
+    {
+      "videoId": "054495be-3fe2-4a44-aa0d-6456ef45fcf9",
+      "videoUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/054495be-3fe2-4a44-aa0d-6456ef45fcf9.mp4",
+      "approved": true,
+      "speedrunTime": 97770,
+      "uploadDate": {
+        "$date": "2026-03-30T13:31:54.067Z"
+      },
+      "_id": {
+        "$oid": "69ca7b4a6b96da376e381b89"
+      }
+    }
+  ],
+  "accountCreation": {
+    "$date": "2026-03-30T13:30:20.957Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ca7b666b96da376e381b8b"
+  },
+  "username": "Kidow",
+  "email": "kidow@kidow.com",
+  "password": "$2b$10$SsLn8xbpbWH3yoX8ujuq5eE1DxcaX1i1DA2JoIXXqKMjEQY0hc5sC",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774877541781-328a26fd3a70.jpg",
+  "nationality": "Philippines",
+  "userId": "f9a59835-2fbb-4060-9f7b-2642705f7231",
+  "modViewEnabled": false,
+  "videos": [
+    {
+      "videoId": "cd2bd860-9c41-4dca-8d2a-ade60cbb1d48",
+      "videoUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/cd2bd860-9c41-4dca-8d2a-ade60cbb1d48.mp4",
+      "approved": true,
+      "speedrunTime": 90830,
+      "uploadDate": {
+        "$date": "2026-03-30T13:34:05.838Z"
+      },
+      "_id": {
+        "$oid": "69ca7bcd6b96da376e381b93"
+      }
+    }
+  ],
+  "accountCreation": {
+    "$date": "2026-03-30T13:32:22.145Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ca7c4b6b96da376e381b9c"
+  },
+  "username": "Illie",
+  "email": "illie@illie.com",
+  "password": "$2b$10$PLiiBOFdSoPoip5GeGYtYeE1KNOFaQ9vb07mNujKq2A4GGkopIb1W",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774877771089-Vol1-cover.webp",
+  "nationality": "Finland",
+  "userId": "2dded955-3b0d-4fcd-a806-be2f9287b183",
+  "modViewEnabled": false,
+  "videos": [
+    {
+      "videoId": "edf42360-ea44-4d30-bc2a-a466c9fb6400",
+      "videoUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/edf42360-ea44-4d30-bc2a-a466c9fb6400.mp4",
+      "approved": false,
+      "speedrunTime": 104960,
+      "uploadDate": {
+        "$date": "2026-03-30T13:40:18.473Z"
+      },
+      "_id": {
+        "$oid": "69ca7d425d087ed7b3ad36b3"
+      }
+    }
+  ],
+  "accountCreation": {
+    "$date": "2026-03-30T13:36:11.625Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ca7d745d087ed7b3ad36bc"
+  },
+  "username": "Daijin",
+  "email": "daijin@daijin.com",
+  "password": "$2b$10$kRKAdiqkppE..tkBy3mYneWCN1IXZSgBSsVCLA3vvr0CUP2qDPAEO",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774878068407-79358254c60629af4550db703898905b.jpg",
+  "nationality": "Cyprus",
+  "userId": "64c9d1d4-9926-46bd-948c-3c2e796fbbea",
+  "modViewEnabled": false,
+  "videos": [
+    {
+      "videoId": "7d98af98-0c73-4042-9ca8-e7fdbf7157b9",
+      "videoUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/7d98af98-0c73-4042-9ca8-e7fdbf7157b9.mp4",
+      "approved": true,
+      "speedrunTime": 94910,
+      "uploadDate": {
+        "$date": "2026-03-30T13:43:11.487Z"
+      },
+      "_id": {
+        "$oid": "69ca7def5d087ed7b3ad36cd"
+      }
+    }
+  ],
+  "accountCreation": {
+    "$date": "2026-03-30T13:41:08.874Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ca7e2c5d087ed7b3ad36cf"
+  },
+  "username": "GoatedMetalPipe",
+  "email": "pipe@pipe.com",
+  "password": "$2b$10$KpXoxrlTLvqCDqhF.sBAM.CVUhD5aTZv66U6zo5AqQDqCRa6J3hui",
+  "avatarUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/avatars/1774878251711-G03.jpg",
+  "nationality": "North Korea",
+  "userId": "29949497-7174-4a35-8fdd-ee285bf404e7",
+  "modViewEnabled": false,
+  "videos": [
+    {
+      "videoId": "0caada64-c2b1-46d8-8e0a-c763b2a18b53",
+      "videoUrl": "https://pub-534285b907e7455f9fd6b3b5e49b46a0.r2.dev/0caada64-c2b1-46d8-8e0a-c763b2a18b53.mp4",
+      "approved": true,
+      "speedrunTime": 104890,
+      "uploadDate": {
+        "$date": "2026-03-30T13:46:30.410Z"
+      },
+      "_id": {
+        "$oid": "69ca7eb65d087ed7b3ad36e2"
+      }
+    }
+  ],
+  "accountCreation": {
+    "$date": "2026-03-30T13:44:12.283Z"
+  },
+  "__v": 0
+}]
