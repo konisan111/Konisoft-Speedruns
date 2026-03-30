@@ -1,29 +1,42 @@
-/*
+/* 
  _           _         ___ _   
 | |_ ___ ___|_|___ ___|  _| |_ 
 | '_| . |   | |_ -| . |  _|  _|
 |_,_|___|_|_|_|___|___|_| |_|
 Konisoft Speedruns Platform
 If you want it, then you'll have to take it.
+
+light-theme.css
+Defines the color palette and theme-specific variables for the light mode.
 */
 
-/* Light Theme CSS for the platform's website. */
 :root {
-    --main-background:#ffffff;
-    --main-background-elements:#ffffff91;
+    /* --- Core Backgrounds --- */
+    --main-background: #ffffff;
+    --main-background-elements: #ffffff91;
+    --secondary-background: #f0f0f0;
+    
+    /* --- Leaderboard Colors --- */
     --leaderboard-card-odd-color: #f9f9f9;
     --leaderboard-card-even-color: #ececec;
-    --secondary-background:#f0f0f0;
+    
+    /* --- Typography & Icons --- */
     --text-color: #000000;
     --secondary-text-color: #474747;
     --icon-color: #1b1b1b;
+    
+    /* --- Asset Overrides --- */
     --theme-switcher-icon: url(../images/theme_switcher_icon_light.webp);
     --dropdown-icon: url(../images/dropdown_icon_light.webp);
     --dropdown-close-icon: url(../images/dropdown_close_icon_light.webp);
     --konisoft-logo: url(../images/konisoft_logo_light.webp);
     --speedruns-logo: url(../images/speedruns_logo_light.webp);
+    
+    /* --- Borders & UI Elements --- */
     --global-border: rgb(216, 216, 216);
     --jam-text-color: white;
+    
+    /* --- Grid System --- */
     --grid-vertical-lane: #35353512;
     --grid-horizontal-lane: #3f3f3f12;
 }

@@ -1,122 +1,159 @@
-import { updateGoogleButton } from '../authentication/google-id.js';
-import { countries, translations } from '../data/translations.js';
-import { showToast } from '../elements/toast-error.js';
-import { pfpFileInputFunction } from '../functions/pfp-file-input.js';
-import { registerButtonFunction } from '../functions/register-button.js';
-import { loginButtonFunction } from '../functions/login-button.js';
-import { elementsToHide } from '../functions/elements-to-hide.js'
-import { pfpSendButtonFunction } from '../functions/pfp-send-button.js';
-import { toggle, initialTheme, setTheme } from '../functions/theme-functions.js';
-import { 
-    mainContainer,logo,
-    passwordLabels,copyright,registerButton,
-    backToLoginButton,loginButton,
-    forgotPassword,loginSeparator,
-    googleLoginButton,usernameLabel,
-    usernameInput,emailLabel,
-    emailInput,passwordInput,
-    repeatPasswordInput,repeatPasswordLabel,
-    customCountryDropdown,countryOptions,
-    hiddenCountryInput,pfpUploadButton,
-    pfpUploadContainer,pfpPreview,
-    pfpSendButton,pfpFileInput 
-} from '../elements/html-elements.js';
+//  _           _         ___ _   
+// | |_ ___ ___|_|___ ___|  _| |_ 
+// | '_| . |   | |_ -| . |  _|  _|
+// |_,_|___|_|_|_|___|___|_| |_|
+// Konisoft Speedruns Platform
+// If you want it, then you'll have to take it.
+// 
+/**
+ * main.js
+ * Entry point for the authentication system. Handles login, registration,
+ * theme switching, and localization for the landing page.
+ */
 
-const THEME_FILES = { light: "../style/light-theme.css", dark: "../style/dark-theme.css" };
+// --- Module Imports ---
+import { updateGoogleButton } from "../authentication/google-id.js";
+import { countries, translations } from "../data/translations.js";
+import { showToast } from "../elements/toast-error.js";
+import { pfpFileInputFunction } from "../functions/pfp-file-input.js";
+import { registerButtonFunction } from "../functions/register-button.js";
+import { loginButtonFunction } from "../functions/login-button.js";
+import { elementsToHide } from "../functions/elements-to-hide.js";
+import { pfpSendButtonFunction } from "../functions/pfp-send-button.js";
+import {
+  toggle,
+  initialTheme,
+  setTheme,
+} from "../functions/theme-functions.js";
+import {
+  mainContainer,
+  logo,
+  passwordLabels,
+  copyright,
+  registerButton,
+  backToLoginButton,
+  loginButton,
+  forgotPassword,
+  loginSeparator,
+  googleLoginButton,
+  usernameLabel,
+  usernameInput,
+  emailLabel,
+  emailInput,
+  passwordInput,
+  repeatPasswordInput,
+  repeatPasswordLabel,
+  customCountryDropdown,
+  countryOptions,
+  hiddenCountryInput,
+  pfpUploadButton,
+  pfpUploadContainer,
+  pfpPreview,
+  pfpSendButton,
+  pfpFileInput,
+} from "../elements/html-elements.js";
 
+// --- State Management ---
 let isHungarian = false;
 
-window.addEventListener('load', async () => {
-  document.querySelectorAll('.fade-in').forEach((element, i) => {
-    element.style.animationDelay = (0.15 + i * 0.15) + 's';
-  });
-
-  document.querySelectorAll('.text-loading, .image-loading, .video-loading').forEach(el => {
-    el.classList.remove('text-loading', 'image-loading', 'video-loading');
-  });
-  
-  const initialLang = isHungarian ? 'hu' : 'en';
-  updateGoogleButton(initialLang);
-});
+// --- Theme Configuration ---
+const THEME_FILES = {
+  light: "../style/light-theme.css",
+  dark: "../style/dark-theme.css",
+};
 
 let themeLink = document.getElementById("theme-css");
 if (!themeLink) {
-    themeLink = document.createElement("link");
-    themeLink.id = "theme-css";
-    themeLink.rel = "stylesheet";
-    document.head.appendChild(themeLink);
+  themeLink = document.createElement("link");
+  themeLink.id = "theme-css";
+  themeLink.rel = "stylesheet";
+  document.head.appendChild(themeLink);
 }
 
 setTheme(initialTheme(), false, THEME_FILES, themeLink, isHungarian);
 
-["#theme-switcher", "#theme-switcher-mobile"].forEach(id => {
-    const el = document.querySelector(id);
-    if (el) el.addEventListener("click", () => {
-        toggle(THEME_FILES, themeLink, isHungarian);
+["#theme-switcher", "#theme-switcher-mobile"].forEach((id) => {
+  const el = document.querySelector(id);
+  if (el)
+    el.addEventListener("click", () => {
+      toggle(THEME_FILES, themeLink, isHungarian);
     });
 });
+// --- Initialization & Event Listeners ---
 document.addEventListener("DOMContentLoaded", () => {
   const languageContainer = document.getElementById("language-switcher");
   const languageButton = document.getElementById("language-switcher-button");
-  let isRegistering = false; 
+  let isRegistering = false;
 
   let currentLanguage = "en";
 
+  /**
+   * Renders the country selection options based on the current language.
+   */
   const renderCountryOptions = () => {
     const countryOptions = document.getElementById("country-options");
-    const customCountryDropdown = document.getElementById("custom-country-dropdown");
-    const countrySelectedText = document.getElementById("country-selected-text");
+    const customCountryDropdown = document.getElementById(
+      "custom-country-dropdown",
+    );
+    const countrySelectedText = document.getElementById(
+      "country-selected-text",
+    );
     const hiddenCountryInput = document.getElementById("country-input");
 
     if (!countryOptions) return;
 
-    const langKey = isHungarian ? 'hu' : 'en';    
-    const sortedCountries = [...countries].sort((a, b) => a[langKey].localeCompare(b[langKey], langKey));
-    
-    countryOptions.innerHTML = '';
-    
-    sortedCountries.forEach(countryObj => {
+    const langKey = isHungarian ? "hu" : "en";
+    const sortedCountries = [...countries].sort((a, b) =>
+      a[langKey].localeCompare(b[langKey], langKey),
+    );
+
+    countryOptions.innerHTML = "";
+
+    sortedCountries.forEach((countryObj) => {
       const optionDiv = document.createElement("div");
       optionDiv.className = "dropdown-option";
       optionDiv.textContent = countryObj[langKey];
-      
-    optionDiv.addEventListener("click", (e) => {
+
+      optionDiv.addEventListener("click", (e) => {
         e.stopPropagation();
-        countrySelectedText.textContent = countryObj[langKey]; 
-        
-        hiddenCountryInput.value = countryObj.en; 
-        
+        countrySelectedText.textContent = countryObj[langKey];
+
+        hiddenCountryInput.value = countryObj.en;
+
         customCountryDropdown.classList.remove("open");
         customCountryDropdown.classList.remove("input-error");
-    });
-        
+      });
+
       countryOptions.appendChild(optionDiv);
     });
   };
 
+  /**
+   * Updates all UI text elements and placeholders according to the selected language.
+   */
   const updateTexts = () => {
     const lang = currentLanguage;
     const hiddenCountryInput = document.getElementById("country-input");
-    
-    Object.keys(translations[lang]).forEach(id => {
+
+    Object.keys(translations[lang]).forEach((id) => {
       const el = document.getElementById(id);
       if (el) {
         if (el.tagName === "INPUT") {
-            el.placeholder = translations[lang][id];
+          el.placeholder = translations[lang][id];
         } else if (id === "country-selected-text") {
-            if (!hiddenCountryInput || hiddenCountryInput.value === "") {
-                el.textContent = translations[lang][id];
-            }
+          if (!hiddenCountryInput || hiddenCountryInput.value === "") {
+            el.textContent = translations[lang][id];
+          }
         } else {
-            if (id === "email-label" && isRegistering) {
-                el.textContent = translations[lang]["email-label-register"];
+          if (id === "email-label" && isRegistering) {
+            el.textContent = translations[lang]["email-label-register"];
+          } else {
+            if (id === "google-text") {
+              el.textContent = translations[lang][id];
             } else {
-                if (id === "google-text") {
-                    el.textContent = translations[lang][id];
-                } else {
-                    el.textContent = translations[lang][id];
-                }
+              el.textContent = translations[lang][id];
             }
+          }
         }
       }
     });
@@ -124,33 +161,44 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCountryOptions();
 
     if (hiddenCountryInput && hiddenCountryInput.value !== "") {
-        const selectedCountryObj = countries.find(c => c.en === hiddenCountryInput.value);
-        if (selectedCountryObj) {
-            document.getElementById("country-selected-text").textContent = 
-                isHungarian ? selectedCountryObj.hu : selectedCountryObj.en;
-        }
+      const selectedCountryObj = countries.find(
+        (c) => c.en === hiddenCountryInput.value,
+      );
+      if (selectedCountryObj) {
+        document.getElementById("country-selected-text").textContent =
+          isHungarian ? selectedCountryObj.hu : selectedCountryObj.en;
+      }
     }
   };
 
+  /**
+   * Resets input values and removes error styling from the form.
+   */
   const clearInputsAndErrors = () => {
-    [usernameInput, emailInput, passwordInput, repeatPasswordInput].forEach(input => {
-        input.value = '';
-        input.classList.remove('input-error');
-    });
+    [usernameInput, emailInput, passwordInput, repeatPasswordInput].forEach(
+      (input) => {
+        input.value = "";
+        input.classList.remove("input-error");
+      },
+    );
   };
 
+  /**
+   * Configures the UI to display the registration form.
+   * @param {HTMLElement} mainContainer - The main form container.
+   */
   const showRegistrationForm = (mainContainer) => {
     isRegistering = true;
-    mainContainer.style.setProperty('--dynamic-bg-opacity', '0');
-    
+    mainContainer.style.setProperty("--dynamic-bg-opacity", "0");
+
     clearInputsAndErrors();
 
     loginButton.style.display = "none";
     // forgotPassword.style.display = "none";
-    
+
     logo.style.display = "";
     passwordLabels.style.display = "flex";
-    
+
     loginSeparator.style.display = "none";
     googleLoginButton.style.display = "flex";
 
@@ -160,14 +208,18 @@ document.addEventListener("DOMContentLoaded", () => {
     repeatPasswordInput.style.display = "block";
     backToLoginButton.style.display = "block";
     pfpUploadContainer.style.display = "none";
-    
+
     updateTexts();
   };
 
+  /**
+   * Configures the UI to display the login form.
+   * @param {HTMLElement} mainContainer - The main form container.
+   */
   const showLoginForm = (mainContainer) => {
     isRegistering = false;
-    mainContainer.style.setProperty('--dynamic-bg-opacity', '0');
-    
+    mainContainer.style.setProperty("--dynamic-bg-opacity", "0");
+
     clearInputsAndErrors();
 
     usernameLabel.style.display = "none";
@@ -176,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
     repeatPasswordInput.style.display = "none";
     backToLoginButton.style.display = "none";
     pfpUploadContainer.style.display = "none";
-    
+
     logo.style.display = "";
     passwordLabels.style.display = "flex";
 
@@ -184,62 +236,67 @@ document.addEventListener("DOMContentLoaded", () => {
     // forgotPassword.style.display = "block";
     loginSeparator.style.display = "flex";
     googleLoginButton.style.display = "flex";
-    
+
     updateTexts();
   };
 
+  /**
+   * Handles the smooth height and opacity transitions between form states.
+   * @param {Function} toggleLogic - The logic to execute during the transition (e.g., switching form visibility).
+   */
   const animateFormTransition = (toggleLogic) => {
     const container = mainContainer;
     const children = Array.from(container.children);
-    
+
     const currentHeight = container.getBoundingClientRect().height;
     container.style.height = `${currentHeight}px`;
     container.style.overflow = "hidden";
-    
-    children.forEach(child => {
-        child.style.transition = "opacity 0.2s ease"; 
-        child.style.opacity = "0";
+
+    children.forEach((child) => {
+      child.style.transition = "opacity 0.2s ease";
+      child.style.opacity = "0";
     });
 
     setTimeout(() => {
-        toggleLogic(); 
+      toggleLogic();
 
-        const newChildren = Array.from(container.children);
-        newChildren.forEach(child => {
-            child.style.transition = "none"; 
-            child.style.opacity = "0";
+      const newChildren = Array.from(container.children);
+      newChildren.forEach((child) => {
+        child.style.transition = "none";
+        child.style.opacity = "0";
+      });
+
+      container.style.height = "auto";
+      const newHeight = container.getBoundingClientRect().height;
+
+      container.style.height = `${currentHeight}px`;
+      container.offsetHeight;
+
+      container.style.transition = "height 0.2s ease, background 0.2s ease";
+      container.style.height = `${newHeight}px`;
+
+      setTimeout(() => {
+        newChildren.forEach((child) => {
+          child.style.transition = "opacity 0.2s ease";
+          child.style.opacity = "1";
         });
 
-        container.style.height = "auto";
-        const newHeight = container.getBoundingClientRect().height;
-        
-        container.style.height = `${currentHeight}px`;
-        container.offsetHeight; 
-        
-        container.style.transition = "height 0.2s ease, background 0.2s ease";
-        container.style.height = `${newHeight}px`;
-
         setTimeout(() => {
-            newChildren.forEach(child => {
-                child.style.transition = "opacity 0.2s ease"; 
-                child.style.opacity = "1";
-            });
-
-            setTimeout(() => {
-                container.style.height = ""; 
-                container.style.overflow = "";
-                container.style.transition = "background 0.2s ease";
-                newChildren.forEach(child => {
-                    child.style.transition = "";
-                    child.style.opacity = "";
-                });
-            }, 200);
-            
-        }, 200); 
-
-    }, 200); 
+          container.style.height = "";
+          container.style.overflow = "";
+          container.style.transition = "background 0.2s ease";
+          newChildren.forEach((child) => {
+            child.style.transition = "";
+            child.style.opacity = "";
+          });
+        }, 200);
+      }, 200);
+    }, 200);
   };
 
+  /**
+   * Updates the language toggle button icon and text.
+   */
   const updateFlags = () => {
     const flag = currentLanguage === "hu" ? "lang_en.webp" : "lang_hu.webp";
     if (languageButton) {
@@ -252,10 +309,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  /**
+   * Toggles the application language and refreshes dependent UI components.
+   */
   const handleLanguageSwitch = () => {
     currentLanguage = currentLanguage === "en" ? "hu" : "en";
     isHungarian = currentLanguage === "hu";
-    localStorage.setItem('language', isHungarian ? 'hu' : 'en');
+    localStorage.setItem("language", isHungarian ? "hu" : "en");
     updateFlags();
     updateTexts();
 
@@ -263,22 +323,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const curTheme = document.documentElement.dataset.theme;
     if (curTheme) {
-        setTheme(curTheme, false, THEME_FILES, themeLink, isHungarian);
+      setTheme(curTheme, false, THEME_FILES, themeLink, isHungarian);
     }
   };
 
+  // --- Language & Theme Event Listeners ---
   if (languageContainer && languageButton) {
     languageContainer.addEventListener("click", () => {
-      const textElements = [document.getElementById("language-switcher-text"), document.getElementById("theme-switcher-text")];
-      Object.keys(translations[currentLanguage]).forEach(id => {
+      const textElements = [
+        document.getElementById("language-switcher-text"),
+        document.getElementById("theme-switcher-text"),
+      ];
+      Object.keys(translations[currentLanguage]).forEach((id) => {
         const el = document.getElementById(id);
         if (el) textElements.push(el);
       });
 
       languageButton.style.transition = "opacity 0.15s ease";
       languageButton.style.opacity = 0;
-      
-      textElements.forEach(el => {
+
+      textElements.forEach((el) => {
         if (el) {
           el.style.transition = "opacity 0.15s ease";
           el.style.opacity = 0;
@@ -287,63 +351,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(() => {
         handleLanguageSwitch();
-        
+
         languageButton.style.opacity = 1;
-        textElements.forEach(el => {
+        textElements.forEach((el) => {
           if (el) el.style.opacity = 1;
         });
       }, 150);
     });
   }
 
-  [usernameInput, emailInput, passwordInput, repeatPasswordInput].forEach(input => {
-      input.addEventListener('input', () => {
-          input.classList.remove('input-error');
+  [usernameInput, emailInput, passwordInput, repeatPasswordInput].forEach(
+    (input) => {
+      input.addEventListener("input", () => {
+        input.classList.remove("input-error");
       });
-  });
+    },
+  );
 
+  // --- Custom Country Dropdown Logic ---
   if (customCountryDropdown) {
-      customCountryDropdown.addEventListener("click", () => {
-          customCountryDropdown.classList.toggle("open");
-      });
+    customCountryDropdown.addEventListener("click", () => {
+      customCountryDropdown.classList.toggle("open");
+    });
 
-      customCountryDropdown.addEventListener("keydown", (e) => {
-          if (e.key.length === 1 && e.key.match(/[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ]/)) {
-              const char = e.key.toLowerCase();
-              const options = Array.from(countryOptions.children);
-              
-              const match = options.find(opt => opt.textContent.toLowerCase().startsWith(char));
-              
-              if (match) {
-                  if (!customCountryDropdown.classList.contains("open")) {
-                      customCountryDropdown.classList.add("open");
-                  }
-                  match.scrollIntoView({ behavior: "auto", block: "start" });
-              }
-          }
-      });
+    customCountryDropdown.addEventListener("keydown", (e) => {
+      if (e.key.length === 1 && e.key.match(/[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ]/)) {
+        const char = e.key.toLowerCase();
+        const options = Array.from(countryOptions.children);
 
-      document.addEventListener("click", (e) => {
-          if (!customCountryDropdown.contains(e.target)) {
-              customCountryDropdown.classList.remove("open");
+        const match = options.find((opt) =>
+          opt.textContent.toLowerCase().startsWith(char),
+        );
+
+        if (match) {
+          if (!customCountryDropdown.classList.contains("open")) {
+            customCountryDropdown.classList.add("open");
           }
-      });
+          match.scrollIntoView({ behavior: "auto", block: "start" });
+        }
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!customCountryDropdown.contains(e.target)) {
+        customCountryDropdown.classList.remove("open");
+      }
+    });
   }
 
+  // --- Profile Picture Upload View ---
   window.showPfpUploadScreen = () => {
     animateFormTransition(() => {
-        elementsToHide.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.style.display = "none";
-        });
+      elementsToHide.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "none";
+      });
 
-        const pfpUploadContainer = document.getElementById("pfp-upload-container");
-        if (pfpUploadContainer) {
-            pfpUploadContainer.style.display = "flex";
-        }
+      const pfpUploadContainer = document.getElementById(
+        "pfp-upload-container",
+      );
+      if (pfpUploadContainer) {
+        pfpUploadContainer.style.display = "flex";
+      }
     });
   };
 
+  // --- Form Navigation & Action Listeners ---
   if (backToLoginButton) {
     backToLoginButton.addEventListener("click", () => {
       animateFormTransition(() => showLoginForm(mainContainer));
@@ -351,28 +424,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loginButton.addEventListener("click", () => {
-      loginButtonFunction(
-          isRegistering,
-          emailInput,
-          passwordInput,
-          isHungarian,
-          showToast
-      );
+    loginButtonFunction(
+      isRegistering,
+      emailInput,
+      passwordInput,
+      isHungarian,
+      showToast,
+    );
   });
 
   registerButton.addEventListener("click", () => {
-      registerButtonFunction(
-          isRegistering, 
-          () => { 
-              animateFormTransition(() => showRegistrationForm(mainContainer)); 
-          }, 
-          usernameInput, 
-          emailInput, 
-          passwordInput, 
-          repeatPasswordInput, 
-          isHungarian, 
-          showToast
-      );
+    registerButtonFunction(
+      isRegistering,
+      () => {
+        animateFormTransition(() => showRegistrationForm(mainContainer));
+      },
+      usernameInput,
+      emailInput,
+      passwordInput,
+      repeatPasswordInput,
+      isHungarian,
+      showToast,
+    );
   });
 
   pfpUploadButton.addEventListener("click", () => {
@@ -380,15 +453,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   pfpFileInput.addEventListener("change", (event) => {
-    pfpFileInputFunction(
-        event, 
-        pfpPreview, 
-        mainContainer
-    );
+    pfpFileInputFunction(event, pfpPreview, mainContainer);
   });
 
   pfpSendButton.addEventListener("click", () => {
-      pfpSendButtonFunction(customCountryDropdown, hiddenCountryInput)
+    pfpSendButtonFunction(customCountryDropdown, hiddenCountryInput);
   });
 
   updateTexts();

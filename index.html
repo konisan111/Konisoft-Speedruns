@@ -1,33 +1,59 @@
+<!-- 
+ _           _         ___ _   
+| |_ ___ ___|_|___ ___|  _| |_ 
+| '_| . |   | |_ -| . |  _|  _|
+|_,_|___|_|_|_|___|___|_| |_|
+Konisoft Speedruns Platform
+If you want it, then you'll have to take it.
+
+index.html
+Main entry point for the Konisoft Speedruns platform. 
+Provides login and registration functionality.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- --- Meta Tags & Page Information --- -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
+    
+    <!-- --- Font Imports --- -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+    
+    <!-- --- Stylesheets --- -->
     <link rel="stylesheet" href="style/main.css">
     <link id="theme-css" rel="stylesheet" href="style/dark-theme.css">
+    
+    <!-- --- External Scripts --- -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script type="module" src="scripts/main/main.js"></script>
     <script type="module" src="scripts/authentication/auth.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <title>Konisoft | Welcome to the official Konisoft website</title>
+    
+    <!-- --- Title & Favicon --- -->
+    <title>Login or Register | Welcome to Speedruns!</title>
     <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+    
+    <!-- --- Open Graph / Social Media Meta --- -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Konisoft | Welcome to the official Konisoft website">
+    <meta property="og:title" content="Login or Register | Welcome to Speedruns!">
     <meta property="og:description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
     <meta property="og:image" content="https://konisoft.hu/images/favicon.png">
     <meta property="og:url" content="https://konisoft.hu">
     <meta property="og:site_name" content="Konisoft">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Konisoft | Welcome to the official Konisoft website">
+    <meta name="twitter:title" content="Login or Register | Welcome to Speedruns!">
     <meta name="twitter:description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
     <meta name="twitter:image" content="https://konisoft.hu/images/favicon.png">
     <meta name="twitter:url" content="https://konisoft.hu">
     <meta name="twitter:site" content="@konisoft_hu">
+    
+    <!-- --- Structured Data (JSON-LD) --- -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -40,19 +66,16 @@
     }
     </script>
 </head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5P5D1PWEDT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-5P5D1PWEDT');
-</script>
 <body>
+    <!-- --- Background Grid --- -->
     <div class="grid"></div>
+    
     <main>
+        <!-- --- Authentication Container --- -->
         <div id="container" class="fade-in">
             <div id="logo"></div>
             
+            <!-- --- Login/Register Form Fields --- -->
             <label id="username-label" for="username-input" style="display: none;">Username</label>
             <input id="username-input" type="text" placeholder="" style="display: none;">
 
@@ -67,6 +90,7 @@
             <label id="repeat-password-label" for="repeat-password-input" style="display: none;">Repeat Password</label>
             <input id="repeat-password-input" type="password" placeholder="********" style="display: none;">
             
+            <!-- --- Action Buttons --- -->
             <button id="login-button" class="action-button">Login</button>
             
             <div id="login-register-separator">
@@ -79,16 +103,19 @@
             
             <div id="back-to-login" style="display: none;">Back to Login</div>
             
+            <!-- --- Third-Party Authentication --- -->
             <div id="google-login">
                 <div id="google-button-target"></div> 
             </div>
 
+            <!-- --- Profile Picture & Country Selection --- -->
             <div id="pfp-upload-container">
                 <div id="pfp-preview"></div>
                 <div id="pfp-text">Upload your profile picture</div>
                 <button id="pfp-upload-button" class="action-button">Select Image</button>
                 <input type="file" id="pfp-file-input" accept="image/*" style="display: none;">
-                
+
+                <!-- --- Country Dropdown --- -->
                 <div id="custom-country-dropdown" class="custom-dropdown" tabindex="0">
                     <div class="dropdown-selected">
                         <span class="dropdown-icon">▼</span>
@@ -102,6 +129,7 @@
                 <button id="pfp-send-button" class="action-button">Next</button>
             </div>
 
+            <!-- --- Settings: Language & Theme --- -->
             <div id="language-and-theme">
                 <div id="language-switcher">
                     <div id="language-switcher-button"></div>
@@ -112,6 +140,8 @@
                     <div id="theme-switcher-text"></div>
                 </div>
             </div>
+            
+            <!-- --- Footer --- -->
             <div id="copyright">Speedruns is a platform of Konisoft. Made and hosted by Konisoft Indie Game Studio. 2026-2027</div>
         </div>
     </main>

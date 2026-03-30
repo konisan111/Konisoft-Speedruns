@@ -5,25 +5,38 @@
 |_,_|___|_|_|_|___|___|_| |_|
 Konisoft Speedruns Platform
 If you want it, then you'll have to take it.
+
+dark-theme.css
+Defines the color palette and theme-specific variables for the dark mode.
 */
 
-/* Dark Theme CSS for the platform's website. */
 :root {
-    --main-background:#000000;
-    --main-background-elements:#00000091;
+    /* --- Core Backgrounds --- */
+    --main-background: #000000;
+    --main-background-elements: #00000091;
+    --secondary-background: #0a0a0a;
+    
+    /* --- Leaderboard Colors --- */
     --leaderboard-card-odd-color: #0B0B0B;
     --leaderboard-card-even-color: #111111;
-    --secondary-background:#0a0a0a;
+    
+    /* --- Typography & Icons --- */
     --text-color: #ffffff;
     --secondary-text-color: #474747;
     --icon-color: #1b1b1b;
+    
+    /* --- Asset Overrides --- */
     --theme-switcher-icon: url(../images/theme_switcher_icon_dark.webp);
     --dropdown-icon: url(../images/dropdown_icon_dark.webp);
     --dropdown-close-icon: url(../images/dropdown_close_icon_dark.webp);
     --konisoft-logo: url(../images/konisoft_logo_dark.webp);
     --speedruns-logo: url(../images/speedruns_logo_dark.webp);
+    
+    /* --- Borders & UI Elements --- */
     --global-border: rgb(26, 26, 26);
     --jam-text-color: white;
+    
+    /* --- Grid System --- */
     --grid-vertical-lane: #a5a5a512;
     --grid-horizontal-lane: #e7e7e712;
 }

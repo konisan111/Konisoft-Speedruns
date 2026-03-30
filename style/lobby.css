@@ -6,26 +6,21 @@
 Konisoft Speedruns Platform
 If you want it, then you'll have to take it.
 
------------------------------> LOBBY.CSS
+lobby.css
+Styles for the main lobby, including the navigation bar, 
+leaderboard, user profile, and modals.
 */
 
-/* WEBKIT OPTIONS */
-
-
-
+/* --- Scrollbar Configuration --- */
 ::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--main-background) }
+::-webkit-scrollbar-track { background: var(--main-background); }
 ::-webkit-scrollbar-thumb { 
     background: rgb(200, 200, 200);
     border-radius: 5px;
 }
-
 ::-webkit-scrollbar-thumb:hover { background: rgb(170, 170, 170); }
 
-/* FADING */
-
-
-
+/* --- Animations: Fading & Sliding --- */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -46,21 +41,13 @@ If you want it, then you'll have to take it.
   to { transform: translateX(50%) skewX(-20deg); }
 }
 
-.hidden {
-    display: none !important;
-}
+/* --- Utility Classes --- */
+.hidden { display: none !important; }
 
-#fall-container {
-    position: absolute;
-}
+#fall-container { position: absolute; }
 
-.fade-bg {
-    transition: opacity 0.5s ease;
-}
-
-.fade-bg.hidden {
-    opacity: 0;
-}
+.fade-bg { transition: opacity 0.5s ease; }
+.fade-bg.hidden { opacity: 0; }
 
 .fade-in {
     opacity: 0;
@@ -71,15 +58,9 @@ If you want it, then you'll have to take it.
     transition: color 0.5s ease;
     color: var(--text-color);
 }
+.fade-text.hidden { color: transparent; }
 
-.fade-text.hidden {
-    color: transparent;
-}
-
-/* BACKGROUND GRID */
-
-
-
+/* --- Global Background Elements --- */
 .grid {
   position: fixed;
   inset: 0;
@@ -98,19 +79,14 @@ If you want it, then you'll have to take it.
   pointer-events: none;
 }
 
-/* BASIC HTML ELEMENTS */
-
-
-
+/* --- Base HTML Elements --- */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
   overflow-x: hidden;
 }
 
-* {
-    transition: background-color 0.25s ease;
-}
+* { transition: background-color 0.25s ease; }
 
 body {
     background-color: var(--secondary-background);
@@ -131,6 +107,7 @@ header {
     min-width: 0;
 }
 
+/* --- Navigation Bar (Desktop) --- */
 nav {
     background-color: var(--main-background);
     width: 100%;
@@ -140,19 +117,8 @@ nav {
     justify-content: space-between;
     min-width: 0;
     border-bottom: 1px solid var(--global-border);
-    padding: 0 0.25rem 0 0.25rem;
+    padding: 0 0.25rem;
     box-sizing: border-box;
-}
-
-/* NAVBAR */
-
-
-
-.dot{
-  width:35px;
-  height:35px;
-  position:absolute;
-  background-size: 100% 100%;
 }
 
 #header-logo {
@@ -181,9 +147,7 @@ nav {
     margin-right: -.6em;
 }
 
-#menu-buttons {
-    display: none;
-}
+#menu-buttons { display: none; }
 
 .menu-button {
     color: var(--text-color);
@@ -195,24 +159,15 @@ nav {
     transition: 0.2s;
     font-weight: 500;
 }
-
-.menu-button:hover {
-    font-size: 1.15em;
-}
+.menu-button:hover { font-size: 1.15em; }
 
 #theme-and-settings {
     display: flex;
     gap: 1em;
 }
 
-#theme-and-settings-mobile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2em;
-}
-
-#language {
+/* --- Localization & Theme Controls --- */
+#language, #language-mobile {
   background-image: url(../images/lang_hu.webp);
   cursor: pointer;
   background-size: contain;
@@ -221,70 +176,33 @@ nav {
   height: 30px;
   width: 30px;
   display: block;
-  transition: opacity 0.2s ease-in-out;
-  transition: 0.2s;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   opacity: 1;
-  margin-right: 1em;
-  margin-left: .5em;
 }
 
-#language-mobile {
-  background-image: url(../images/lang_hu.webp);
-  cursor: pointer;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 30px;
-  width: 30px;
-  display: block;
-  transition: opacity 0.2s ease-in-out;
-  transition: 0.2s;
-  opacity: 1;
-  margin-right: 1em;
-  margin-left: .5em;
-}
+#language:hover { transform: scale(1.15); }
 
-#language:hover {
-    width: 35px;
-    height: 35px;
-}
-
-#theme-switcher, #language {
+#theme-switcher, #theme-switcher-mobile {
     height: 30px;
     width: 30px;
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 #theme-switcher-mobile, #language-mobile {
     height: 40px;
     width: 40px;
-    background-position: center;
-    background-repeat: no-repeat;
-    cursor: pointer;
 }
 
-#theme-switcher {
+#theme-switcher, #theme-switcher-mobile {
     background-image: var(--theme-switcher-icon);
     background-size: 100%;
-    margin-right: 0em;
     margin-left: 1em;
-    transition: 0.2s;
 }
 
-#theme-switcher-mobile {
-    background-image: var(--theme-switcher-icon);
-    background-size: 100%;
-    margin-right: 0em;
-    margin-left: 1em;
-    transition: 0.2s;
-}
-
-#theme-switcher:hover {
-    width: 35px;
-    height: 35px;
-}
+#theme-switcher:hover { transform: scale(1.15); }
 
 #settings-mobile {
     background-image: var(--dropdown-icon);
@@ -298,16 +216,12 @@ nav {
     transition: 0.5s;
 }
 
-#settings-mobile.dropdown-menu-up {
-    background-image: var(--dropdown-icon);
-    background-size: contain;
-}
-
 #settings-mobile.dropdown-menu-down {
     background-image: var(--dropdown-close-icon);
     background-size: 90%;
 }
 
+/* --- Dropdown Menus (Mobile) --- */
 #dropdown-menu {
     border-bottom: 1px solid var(--global-border);
     position: absolute;
@@ -317,15 +231,11 @@ nav {
     overflow: hidden;
     backdrop-filter: blur(12px);
     background-color: color-mix(in srgb, var(--main-background) 85%, transparent);
-
     transform-origin: top;
     transform: scaleY(0);
     opacity: 0;
     pointer-events: none;
-
-    transition:
-        transform 400ms ease,
-        opacity   300ms ease;
+    transition: transform 400ms ease, opacity 300ms ease;
 }
 
 #dropdown-menu.dropdown-menu-down {
@@ -349,10 +259,7 @@ nav {
     justify-content: center;
 }
 
-/* NAVBAR USER PROFILE */
-
-
-
+/* --- User Profile Sync (Navbar) --- */
 #nav-user-profile {
     display: flex;
     align-items: center;
@@ -421,10 +328,7 @@ nav {
     text-overflow: ellipsis;
 }
 
-/* UPLOADING SCREEN */
-
-
-
+/* --- Video Upload Modal --- */
 .modal-overlay { 
     position: fixed; 
     top: 0; left: 0; 
@@ -458,9 +362,7 @@ nav {
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.modal-overlay.show .modal-content {
-    transform: scale(1);
-}
+.modal-overlay.show .modal-content { transform: scale(1); }
 
 #close-upload-modal {
     position: absolute;
@@ -522,13 +424,7 @@ nav {
     transition: transform 0.2s ease;
 }
 
-#select-video-btn {
-    transition: transform 0.2s ease;
-    font-family: "Oxanium", sans-serif;
-}
-
 #select-video-btn:hover, .upload-submit-btn:hover, .cancel-btn:hover {
-    font-size: 1rem !important; 
     transform: scale(1.01);
 }
 
@@ -544,10 +440,7 @@ nav {
     color: white;
 }
 
-/* MAIN */
-
-
-
+/* --- Main Layout Sections --- */
 main {
     display: flex;
     flex: 1;
@@ -562,10 +455,7 @@ main {
     z-index: 1;
 }
 
-/* ERROR TOASTS */
-
-
-
+/* --- Feedback: Toasts --- */
 .toast.error {
     background-color: rgba(173, 52, 52, 0.3);
     border: 2px solid #ff4d4d;
@@ -597,12 +487,6 @@ main {
     font-family: "Oxanium", sans-serif;
     animation: slideIn 0.3s ease-out;
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.toast-icon {
-    width: 20px;
-    height: 20px;
 }
 
 @keyframes slideIn {
@@ -616,10 +500,7 @@ main {
     }
 }
 
-/* LEADERBOARDS */
-
-
-
+/* --- Leaderboard UI --- */
 #leaderboard-container {
     border-radius: 1.25rem;
     border: 1px solid var(--global-border);
@@ -633,6 +514,7 @@ main {
     height: calc(100vh - 6.5rem);
 }
 
+/* --- User Profile UI --- */
 #profile-container {
     border-radius: 1.25rem;
     border: 1px solid var(--global-border);
@@ -656,14 +538,12 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0;
 }
 
 #profile-picture {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background-color: var(--secondary-background);
     background-image: url('../images/pfp_placeholder.webp');
     background-size: cover;
     background-position: center;
@@ -677,11 +557,6 @@ main {
     color: var(--text-color);
 }
 
-#profile-creation-date {
-    color: var(--text-color);
-    font-size: 1rem;
-}
-
 #profile-country-info {
     display: flex;
     align-items: center;
@@ -693,54 +568,7 @@ main {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-image: url('../images/lang_hu.webp');
     background-size: cover;
-    background-position: center;
-}
-
-#profile-country-name-static {
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-#profile-mini-leaderboard {
-    width: 100%;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-#profile-mini-title {
-    text-align: center;
-    color: var(--text-color);
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-#mini-leaderboard-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    height: 270px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 4px 5px 4px 4px;
-    border-radius: 0.8rem;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    position: relative;
-}
-
-#mini-leaderboard-cards::-webkit-scrollbar {
-    display: none;
-}
-
-.leaderboard-card.highlight-user {
-    border: 1px solid color-mix(in srgb, var(--text-color) 30%, transparent);
-    box-shadow: 0 4px 15px color-mix(in srgb, var(--text-color) 10%, transparent);
-    transform: scale(1.02);
-    z-index: 1;
 }
 
 #profile-logout-button {
@@ -757,128 +585,9 @@ main {
     width: 100%;
     transition: filter 0.2s ease;
 }
+#profile-logout-button:hover { filter: brightness(1.2); }
 
-#profile-logout-button:hover {
-    filter: brightness(1.2);
-}
-
-#leaderboard-top-header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-#leaderboard-main-title-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-#leaderboard-main-title {
-    margin: 0;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-color);
-}
-
-#leaderboard-scope {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text-color);
-}
-
-#leaderboard-filters {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-/* LEADERBOARD DROPDOWNS */
-
-
-
-.custom-dropdown {
-    position: relative;
-    font-family: "Oxanium", sans-serif;
-    font-size: 1.1rem;
-    z-index: 100;
-}
-
-.custom-dropdown-header {
-    font-family: "Oxanium", sans-serif;
-    background-color: transparent;
-    color: var(--text-color);
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: filter 0.2s ease;
-    user-select: none;
-}
-
-.custom-dropdown-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: var(--secondary-background);
-    border: 1px solid var(--global-border);
-    border-radius: 0.5rem;
-    z-index: 1000;
-}
-
-.custom-dropdown-header:hover {
-    filter: brightness(1.2);
-}
-
-.dropdown-icon, .dropdown-text {
-    font-size: 1.1rem;
-}
-
-.custom-dropdown-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: max-content;
-    min-width: 100%;
-    background-color: var(--main-background);
-    border: 1px solid var(--global-border);
-    border-radius: 0.5rem;
-    z-index: 100;
-    display: none;
-    flex-direction: column;
-    overflow-y: auto;
-    max-height: 300px;
-}
-
-.custom-dropdown.open .custom-dropdown-list {
-    display: flex;
-}
-
-.custom-dropdown-item {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    color: var(--text-color);
-    transition: opacity 0.2s ease;
-    white-space: nowrap;
-}
-
-.custom-dropdown-item:hover {
-    background-color: var(--secondary-background);
-    opacity: 0.7;
-}
-
-/* LEADERBOARD TITLEBARS */
-
-
-
+/* --- Leaderboard Cards & Titlebars --- */
 #leaderboard-titlebar, .leaderboard-card {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 85px max-content;
@@ -888,53 +597,9 @@ main {
     box-sizing: border-box;
 }
 
-#leaderboard-recordings-title {
-    text-align: right;
-    justify-self: end;
-}
-
 #leaderboard-titlebar {
     font-weight: bold;
     font-size: 1.1rem;
-    box-sizing: border-box;
-}
-
-#leaderboard-titlebar > div, .leaderboard-card > div {
-    text-align: left;
-}
-
-#leaderboard-titlebar > #leaderboard-time-title, .leaderboard-time,
-#leaderboard-titlebar > #leaderboard-recordings-title, .leaderboard-watch-link {
-    text-align: right !important;
-    justify-self: end;
-}
-
-.leaderboard-watch-link {
-    color: red;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 12px;
-    transition: filter 0.2s ease;
-}
-
-.leaderboard-watch-link:hover {
-    filter: brightness(1.3);
-    text-decoration: underline;
-}
-
-#leaderboard-time-title {
-    width: 85px;
-    display: flex;
-}
-
-#leaderboard-card-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    overflow-y: auto;
-    flex: 1;
-    min-height: 0;
-    box-sizing: border-box;
 }
 
 .leaderboard-card {
@@ -944,128 +609,19 @@ main {
     font-size: 1.1rem;
     flex-shrink: 0;
 }
-
 .leaderboard-card:nth-child(odd) { background-color: var(--leaderboard-card-odd-color); }
 .leaderboard-card:nth-child(even) { background-color: var(--leaderboard-card-even-color); }
 
-/* MINILEADERBOARD */
-
-
-
-.mini-card {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0.8rem !important;
+.leaderboard-watch-link {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+    transition: filter 0.2s ease;
 }
+.leaderboard-watch-link:hover { filter: brightness(1.3); text-decoration: underline; }
 
-.mini-placement {
-    font-size: 1.1rem;
-    font-weight: 700;
-    opacity: 0.6;
-    margin-right: 0.2rem;
-    min-width: 1.5rem;
-    text-align: left;
-}
-
-.mini-card .leaderboard-user-information {
-    flex: 1;
-    min-width: 0;
-    gap: 0.3rem;
-}
-
-.mini-card .leaderboard-country {
-    margin-right: 0.5rem;
-    gap: 0.3rem;
-}
-
-.mini-card .leaderboard-time {
-    text-align: right;
-}
-
-.leaderboard-datetime {
-    display: contents;
-}
-
-.leaderboard-user-information {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.5rem;
-    align-items: center;
-    overflow: hidden;
-    min-width: 0;
-}
-
-.leaderboard-username {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    word-break: break-word;
-    white-space: normal;
-    line-height: 1.2;
-}
-
-.leaderboard-profile-picture {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: white;
-    flex-shrink: 0;
-}
-
-.leaderboard-country {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    overflow: hidden;
-}
-
-.leaderboard-country-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.leaderboard-game {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.95em;
-    word-break: break-word;
-    line-height: 1.2;
-}
-
-.leaderboard-flag {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: white;
-    flex-shrink: 0;
-}
-
-#games-container {
-    height: 300px;
-    grid-column: 1 / 3;
-}
-
-.fade-in-section {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .5s ease-out, transform .3s ease-out;
-}
-
-.fade-in-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* FOOTER */
-
-
-
+/* --- Footer Configuration --- */
 footer {
     background-color: var(--main-background);
     height: 9em;
@@ -1088,69 +644,14 @@ footer {
     background-position: center;
 }
 
-#footer-text-1, #footer-text-2, #footer-text-3 {
-    text-align: center;
-    font-size: 0.9em;
-}
-
-#footer-text-1 {
-    width: 16em;
-    height: 1.3em;
-    margin-top: 1em;
-}
-
-#footer-text-2 {
-    width: 11em;
-    height: 1.3em;
-    margin-top: 0.5em;
-}
-
-#footer-text-3 {3
-    width: 12em;
-    height: 1.2em;
-    margin-top: 3em;
-}
-
+/* --- Responsive Adjustments (Mobile) --- */
 @media (max-width: 900px) {
-    main {
-        flex-direction: column;
-    }
-
-    #profile-container {
-        order: 1;
-    }
-
-    #leaderboard-main-title {
-        font-size: 2.2rem;
-    }
-
-    #leaderboard-container {
-        order: 1;
-    }
-
-    #header-logo {
-        width: 12rem;
-        margin-left: 0.5rem;
-    }
-    
-    nav {
-        padding: 0 1rem;
-    }
-    
-    #nav-buttons {
-        padding-right: 0;
-    }
-
-    #language, #theme-switcher, #nav-user-profile {
-        display: none !important;
-    }
-
-    #leaderboard-titlebar {
-        display: none;
-    }
+    main { flex-direction: column; }
+    #nav-buttons { padding-right: 0; }
+    #language, #theme-switcher, #nav-user-profile { display: none !important; }
+    #leaderboard-titlebar { display: none; }
     
     .leaderboard-card {
-        display: grid;
         grid-template-columns: 1fr max-content;
         grid-template-areas:
             "user game"
@@ -1159,218 +660,10 @@ footer {
         gap: 0.5rem 1.5rem;
         padding: 1rem;
         height: max-content;
-        min-height: max-content;
-        flex-shrink: 0;
-        align-items: center;
-        overflow-x: hidden;
-    }
-
-    .mini-card {
-        display: flex !important;
-        padding: 0.5rem 0.8rem !important;
-    }
-
-    .leaderboard-datetime {
-        display: flex;
-        grid-area: datetime;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .leaderboard-user-information {
-        grid-area: user;
-        max-width: 100%;
-    }
-
-    .leaderboard-username {
-        font-size: 1.25em;
-    }
-
-    .leaderboard-country {
-        grid-area: country;
-        justify-content: flex-start;
-        justify-self: start;
-    }
-
-    .leaderboard-country-name {
-        font-size: 1.15em;
-    }
-
-    .leaderboard-game {
-        grid-area: game;
-        text-align: right;
-        font-size: 1.25em;
-        justify-self: end;
-    }
-
-    .leaderboard-date {
-        font-size: 1.15em;
-    }
-
-    .leaderboard-time {
-        font-size: 1.15em;
-    }
-
-    leaderboard-watch-link {
-        grid-area: watch;
-        justify-self: end;
-        margin-top: -5px;
-    }
-}
-
-/* MEDIA - RESPONSIVE LAYOUTS */
-
-
-
-@media (max-width: 680px) {
-    main {
-        padding: 1rem;
-    }
-
-    #leaderboard-main-title {
-        font-size: 1.8rem;
-    }
-
-    #leaderboard-container {
-        padding: 0.75rem;
-        height: calc(100vh - 6rem);
-    }
-
-    #leaderboard-top-header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.75rem;
-        padding: 0;
-    }
-
-    #leaderboard-filters {
-        flex-direction: row;
-        width: 100%;
-        gap: 0.5rem;
-        flex-wrap: nowrap;
-    }
-
-    .custom-dropdown {
-        flex: 1 1 0;
-        min-width: 0;
-    }
-
-    .custom-dropdown-header {
-        width: 100%;
-        justify-content: space-between;
-        background-color: var(--secondary-background);
-        padding: 0.6rem 0.5rem;
-        box-sizing: border-box;
-        font-size: 0.85rem;
-    }
-
-    .dropdown-text {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .custom-dropdown-list {
-        width: max-content;
-        min-width: 100%;
-    }
-
-    .custom-dropdown:last-child .custom-dropdown-list {
-        left: auto;
-        right: 0;
-    }
-    
-    .leaderboard-card {
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-            "user country"
-            "game game"
-            "datetime datetime";
-        gap: 0.5rem 0.8rem;
-    }
-
-    .mini-card {
-        display: flex !important;
-        padding: 0.5rem 0.8rem !important;
-    }
-
-    .leaderboard-datetime {
-        justify-content: space-between;
-        width: 100%;
-    }
-    
-    .leaderboard-username {
-        font-size: inherit;
-    }
-
-    .leaderboard-country {
-        justify-content: flex-end;
-        justify-self: end;
-    }
-
-    .leaderboard-country-name {
-        font-size: inherit;
-    }
-    
-    .leaderboard-game {
-        text-align: left;
-        font-size: 1.05em;
-        justify-self: start;
-    }
-    
-    .leaderboard-date {
-        font-size: 0.95em;
-    }
-
-    .leaderboard-time {
-        font-size: 0.95em;
-    }
-
-    #header-logo {
-        width: 11rem;
     }
 }
 
 @media (min-width: 901px) {
-    #language, #theme-switcher {
-        display: block;
-    }
-
-    #nav-buttons {
-        display: flex;
-        gap: 1.5em;
-        padding-right: 1.5em;
-    }
-
-    #menu-buttons {
-        display: flex;
-        gap: 2em;
-    }
-
-    .menu-button {
-        color: var(--text-color);
-        font-size: 1em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-    }
-
-    #settings-mobile {
-        background-image: url(../images/settings-mobile.webp);
-        display: none;
-        cursor: pointer;
-        background-size: contain;
-        background-repeat: no-repeat;
-        height: 30px;
-        width: 30px;
-    }
-
+    #menu-buttons { display: flex; gap: 2em; }
     #dropdown-menu, #nav-user-profile-mobile { display: none !important; }
-
-    #footer-logo { width: 20em; }
-    #footer-text-1 { width: 18rem; }
-    #footer-text-2 { width: 14rem; }
-    #footer-text-3 { width: 15rem; }
 }

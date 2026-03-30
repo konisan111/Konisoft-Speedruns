@@ -1,145 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style/lobby.css">
-    <link id="theme-css" rel="stylesheet" href="../style/dark-theme.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script type="module" src="../scripts/main/mod-view.js"></script>
-    <title>Konisoft | Welcome to the official Konisoft website</title>
-    <link rel="icon" href="../images/favicon.png" type="image/x-icon" />
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Konisoft | Welcome to the official Konisoft website">
-</head>
-<body>
-    <header>
-        <nav>
-            <div id="header-logo"></div>
-            <div id="nav-buttons">
-                <div id="menu-buttons">
-                    <a href="#" class="menu-button" id="nav-home">Leaderboard</a>
-                    <div id="nav-split"></div>
-                    <a href="#" class="menu-button" id="nav-profile">Profile</a>
-                    <div id="nav-split"></div>
-                    <a href="https://konisoft.hu" class="menu-button" id="nav-profile">Konisoft</a>
-                    <div id="nav-split"></div>
-                </div>
-                <div id="theme-and-settings">
-                    <div id="nav-user-profile" class="hidden">
-                        <div id="nav-profile-picture"></div>
-                        <span id="nav-username">username</span>
+    <!-- 
+    _           _         ___ _   
+    | |_ ___ ___|_|___ ___|  _| |_ 
+    | '_| . |   | |_ -| . |  _|  _|
+    |_,_|___|_|_|_|___|___|_| |_|
+    Konisoft Speedruns Platform
+    If you want it, then you'll have to take it.
+
+    mod-view.html
+    Moderator interface for the Konisoft Speedruns platform. 
+    Allows moderators to review, approve, or reject speedrun submissions.
+    -->
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <!-- --- Meta Tags & Page Information --- -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
+        
+        <!-- --- Font Imports --- -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&swap" rel="stylesheet">
+        
+        <!-- --- Stylesheets --- -->
+        <link rel="stylesheet" href="../style/lobby.css">
+        <link id="theme-css" rel="stylesheet" href="../style/dark-theme.css">
+        
+        <!-- --- External Scripts --- -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script type="module" src="../scripts/main/mod-view.js"></script>
+        
+        <!-- --- Title & Favicon --- -->
+        <title>Moderator View | Speedruns</title>
+        <link rel="icon" href="../images/favicon.png" type="image/x-icon" />
+        
+        <!-- --- Open Graph --- -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Moderator View - Speedruns">
+    </head>
+    <body>
+        <header>
+            <!-- --- Navigation Bar --- -->
+            <nav>
+                <div id="header-logo"></div>
+                <div id="nav-buttons">
+                    <!-- --- Menu Buttons (Desktop) --- -->
+                    <div id="menu-buttons">
+                        <a href="#" class="menu-button" id="nav-home">Leaderboard</a>
+                        <div id="nav-split"></div>
+                        <a href="#" class="menu-button" id="nav-profile">Profile</a>
+                        <div id="nav-split"></div>
+                        <a href="https://konisoft.hu" class="menu-button" id="nav-profile">Konisoft</a>
+                        <div id="nav-split"></div>
                     </div>
-                    <div id="nav-split"></div>
-                    <div id="language"></div>
-                    <div id="nav-split"></div>
-                    <div id="theme-switcher"></div>
-                    <div id="settings-mobile"></div>
+
+                    <!-- --- User Settings & Profile Sync --- -->
+                    <div id="theme-and-settings">
+                        <div id="nav-user-profile" class="hidden">
+                            <div id="nav-profile-picture"></div>
+                            <span id="nav-username">username</span>
+                        </div>
+                        <div id="nav-split"></div>
+                        <div id="language"></div>
+                        <div id="nav-split"></div>
+                        <div id="theme-switcher"></div>
+                        <div id="settings-mobile"></div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- --- Dropdown Menus (Mobile) --- -->
+            <div id="dropdown-menu">
+                <a href="#" class="dropdown-menu-button" id="nav-home-mobile">Leaderboard</a>
+                <a href="#" class="dropdown-menu-button" id="nav-profile-mobile">Profile</a>
+                <a href="https://konisoft.hu" class="dropdown-menu-button" id="nav-home-mobile">Konisoft</a>
+                <div id="dropdown-menu-icons">
+                    <div id="language-mobile"></div>
+                    <div id="theme-switcher-mobile"></div>
                 </div>
             </div>
-        </nav>
-        <div id="dropdown-menu">
-            <a href="#" class="dropdown-menu-button" id="nav-home-mobile">Leaderboard</a>
-            <a href="#" class="dropdown-menu-button" id="nav-profile-mobile">Profile</a>
-            <a href="https://konisoft.hu" class="dropdown-menu-button" id="nav-home-mobile">Konisoft</a>
-            <div id="dropdown-menu-icons">
-                <div id="language-mobile"></div>
-                <div id="theme-switcher-mobile"></div>
-            </div>
-        </div>
-    </header>
-    <div class="grid"></div>
-    <main>
-        <div id="leaderboard-container">
-            <div id="leaderboard-top-header">
-                <div id="leaderboard-main-title-container">
-                    <h1 id="leaderboard-main-title">Leaderboard</h1>
-                </div>
-                <div id="leaderboard-filters">
-                    <div class="custom-dropdown">
-                        <button class="custom-dropdown-header">
-                            <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-nation" data-value="Global">by nation</div>
-                        </button>
-                        <div class="custom-dropdown-list" id="nation-dropdown-list">
-                            <div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>
+        </header>
+
+        <!-- --- Background Grid --- -->
+        <div class="grid"></div>
+        
+        <main>
+            <!-- --- Moderator Leaderboard Section --- -->
+            <div id="leaderboard-container">
+                <!-- --- Leaderboard Header & Filters --- -->
+                <div id="leaderboard-top-header">
+                    <div id="leaderboard-main-title-container">
+                        <h1 id="leaderboard-main-title">Leaderboard</h1>
+                    </div>
+                    <div id="leaderboard-filters">
+                        <!-- --- Filter: Nation --- -->
+                        <div class="custom-dropdown">
+                            <button class="custom-dropdown-header">
+                                <div class="dropdown-icon">▼</div>
+                                <div class="dropdown-text" id="opt-nation" data-value="Global">by nation</div>
+                            </button>
+                            <div class="custom-dropdown-list" id="nation-dropdown-list">
+                                <div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>
+                            </div>
+                        </div>
+                        <!-- --- Filter: Upload Date --- -->
+                        <div class="custom-dropdown">
+                            <button class="custom-dropdown-header">
+                                <div class="dropdown-icon">▼</div>
+                                <div class="dropdown-text" id="opt-upload">by upload date</div>
+                            </button>
+                            <div class="custom-dropdown-list">
+                                <div class="custom-dropdown-item" id="opt-upload-1">Newest</div>
+                                <div class="custom-dropdown-item" id="opt-upload-2">Oldest</div>
+                            </div>
+                        </div>
+                        <!-- --- Filter: Time --- -->
+                        <div class="custom-dropdown">
+                            <button class="custom-dropdown-header">
+                                <div class="dropdown-icon">▼</div>
+                                <div class="dropdown-text" id="opt-time">by time</div>
+                            </button>
+                            <div class="custom-dropdown-list">
+                                <div class="custom-dropdown-item" id="opt-time-1">Shortest Time</div>
+                                <div class="custom-dropdown-item" id="opt-time-2">Longest Time</div>
+                            </div>
+                        </div>
+                        <!-- --- Filter: Game --- -->
+                        <div class="custom-dropdown">
+                            <button class="custom-dropdown-header">
+                                <div class="dropdown-icon">▼</div>
+                                <div class="dropdown-text" id="opt-game">by game</div>
+                            </button>
+                            <div class="custom-dropdown-list">
+                                <div class="custom-dropdown-item" id="opt-game-1">All Games</div>
+                                <div class="custom-dropdown-item" id="opt-game-2">Lumi Dungeon of Dreadspire</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="custom-dropdown">
-                        <button class="custom-dropdown-header">
-                            <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-upload">by upload date</div>
-                        </button>
-                        <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-upload-1">Newest</div>
-                            <div class="custom-dropdown-item" id="opt-upload-2">Oldest</div>
-                        </div>
-                    </div>
-                    <div class="custom-dropdown">
-                        <button class="custom-dropdown-header">
-                            <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-time">by time</div>
-                        </button>
-                        <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-time-1">Shortest Time</div>
-                            <div class="custom-dropdown-item" id="opt-time-2">Longest Time</div>
-                        </div>
-                    </div>
-                    <div class="custom-dropdown">
-                        <button class="custom-dropdown-header">
-                            <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-game">by game</div>
-                        </button>
-                        <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-game-1">All Games</div>
-                            <div class="custom-dropdown-item" id="opt-game-2">Lumi Dungeon of Dreadspire</div>
-                        </div>
-                    </div>
+                </div>
+
+                <!-- --- Leaderboard Column Headers --- -->
+                <div id="leaderboard-titlebar">
+                    <div id="leaderboard-profile-title">Profile</div>
+                    <div id="leaderboard-country-title">Country</div>
+                    <div id="leaderboard-game-title">Game</div>
+                    <div id="leaderboard-date-title">Date</div>
+                    <div id="leaderboard-time-title">Time</div>
+                    <div id="leaderboard-recordings-title">Recordings</div>
+                </div>
+
+                <!-- --- Container for Dynamic Leaderboard Cards --- -->
+                <div id="leaderboard-card-container">
                 </div>
             </div>
 
-            <div id="leaderboard-titlebar">
-                <div id="leaderboard-profile-title">Profile</div>
-                <div id="leaderboard-country-title">Country</div>
-                <div id="leaderboard-game-title">Game</div>
-                <div id="leaderboard-date-title">Date</div>
-                <div id="leaderboard-time-title">Time</div>
-                <div id="leaderboard-recordings-title">Recordings</div>
-            </div>
+            <!-- --- User Profile Section --- -->
+            <div id="profile-container" class="hidden">
+                <div id="profile-header">
+                    <div id="profile-picture"></div>
+                    <h2 id="profile-username" data-i18n="username">User1234</h2>
+                    <div id="profile-creation-date"><span id="profile-member-since">Member since:</span> 2024.01.15</div>
+                    <div id="profile-country-info">
+                        <div id="profile-flag"></div>
+                        <span id="profile-country-name-static">Hungary</span>
+                    </div>
+                </div>
 
-            <div id="leaderboard-card-container">
-            </div>
-        </div>
-
-        <div id="profile-container" class="hidden">
-            <div id="profile-header">
-                <div id="profile-picture"></div>
-                <h2 id="profile-username" data-i18n="username">User1234</h2>
-                <div id="profile-creation-date"><span id="profile-member-since">Member since:</span> 2024.01.15</div>
-                <div id="profile-country-info">
-                    <div id="profile-flag"></div>
-                    <span id="profile-country-name-static">Hungary</span>
+                <!-- --- Mini Leaderboard (Profile Context) --- -->
+                <div id="profile-mini-leaderboard">
+                    <h3 id="profile-mini-title">Leaderboard</h3>
+                    <div id="mini-leaderboard-cards">
+                    </div>
+                    <button id="profile-logout-button">Logout</button>
                 </div>
             </div>
+        </main>
 
-            <div id="profile-mini-leaderboard">
-                <h3 id="profile-mini-title">Leaderboard</h3>
-                <div id="mini-leaderboard-cards">
-                </div>
-                <button id="profile-logout-button">Logout</button>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <div id="footer-logo"></div>
-        <div id="footer-text-1" class="text-loading"></div>
-        <div id="footer-text-2" class="text-loading"></div>
-        <div id="footer-text-3" class="text-loading"></div>
-    </footer>
-</body>
-</html>
+        <!-- --- Footer --- -->
+        <footer>
+            <div id="footer-logo"></div>
+            <div id="footer-text-1" class="text-loading"></div>
+            <div id="footer-text-2" class="text-loading"></div>
+            <div id="footer-text-3" class="text-loading"></div>
+        </footer>
+    </body>
+    </html>

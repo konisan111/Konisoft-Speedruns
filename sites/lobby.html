@@ -1,26 +1,52 @@
+<!-- 
+ _           _         ___ _   
+| |_ ___ ___|_|___ ___|  _| |_ 
+| '_| . |   | |_ -| . |  _|  _|
+|_,_|___|_|_|_|___|___|_| |_|
+Konisoft Speedruns Platform
+If you want it, then you'll have to take it.
+
+lobby.html
+The main lobby for logged-in users. Displays the leaderboard, 
+user profiles, and provides video upload functionality.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- --- Meta Tags & Page Information --- -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Konisoft is an independent indie game studio located in Hungary, developing games in multiple genres to keep gamers happy and entertained.">
+    
+    <!-- --- Font Imports --- -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&swap" rel="stylesheet">
+    
+    <!-- --- Stylesheets --- -->
     <link rel="stylesheet" href="../style/lobby.css">
     <link id="theme-css" rel="stylesheet" href="../style/dark-theme.css">
+    
+    <!-- --- External Scripts --- -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script type="module" src="../scripts/main/lobby.js"></script>
-    <title>Konisoft | Welcome to the official Konisoft website</title>
+    
+    <!-- --- Title & Favicon --- -->
+    <title>Lobby | Welcome to Speedruns!</title>
     <link rel="icon" href="../images/favicon.png" type="image/x-icon" />
+    
+    <!-- --- Open Graph --- -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Konisoft | Welcome to the official Konisoft website">
+    <meta property="og:title" content="Lobby | Welcome to Speedruns!">
 </head>
 <body>
     <header>
+        <!-- --- Navigation Bar --- -->
         <nav>
             <div id="header-logo"></div>
             <div id="nav-buttons">
+                <!-- --- Menu Buttons (Desktop) --- -->
                 <div id="menu-buttons">
                     <a href="#" class="menu-button" id="nav-upload">Upload your time</a>
                     <div id="nav-split"></div>
@@ -31,6 +57,8 @@
                     <a href="https://konisoft.hu" class="menu-button" id="nav-profile">Konisoft</a>
                     <div id="nav-split"></div>
                 </div>
+
+                <!-- --- User Settings & Profile Sync --- -->
                 <div id="theme-and-settings">
                     <div id="nav-user-profile" class="hidden">
                         <div id="nav-profile-picture"></div>
@@ -44,6 +72,8 @@
                 </div>
             </div>
         </nav>
+
+        <!-- --- Dropdown Menus (Mobile) --- -->
         <div id="dropdown-menu">
             <a href="#" class="dropdown-menu-button" id="nav-upload-mobile">Upload your time</a>
             <a href="#" class="dropdown-menu-button" id="nav-home-mobile">Leaderboard</a>
@@ -55,8 +85,12 @@
             </div>
         </div>
     </header>
+
+    <!-- --- Background Grid --- -->
     <div class="grid"></div>
+    
     <main>
+        <!-- --- Video Upload Modal --- -->
         <div id="upload-modal" class="modal-overlay">
             <div class="modal-content">
                 <button id="close-upload-modal">×</button>
@@ -68,6 +102,7 @@
                     <p id="selected-file-name" style="font-size: 12px; margin-top: 5px; text-align: center;"></p>
                 </div>
 
+                <!-- --- Speedrun Time Inputs --- -->
                 <div class="input-group">
                     <label id="upload-time-label" style="font-size: 14px; font-weight: 600; color: var(--text-color);">Speedrun Time:</label>
                     <div class="time-inputs-container">
@@ -94,13 +129,16 @@
                 <div id="upload-progress-bar" style="width: 0%; height: 5px; background: cyan; margin-top: 15px; transition: width 0.3s; border-radius: 5px;"></div>
             </div>
         </div>
-        
+
+        <!-- --- Leaderboard Section --- -->
         <div id="leaderboard-container">
+            <!-- --- Leaderboard Header & Filters --- -->
             <div id="leaderboard-top-header">
                 <div id="leaderboard-main-title-container">
                     <h1 id="leaderboard-main-title">Leaderboard</h1>
                 </div>
                 <div id="leaderboard-filters">
+                    <!-- --- Filter: Nation --- -->
                     <div class="custom-dropdown">
                         <button class="custom-dropdown-header">
                             <div class="dropdown-icon">▼</div>
@@ -110,6 +148,7 @@
                             <div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>
                         </div>
                     </div>
+                    <!-- --- Filter: Upload Date --- -->
                     <div class="custom-dropdown">
                         <button class="custom-dropdown-header">
                             <div class="dropdown-icon">▼</div>
@@ -120,6 +159,7 @@
                             <div class="custom-dropdown-item" id="opt-upload-2">Oldest</div>
                         </div>
                     </div>
+                    <!-- --- Filter: Time --- -->
                     <div class="custom-dropdown">
                         <button class="custom-dropdown-header">
                             <div class="dropdown-icon">▼</div>
@@ -130,6 +170,7 @@
                             <div class="custom-dropdown-item" id="opt-time-2">Longest Time</div>
                         </div>
                     </div>
+                    <!-- --- Filter: Game --- -->
                     <div class="custom-dropdown">
                         <button class="custom-dropdown-header">
                             <div class="dropdown-icon">▼</div>
@@ -143,6 +184,7 @@
                 </div>
             </div>
 
+            <!-- --- Leaderboard Column Headers --- -->
             <div id="leaderboard-titlebar">
                 <div id="leaderboard-profile-title">Profile</div>
                 <div id="leaderboard-country-title">Country</div>
@@ -152,10 +194,12 @@
                 <div id="leaderboard-recordings-title">Recordings</div>
             </div>
 
+            <!-- --- Container for Dynamic Leaderboard Cards --- -->
             <div id="leaderboard-card-container">
             </div>
         </div>
 
+        <!-- --- User Profile Section --- -->
         <div id="profile-container" class="hidden">
             <div id="profile-header">
                 <div id="profile-picture"></div>
@@ -167,6 +211,7 @@
                 </div>
             </div>
 
+            <!-- --- Mini Leaderboard (Profile Context) --- -->
             <div id="profile-mini-leaderboard">
                 <h3 id="profile-mini-title">Leaderboard</h3>
                 <div id="mini-leaderboard-cards">
@@ -175,7 +220,8 @@
             </div>
         </div>
     </main>
-
+    
+    <!-- --- Footer --- -->
     <footer>
         <div id="footer-logo"></div>
         <div id="footer-text-1" class="text-loading"></div>

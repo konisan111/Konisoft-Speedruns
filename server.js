@@ -1,108 +1,142 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const https = require('https');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
-const { NodeHttpHandler } = require("@smithy/node-http-handler");
-const { v4: uuidv4 } = require('uuid'); // We have to install UUIDs
-require('dotenv').config();
+//  _           _         ___ _
+// | |_ ___ ___|_|___ ___|  _| |_
+// | '_| . |   | |_ -| . |  _|  _|
+// |_,_|___|_|_|_|___|___|_| |_|
+// Konisoft Speedruns Platform
+// If you want it, then you'll have to take it.
+//
+/**
+ * server.js
+ * Backend server for Konisoft Speedruns. Handles user authentication,
+ * MongoDB data persistence, S3-compatible file storage (R2), and
+ * leaderboard management.
+ */
 
-const { OAuth2Client } = require('google-auth-library');
+// --- Module Imports ---
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const https = require("https");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { NodeHttpHandler } = require("@smithy/node-http-handler");
+const { v4: uuidv4 } = require("uuid"); // We have to install UUIDs
+require("dotenv").config();
+
+const { OAuth2Client } = require("google-auth-library");
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const app = express();
 const JWT_SECRET = process.env.JWT_SECRET;
 
-app.use(cors({
-    origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'https://konisoft.hu'], 
-    methods: ['GET', 'POST'],
-    credentials: true
-}));
-app.use(express.json({ limit: '10mb' })); 
-app.use(express.urlencoded({ extended: true, limit: '10mb' })); // Increased limit for base64 images
+app.use(
+  cors({
+    origin: [
+      "http://127.0.0.1:5500",
+      "http://localhost:5500",
+      "https://konisoft.hu",
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  }),
+);
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" })); // Increased limit for base64 images
 
 const userSchema = new mongoose.Schema({
-    username: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    avatarUrl: { type: String },
-    nationality: { type: String},
-    userId: { type: String, unique: true },
-    videos: [{
-        videoId: { type: String },
-        videoUrl: { type: String },
-        approved: { type: Boolean, default: false },
-        speedrunTime: { type: Number },
-        uploadDate: { type: Date, default: Date.now }
-    }],
-    accountCreation: { type: Date, default: Date.now },
-    modViewEnabled: { type: Boolean, default: false }
+  username: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  avatarUrl: { type: String },
+  nationality: { type: String },
+  userId: { type: String, unique: true },
+  videos: [
+    {
+      videoId: { type: String },
+      videoUrl: { type: String },
+      approved: { type: Boolean, default: false },
+      speedrunTime: { type: Number },
+      uploadDate: { type: Date, default: Date.now },
+    },
+  ],
+  accountCreation: { type: Date, default: Date.now },
+  modViewEnabled: { type: Boolean, default: false },
 });
-const User = mongoose.model('User', userSchema);
+// --- Database Models ---
+const User = mongoose.model("User", userSchema);
 
-// JWT Authentication middleware
+/**
+ * Middleware to authenticate JWT tokens in request headers.
+ */
 const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
-    if (!token) return res.status(401).json({ error: "Access denied" });
+  if (!token) return res.status(401).json({ error: "Access denied" });
 
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) return res.status(403).json({ error: "Invalid token" });
-        req.user = user;
-        next();
-    });
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: "Invalid token" });
+    req.user = user;
+    next();
+  });
 };
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB!'))
-  .catch(err => console.error('MongoDB error:', err));
+// --- Database Connection ---
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("[SPEEDRUNS]> Connected to MongoDB!"))
+  .catch((err) => console.error("[SPEEDRUNS]> MongoDB error:", err));
 
-  const os = require('os');
-  
-  function getProgressBar(percent) {
-    const size = 20;
-    const safePercent = Math.min(Math.max(percent || 0, 0), 100);
-    const completed = Math.round(size * (safePercent / 100));
-    const remaining = size - completed;
-    return '[' + '█'.repeat(completed) + ' '.repeat(remaining) + ']';
-    }
-  
-  app.get('/api/stats', (req, res) => {
-      const totalMem = os.totalmem();
-      const freeMem = os.freemem();
-      const usedMem = totalMem - freeMem;
-      const memUsagePercent = ((usedMem / totalMem) * 100).toFixed(1);
-  
-      const cpus = os.cpus();
-      const loadAvg = os.loadavg()[0]; 
-      const cpuUsagePercent = ((loadAvg / cpus.length) * 100).toFixed(1);
-  
-      const uptime = os.uptime();
-      const hours = Math.floor(uptime / 3600);
-      const mins = Math.floor((uptime % 3600) / 60);
-      const secs = Math.floor(uptime % 60);
-  
-      res.json({
-          ram: {
-              percent: memUsagePercent,
-              bar: getProgressBar(memUsagePercent),
-              used: (usedMem / 1024 / 1024 / 1024).toFixed(2),
-              total: (totalMem / 1024 / 1024 / 1024).toFixed(2)
-          },
-          cpu: {
-              percent: cpuUsagePercent,
-              bar: getProgressBar(cpuUsagePercent)
-          },
-          uptime: `${hours}h ${mins}m ${secs}s`
-      });
+const os = require("os");
+
+/**
+ * Generates an ASCII progress bar for system statistics.
+ * @param {number} percent - The percentage value.
+ * @returns {string} - The formatted progress bar string.
+ */
+function getProgressBar(percent) {
+  const size = 20;
+  const safePercent = Math.min(Math.max(percent || 0, 0), 100);
+  const completed = Math.round(size * (safePercent / 100));
+  const remaining = size - completed;
+  return "[" + "█".repeat(completed) + " ".repeat(remaining) + "]";
+}
+
+// --- System Monitoring Routes ---
+app.get("/api/stats", (req, res) => {
+  const totalMem = os.totalmem();
+  const freeMem = os.freemem();
+  const usedMem = totalMem - freeMem;
+  const memUsagePercent = ((usedMem / totalMem) * 100).toFixed(1);
+
+  const cpus = os.cpus();
+  const loadAvg = os.loadavg()[0];
+  const cpuUsagePercent = ((loadAvg / cpus.length) * 100).toFixed(1);
+
+  const uptime = os.uptime();
+  const hours = Math.floor(uptime / 3600);
+  const mins = Math.floor((uptime % 3600) / 60);
+  const secs = Math.floor(uptime % 60);
+
+  res.json({
+    ram: {
+      percent: memUsagePercent,
+      bar: getProgressBar(memUsagePercent),
+      used: (usedMem / 1024 / 1024 / 1024).toFixed(2),
+      total: (totalMem / 1024 / 1024 / 1024).toFixed(2),
+    },
+    cpu: {
+      percent: cpuUsagePercent,
+      bar: getProgressBar(cpuUsagePercent),
+    },
+    uptime: `${hours}h ${mins}m ${secs}s`,
   });
-  
-  app.get('/', (req, res) => {
-    res.send(`
+});
+
+// --- Server Status Dashboard ---
+app.get("/", (req, res) => {
+  res.send(`
       <!DOCTYPE html>
       <html lang="hu">
       <head>
@@ -216,7 +250,7 @@ mongoose.connect(process.env.MONGO_URI)
                       document.getElementById('ram-stat').innerText = \`RAM USED: \${data.ram.bar} \${data.ram.percent}% (\${data.ram.used}GB/\${data.ram.total}GB)\`;
                       document.getElementById('uptime-stat').innerText = \`UPTIME: \${data.uptime}\`;
                   } catch (err) {
-                      console.error('Error fetching stats:', err);
+                      console.error('[SPEEDRUNS]> Error fetching stats:', err);
                   }
               }
   
@@ -228,369 +262,431 @@ mongoose.connect(process.env.MONGO_URI)
     `);
 });
 
+/**
+ * Verifies the presence and validity of a JWT token.
+ */
 const verifyToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if (!token) return res.status(401).json({ error: "No token" });
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.status(401).json({ error: "No token" });
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return res.status(403).json({ error: "Invalid token" });
-        req.user = user;
-        next();
-    });
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: "Invalid token" });
+    req.user = user;
+    next();
+  });
 };
 
-app.post('/register', async (req, res) => {
-    console.log("DEBUG: ", req.body);
-    try {
-        const { username, email, password, nationality, imageData, fileName } = req.body;
+// --- User Authentication Routes ---
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+/**
+ * Registers a new user with an optional avatar upload.
+ */
+app.post("/register", async (req, res) => {
+  console.log("[SPEEDRUNS]> ", req.body);
+  try {
+    const { username, email, password, nationality, imageData, fileName } =
+      req.body;
 
-        // Uploading image to R2
-        let profileImageUrl = "";
-        if (imageData) {
-            const fileKey = `avatars/${Date.now()}-${fileName}`;
-            const uploadParams = {
-                Bucket: process.env.R2_BUCKET,
-                Key: fileKey,
-                Body: Buffer.from(imageData, 'base64'),
-                ContentType: 'image/png'
-            };
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-            await s3.send(new PutObjectCommand(uploadParams));
-            // Assembling the public URL
-            profileImageUrl = `${process.env.R2_PUBLIC_URL}/${fileKey}`;
-        }
+    // Uploading image to R2
+    let profileImageUrl = "";
+    if (imageData) {
+      const fileKey = `avatars/${Date.now()}-${fileName}`;
+      const uploadParams = {
+        Bucket: process.env.R2_BUCKET,
+        Key: fileKey,
+        Body: Buffer.from(imageData, "base64"),
+        ContentType: "image/png",
+      };
 
-        // Saving in MongoDB
-        const newUser = new User({
-            username,
-            email,
-            password: hashedPassword,
-            nationality,
-            avatarUrl: profileImageUrl,
-            userId: uuidv4() // Generating an ID
-        });
-
-        await newUser.save();
-        const token = jwt.sign(
-            { userId: newUser.userId, username: newUser.username }, 
-            JWT_SECRET, 
-            { expiresIn: '24h' }
-        );
-
-        res.status(201).json({ 
-            message: "Successful registration!", 
-            token: token,
-            user: { username, email, userId: newUser.userId } 
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "There was an error while registrating!" });
+      await s3.send(new PutObjectCommand(uploadParams));
+      // Assembling the public URL
+      profileImageUrl = `${process.env.R2_PUBLIC_URL}/${fileKey}`;
     }
+
+    // Saving in MongoDB
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      nationality,
+      avatarUrl: profileImageUrl,
+      userId: uuidv4(), // Generating an ID
+    });
+
+    await newUser.save();
+    const token = jwt.sign(
+      { userId: newUser.userId, username: newUser.username },
+      JWT_SECRET,
+      { expiresIn: "24h" },
+    );
+
+    res.status(201).json({
+      message: "Successful registration!",
+      token: token,
+      user: { username, email, userId: newUser.userId },
+    });
+  } catch (err) {
+    console.error("[SPEEDRUNS]> ", err);
+    res.status(500).json({ error: "There was an error while registrating!" });
+  }
 });
 
-app.post('/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email });
-        
-        if (!user || !(await bcrypt.compare(password, user.password))) {
-            return res.status(401).json({ error: "Invalid credentials" });
-        }
+/**
+ * Authenticates a user and returns a JWT token.
+ */
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-        const token = jwt.sign({ userId: user.userId, username: user.username }, JWT_SECRET, { expiresIn: '24h' });
-        res.status(200).json({ 
-            token, 
-            modViewEnabled: user.modViewEnabled || false 
-        });
-        res.json({ message: "Login successful", token });
-    } catch (err) {
-        res.status(500).json({ error: "Login error" });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ error: "Invalid credentials" });
     }
+
+    const token = jwt.sign(
+      { userId: user.userId, username: user.username },
+      JWT_SECRET,
+      { expiresIn: "24h" },
+    );
+    res.status(200).json({
+      token,
+      modViewEnabled: user.modViewEnabled || false,
+    });
+    res.json({ message: "Login successful", token });
+  } catch (err) {
+    res.status(500).json({ error: "Login error" });
+  }
 });
 
-app.post('/google-login', async (req, res) => {
-    const { idToken } = req.body;
+/**
+ * Handles user authentication via Google OAuth2.
+ */
+app.post("/google-login", async (req, res) => {
+  const { idToken } = req.body;
 
-    try {
-        const ticket = await googleClient.verifyIdToken({
-            idToken,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        const payload = ticket.getPayload();
-        const { email, name, picture } = payload;
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
 
-        let user = await User.findOne({ email });
-        let isNewUser = false;
+    let user = await User.findOne({ email });
+    let isNewUser = false;
 
-        if (!user) {
-            isNewUser = true;
-            user = new User({
-                username: name,
-                email: email,
-                password: "GOOGLE_AUTH_USER_" + uuidv4(),
-                avatarUrl: picture,
-                nationality: "Unknown",
-                userId: uuidv4()
-            });
-            await user.save();
-        }
-
-        const token = jwt.sign(
-            { userId: user.userId, username: user.username }, 
-            JWT_SECRET, 
-            { expiresIn: '24h' }
-        );
-
-        res.json({ 
-            message: "Google Login Successful", 
-            token, 
-            avatarUrl: user.avatarUrl,
-            isNewUser: isNewUser,
-            nationality: user.nationality
-        });
-    } catch (error) {
-        console.error("Google Auth Error:", error);
-        res.status(401).json({ error: "Invalid Google token" });
+    if (!user) {
+      isNewUser = true;
+      user = new User({
+        username: name,
+        email: email,
+        password: "GOOGLE_AUTH_USER_" + uuidv4(),
+        avatarUrl: picture,
+        nationality: "Unknown",
+        userId: uuidv4(),
+      });
+      await user.save();
     }
+
+    const token = jwt.sign(
+      { userId: user.userId, username: user.username },
+      JWT_SECRET,
+      { expiresIn: "24h" },
+    );
+
+    res.json({
+      message: "Google Login Successful",
+      token,
+      avatarUrl: user.avatarUrl,
+      isNewUser: isNewUser,
+      nationality: user.nationality,
+    });
+  } catch (error) {
+    console.error("[SPEEDRUNS]> Google Auth Error:", error);
+    res.status(401).json({ error: "Invalid Google token" });
+  }
 });
 
-app.post('/complete-google-profile', authenticateToken, async (req, res) => {
-    try {
-        const { nationality, imageData, fileName } = req.body;
-        const userId = req.user.userId;
+/**
+ * Finalizes profile setup for users who registered via Google.
+ */
+app.post("/complete-google-profile", authenticateToken, async (req, res) => {
+  try {
+    const { nationality, imageData, fileName } = req.body;
+    const userId = req.user.userId;
 
-        let updateData = { nationality: nationality };
+    let updateData = { nationality: nationality };
 
-        if (imageData) {
-            const fileKey = `avatars/${userId}-${Date.now()}-${fileName}`;
-            const uploadParams = {
-                Bucket: process.env.R2_BUCKET,
-                Key: fileKey,
-                Body: Buffer.from(imageData, 'base64'),
-                ContentType: 'image/png'
-            };
+    if (imageData) {
+      const fileKey = `avatars/${userId}-${Date.now()}-${fileName}`;
+      const uploadParams = {
+        Bucket: process.env.R2_BUCKET,
+        Key: fileKey,
+        Body: Buffer.from(imageData, "base64"),
+        ContentType: "image/png",
+      };
 
-            await s3.send(new PutObjectCommand(uploadParams));
-            updateData.avatarUrl = `${process.env.R2_PUBLIC_URL}/${fileKey}`;
-        }
-
-        const updatedUser = await User.findOneAndUpdate(
-            { userId: userId },
-            updateData,
-            { new: true }
-        );
-
-        res.json({ message: "Google profile is ready!", user: updatedUser });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "There was an error while finishing the google profile!" });
+      await s3.send(new PutObjectCommand(uploadParams));
+      updateData.avatarUrl = `${process.env.R2_PUBLIC_URL}/${fileKey}`;
     }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { userId: userId },
+      updateData,
+      { new: true },
+    );
+
+    res.json({ message: "Google profile is ready!", user: updatedUser });
+  } catch (err) {
+    console.error("[SPEEDRUNS]> ", err);
+    res.status(500).json({
+      error: "There was an error while finishing the google profile!",
+    });
+  }
 });
 
-app.post('/update-pfp', authenticateToken, async (req, res) => {
-    try {
-        const { imageData, fileName } = req.body;
-        const userId = req.user.userId;
+/**
+ * Updates the authenticated user's profile picture.
+ */
+app.post("/update-pfp", authenticateToken, async (req, res) => {
+  try {
+    const { imageData, fileName } = req.body;
+    const userId = req.user.userId;
 
-        if (!imageData) {
-            return res.status(400).json({ error: "No image data provided" });
-        }
-
-        const fileKey = `avatars/${userId}-${Date.now()}-${fileName}`;
-        const uploadParams = {
-            Bucket: process.env.R2_BUCKET,
-            Key: fileKey,
-            Body: Buffer.from(imageData, 'base64'),
-            ContentType: 'image/png'
-        };
-
-        await s3.send(new PutObjectCommand(uploadParams));
-        const profileImageUrl = `${process.env.R2_PUBLIC_URL}/${fileKey}`;
-
-        const updatedUser = await User.findOneAndUpdate(
-            { userId: userId },
-            { avatarUrl: profileImageUrl },
-            { new: true }
-        );
-
-        res.json({ 
-            message: "Profile picture updated!", 
-            avatarUrl: profileImageUrl 
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to update profile picture" });
+    if (!imageData) {
+      return res.status(400).json({ error: "No image data provided" });
     }
+
+    const fileKey = `avatars/${userId}-${Date.now()}-${fileName}`;
+    const uploadParams = {
+      Bucket: process.env.R2_BUCKET,
+      Key: fileKey,
+      Body: Buffer.from(imageData, "base64"),
+      ContentType: "image/png",
+    };
+
+    await s3.send(new PutObjectCommand(uploadParams));
+    const profileImageUrl = `${process.env.R2_PUBLIC_URL}/${fileKey}`;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { userId: userId },
+      { avatarUrl: profileImageUrl },
+      { new: true },
+    );
+
+    res.json({
+      message: "Profile picture updated!",
+      avatarUrl: profileImageUrl,
+    });
+  } catch (err) {
+    console.error("[SPEEDRUNS]> ", err);
+    res.status(500).json({ error: "Failed to update profile picture" });
+  }
 });
 
-app.get('/me', authenticateToken, async (req, res) => {
-    try {
-        const user = await User.findOne({ userId: req.user.userId });
-        if (!user) return res.status(404).json({ error: "Felhasználó nem található" });
+/**
+ * Retrieves the authenticated user's profile data.
+ */
+app.get("/me", authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findOne({ userId: req.user.userId });
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-        res.json({
-            username: user.username,
-            avatarUrl: user.avatarUrl,
-            nationality: user.nationality,
-            accountCreation: user.accountCreation
-        });
-    } catch (err) {
-        res.status(500).json({ error: "Hiba a profil lekérésekor" });
-    }
+    res.json({
+      username: user.username,
+      avatarUrl: user.avatarUrl,
+      nationality: user.nationality,
+      accountCreation: user.accountCreation,
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Error retrieving profile" });
+  }
 });
 
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
+// --- Storage Configuration (Cloudflare R2) ---
 const s3 = new S3Client({
-    region: "auto",
-    endpoint: process.env.R2_ENDPOINT,
-    credentials: {
-        accessKeyId: process.env.R2_ACCESS_KEY,
-        secretAccessKey: process.env.R2_SECRET_KEY,
-    },
-    forcePathStyle: true,
-    requestHandler: new NodeHttpHandler({
-        httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-        }),
+  region: "auto",
+  endpoint: process.env.R2_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY,
+    secretAccessKey: process.env.R2_SECRET_KEY,
+  },
+  forcePathStyle: true,
+  requestHandler: new NodeHttpHandler({
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false,
     }),
+  }),
 });
 
-app.post('/upload-video', verifyToken, upload.single('video'), async (req, res) => {
+// --- Content Management Routes ---
+
+/**
+ * Uploads a speedrun video to storage and records the entry in the database.
+ */
+app.post(
+  "/upload-video",
+  verifyToken,
+  upload.single("video"),
+  async (req, res) => {
     try {
-        if (!req.file) return res.status(400).json({ error: "No file" });
+      if (!req.file) return res.status(400).json({ error: "No file" });
 
-        const videoId = uuidv4();
-        const fileExtension = req.file.originalname.split('.').pop();   
-        const fileName = `${videoId}.${fileExtension}`;
+      const videoId = uuidv4();
+      const fileExtension = req.file.originalname.split(".").pop();
+      const fileName = `${videoId}.${fileExtension}`;
 
-        await s3.send(new PutObjectCommand({
-            Bucket: process.env.R2_BUCKET,
-            Key: fileName,
-            Body: req.file.buffer,
-            ContentType: req.file.mimetype
-        }));
+      await s3.send(
+        new PutObjectCommand({
+          Bucket: process.env.R2_BUCKET,
+          Key: fileName,
+          Body: req.file.buffer,
+          ContentType: req.file.mimetype,
+        }),
+      );
 
-        const rawPublicUrl = process.env.R2_PUBLIC_URL || "";
-        const publicUrl = rawPublicUrl.endsWith('/') ? rawPublicUrl : `${rawPublicUrl}/`;
-        const cleanFileName = fileName.startsWith('/') ? fileName.substring(1) : fileName;
-        const videoUrl = `${publicUrl}${cleanFileName}`;
+      const rawPublicUrl = process.env.R2_PUBLIC_URL || "";
+      const publicUrl = rawPublicUrl.endsWith("/")
+        ? rawPublicUrl
+        : `${rawPublicUrl}/`;
+      const cleanFileName = fileName.startsWith("/")
+        ? fileName.substring(1)
+        : fileName;
+      const videoUrl = `${publicUrl}${cleanFileName}`;
 
-        await User.findOneAndUpdate(
-            { userId: req.user.userId },
-            { 
-                $push: { 
-                    videos: { 
-                        videoId: videoId, 
-                        videoUrl: videoUrl,
-                        approved: false,
-                        speedrunTime: Number(req.body.speedrunTime),
-                        uploadDate: new Date()
-                    } 
-                } 
-            }
-        );
+      await User.findOneAndUpdate(
+        { userId: req.user.userId },
+        {
+          $push: {
+            videos: {
+              videoId: videoId,
+              videoUrl: videoUrl,
+              approved: false,
+              speedrunTime: Number(req.body.speedrunTime),
+              uploadDate: new Date(),
+            },
+          },
+        },
+      );
 
-        res.status(200).json({ message: "Success", videoUrl });
-
+      res.status(200).json({ message: "Success", videoUrl });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message });
+      console.error("[SPEEDRUNS]> ", err);
+      res.status(500).json({ error: err.message });
     }
-});
+  },
+);
 
-app.get('/leaderboard', async (req, res) => {
-    try {
-        const users = await User.find({ "videos.0": { $exists: true } });
+// --- Leaderboard Routes ---
 
-        let allApprovedVideos = [];
+/**
+ * Retrieves the public leaderboard (top 50 approved videos).
+ */
+app.get("/leaderboard", async (req, res) => {
+  try {
+    const users = await User.find({ "videos.0": { $exists: true } });
 
-        users.forEach(user => {
-            user.videos.forEach(vid => {
-                if (vid.approved) {
-                    allApprovedVideos.push({
-                        username: user.username,
-                        avatarUrl: user.avatarUrl,
-                        nationality: user.nationality || "hu",
-                        speedrunTime: vid.speedrunTime,
-                        videoUrl: vid.videoUrl,
-                        uploadDate: vid.uploadDate
-                    });
-                }
-            });
-        });
+    let allApprovedVideos = [];
 
-        allApprovedVideos.sort((a, b) => a.speedrunTime - b.speedrunTime);
-
-        res.json(allApprovedVideos.slice(0, 50));
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Hiba a ranglista generálásakor" });
-    }
-});
-
-app.post('/verify-video', async (req, res) => {
-    const { email, videoUrl, approved } = req.body;
-
-    try {
-        if (approved === false) {
-            await User.findOneAndUpdate(
-                { email },
-                { $pull: { videos: { videoUrl: videoUrl } } }
-            );
-            return res.status(200).json({ message: "Videó törölve" });
-        } else {
-            const user = await User.findOne({ email });
-            if (!user) return res.status(404).json({ error: "Felhasználó nem található" });
-
-            const video = user.videos.find(v => v.videoUrl === videoUrl);
-            if (!video) return res.status(404).json({ error: "Videó nem található" });
-
-            video.approved = true;
-            await user.save();
-            return res.status(200).json({ message: "Videó elfogadva" });
+    users.forEach((user) => {
+      user.videos.forEach((vid) => {
+        if (vid.approved) {
+          allApprovedVideos.push({
+            username: user.username,
+            avatarUrl: user.avatarUrl,
+            nationality: user.nationality || "hu",
+            speedrunTime: vid.speedrunTime,
+            videoUrl: vid.videoUrl,
+            uploadDate: vid.uploadDate,
+          });
         }
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+      });
+    });
+
+    allApprovedVideos.sort((a, b) => a.speedrunTime - b.speedrunTime);
+
+    res.json(allApprovedVideos.slice(0, 50));
+  } catch (err) {
+    console.error("[SPEEDRUNS]> ", err);
+    res
+      .status(500)
+      .json({ error: "There was an error while generating the leaderboard!" });
+  }
 });
 
-app.get('/mod-leaderboard', async (req, res) => {
-    try {
-        const users = await User.find({ "videos.0": { $exists: true } });
-        let allVideos = [];
+// --- Moderator Routes ---
 
-        users.forEach(user => {
-            user.videos.forEach(vid => {
-                allVideos.push({
-                    username: user.username,
-                    email: user.email,
-                    avatarUrl: user.avatarUrl,
-                    nationality: user.nationality || "hu",
-                    speedrunTime: vid.speedrunTime,
-                    videoUrl: vid.videoUrl,
-                    approved: vid.approved,
-                    uploadDate: vid.uploadDate
-                });
-            });
+/**
+ * Approves or rejects a submitted speedrun video.
+ */
+app.post("/verify-video", async (req, res) => {
+  const { email, videoUrl, approved } = req.body;
+
+  try {
+    if (approved === false) {
+      await User.findOneAndUpdate(
+        { email },
+        { $pull: { videos: { videoUrl: videoUrl } } },
+      );
+      return res.status(200).json({ message: "Video deleted" });
+    } else {
+      const user = await User.findOne({ email });
+      if (!user) return res.status(404).json({ error: "User not found" });
+
+      const video = user.videos.find((v) => v.videoUrl === videoUrl);
+      if (!video) return res.status(404).json({ error: "Video not found" });
+
+      video.approved = true;
+      await user.save();
+      return res.status(200).json({ message: "Video approved" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * Retrieves all speedrun submissions (approved and pending) for moderators.
+ */
+app.get("/mod-leaderboard", async (req, res) => {
+  try {
+    const users = await User.find({ "videos.0": { $exists: true } });
+    let allVideos = [];
+
+    users.forEach((user) => {
+      user.videos.forEach((vid) => {
+        allVideos.push({
+          username: user.username,
+          email: user.email,
+          avatarUrl: user.avatarUrl,
+          nationality: user.nationality || "hu",
+          speedrunTime: vid.speedrunTime,
+          videoUrl: vid.videoUrl,
+          approved: vid.approved,
+          uploadDate: vid.uploadDate,
         });
+      });
+    });
 
-        res.json(allVideos);
-    } catch (err) {
-        res.status(500).json({ error: "Hiba" });
-    }
+    res.json(allVideos);
+  } catch (err) {
+    res.status(500).json({ error: "Error" });
+  }
 });
 
+// --- Server Initialization ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
+  console.log(`[SPEEDRUNS]> Server is running on ${PORT}`);
 });
 
-console.log("Is Google ID loaded:", process.env.GOOGLE_CLIENT_ID ? "Yes" : "No");
+console.log(
+  "[SPEEDRUNS]> Is Google ID loaded:",
+  process.env.GOOGLE_CLIENT_ID ? "Yes" : "No",
+);
