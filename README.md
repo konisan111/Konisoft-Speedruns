@@ -8,19 +8,18 @@
   <img src="https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white" alt="Unity">
   <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code">
   
+  <br>
+
+  <img src="https://img.shields.io/badge/Pixilart-%23FF4D6D?style=for-the-badge&logo=heart&logoColor=white" alt="Pixilart">
+  <img src="https://img.shields.io/badge/Doxygen-%234A5568?style=for-the-badge&logo=icloud&logoColor=white" alt="Doxygen">
+  <img src="https://img.shields.io/badge/Soundtrap-%239F7AEA?style=for-the-badge&logo=spotify&logoColor=white" alt="Soundtrap">
   <img src="https://img.shields.io/badge/REST%20API-02303A?style=for-the-badge&logo=insomnia&logoColor=white" alt="REST API">
+
+  <br>
+
   <img src="https://img.shields.io/badge/Cloudflare%20R2-F38020?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Cloudflare R2">
   <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render">
   <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
-  <img src="https://img.shields.io/badge/Konisoft-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white" alt="Konisoft">
-
-  <br>
-
-  <img src="https://img.shields.io/badge/Pixilart-FF0000?style=for-the-badge&logo=heart&logoColor=white" alt="Pixilart">
-  <img src="https://img.shields.io/badge/Soundtrap-FF0000?style=for-the-badge&logo=heart&logoColor=white" alt="Soundtrap">
-  <img src="https://img.shields.io/badge/Doxygen-FF0000?style=for-the-badge&logo=heart&logoColor=white" alt="Doxygen">
-
-  <br>
   <img src="https://img.shields.io/github/commit-activity/m/konisan111/Konisoft-Speedruns?label=COMMITS&style=flat-square&color=orange" alt="Commits">
 </p>
 
@@ -104,6 +103,8 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 
 ## 📸 Frontend Screenshotok
 
+Itt találhatóak a platformról készült screenshotok. Világos és Sötét témában is operál a weboldal, illetve van rajta Magyar, és Angol fordítási lehetőség.
+
 <p align="center">
   <img src="https://i.ibb.co/7tCYzFzJ/Screenshot-2026-03-30-002820.png" width="48%">
   <img src="https://i.ibb.co/9HGfBw57/Screenshot-2026-03-30-002849.png" width="48%">
@@ -120,6 +121,8 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 
 ## 🌐 Adatbázis (ER) Diagramm és Architektúra
 
+dbDiagram generált képek, egy ER és egy architektúra egészen a böngészőtől az összes szerverig, és hostig.
+
 <p align="center">
   <img src="https://i.ibb.co/8DnWWHq7/mongodb.png" width="48%">
   <img src="https://i.ibb.co/pjYGCZ6P/systemarchitecture.png" width="48%">
@@ -129,6 +132,9 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 
 ## 🟠 Cloudflare R2
 
+Cloudflare R2-t használtunk a nagyobb, videó fájlok, illetve a profilképek tárolására.
+Az alábbi képeken látható a traffic a szerveren.
+
 <p align="center">
   <img src="https://i.ibb.co/v6P1QK52/Screenshot-2026-03-30-141800.png" width="48%">
   <img src="https://i.ibb.co/vCYdScXV/image.png" width="48%">
@@ -137,7 +143,7 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 ---
 
 <p align="center">
-  <img src="https://i.ibb.co/twNrWB14/lumi-github-banner.png" width="100%"><br>
+  <img src="https://i.ibb.co/twNrWB14/lumi-github-banner.png"><br>
 </p>
 
 <h1 align="left">Lumi Dungeon Of Dreadspire</h1>
@@ -156,6 +162,12 @@ A fájlok mérete (3GB) miatt a forráskód külső tárhelyen érhető el.
 
 - **Játék letöltése (Build):** [GitHub Releases](https://github.com/konisan111/Konisoft-Speedruns/releases)
 - **Forráskód (3GB):** [Google Drive Link](https://drive.google.com/drive/folders/1nxTFdSdkzDtbkNJnvbn2wdBU1tyzj3o2?usp=sharing)
+
+## 🔵 DOXYGEN, C# kódok, és Diagrammok
+
+A repositoryban létrehoztunk egy teljes doxygen diagramm generálást a Lumi Dungeon Of Dreadspire játék forráskódjának scriptjeihez. Ezek a kódok nyersen megtalálhatóak a `.\lumi\scripts` mappán belül!
+
+> Érdemes a Doxygen-t az index.html-el elindítani a `.\doxygen\` mappából, innen már mindent látni fognak.
 
 ---
 
