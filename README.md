@@ -76,19 +76,19 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 
 A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táblázat foglalja össze a tervezett mérföldköveket és azok aktuális állapotát.
 
-| Fázis               | Feladat megnevezése                     | Leadandó / Kimenet (Output)            | Állapot |
-| :------------------ | :-------------------------------------- | :------------------------------------- | :-----: |
-| **1. Tervezés**     | Csapatalkotás és szerepkörök (2-3 fő)   | Munkamegosztási terv                   |    ✔    |
-|                     | Problémafelvetés és funkcionális terv   | Szoftver céljának leírása              |    ✔    |
-|                     | Technológiai stack kiválasztása         | Rendszerarchitektúra vázlat            |    ✔    |
-|                     | **Adatbázis tervezése**                 | **Adatbázismodell-diagram (ER)**       |   ❌    |
-| **2. Fejlesztés**   | **RESTful szerver** (API) megvalósítása | Szerveroldali forráskód                |    ✔    |
-|                     | **Kliensoldali fejlesztés** (Web/Mobil) | Kliensoldali forráskód                 |    ✔    |
-|                     | CRUD funkciók és adattárolás            | Működő szoftveralkalmazás              |    ✔    |
-|                     | Clean Code felülvizsgálat               | Tiszta, dokumentált kód                |   ❌    |
-|                     | Lumi Technikusi verzió                  | Debuggolt, értékelésre elkészített kód |    ✔    |
-| **3. Dokumentálás** | Műszaki és felhasználói leírás          | **Szoftveralkalmazás dokumentációja**  |   ❌    |
-|                     | Adatbázis exportálása                   | **Adatbázis dump (.sql)**              |   ❌    |
+| Fázis               | Feladat megnevezése                   | Leadandó / Kimenet (Output)            | Állapot |
+| :------------------ | :------------------------------------ | :------------------------------------- | :-----: |
+| **1. Tervezés**     | Csapatalkotás és szerepkörök (2-3 fő) | Munkamegosztási terv                   |    ✔    |
+|                     | Problémafelvetés és funkcionális terv | Szoftver céljának leírása              |    ✔    |
+|                     | Technológiai stack kiválasztása       | Rendszerarchitektúra vázlat            |    ✔    |
+|                     | Adatbázis tervezése                   | Adatbázismodell-diagram (ER)           |    ✔    |
+| **2. Fejlesztés**   | RESTful szerver (API) megvalósítása   | Szerveroldali forráskód                |    ✔    |
+|                     | Kliensoldali fejlesztés (Web/Mobil)   | Kliensoldali forráskód                 |    ✔    |
+|                     | CRUD funkciók és adattárolás          | Működő szoftveralkalmazás              |    ✔    |
+|                     | Clean Code felülvizsgálat             | Tiszta, dokumentált kód                |    ✔    |
+|                     | Lumi Technikusi verzió                | Debuggolt, értékelésre elkészített kód |    ✔    |
+| **3. Dokumentálás** | Műszaki és felhasználói leírás        | **Szoftveralkalmazás dokumentációja**  |   ❌    |
+|                     | Adatbázis exportálása                 | **Adatbázis dump (.sql)**              |   ❌    |
 
 ---
 
@@ -108,6 +108,17 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 </p>
 <p align="center">
   <img src="https://i.ibb.co/DDGdnjRw/Screenshot-2026-03-30-002555.png" width="100%"><br>
+</p>
+
+---
+
+## 🌐 Adatbázis (ER) Diagramm és Architektúra
+
+<p align="center">
+  <img src="https://i.ibb.co/8DnWWHq7/mongodb.png" width="100%"><br>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/pjYGCZ6P/systemarchitecture.png" width="100%"><br>
 </p>
 
 ---
