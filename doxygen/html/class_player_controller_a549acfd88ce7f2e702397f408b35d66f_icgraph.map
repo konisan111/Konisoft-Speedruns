@@ -1,0 +1,7 @@
+<map id="PlayerController.VibrateController" name="PlayerController.VibrateController">
+<area shape="rect" id="Node000001" title=" " alt="" coords="452,5,611,48"/>
+<area shape="rect" id="Node000002" href="$class_player_controller.html#adf8ef53ad5c37325570500afd5e45fc4" title=" " alt="" coords="214,13,404,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="434,27,405,29,405,24,439,27"/>
+<area shape="rect" id="Node000003" href="$class_player_controller.html#ae8bc83dffb99867a04be016473ed2c43" title=" " alt="" coords="5,13,166,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="195,27,166,29,166,24,201,26"/>
+</map>

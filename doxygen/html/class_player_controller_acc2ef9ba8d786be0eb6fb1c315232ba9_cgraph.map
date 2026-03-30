@@ -1,0 +1,7 @@
+<map id="PlayerController.StarRatingSystem" name="PlayerController.StarRatingSystem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,186,48"/>
+<area shape="rect" id="Node000002" href="$class_player_controller.html#ac5c1dde8da7de826d5ef155f0d60167b" title=" " alt="" coords="234,13,413,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,24,221,26,215,27,186,29"/>
+<area shape="rect" id="Node000003" href="$class_game_manager.html#a5aeebbbe3a1cd70f965e9323aab1a354" title=" " alt="" coords="461,13,663,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="414,24,448,27,443,27,414,29"/>
+</map>

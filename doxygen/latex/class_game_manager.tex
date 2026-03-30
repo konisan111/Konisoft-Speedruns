@@ -1,0 +1,213 @@
+\doxysection{Game\+Manager Class Reference}
+\hypertarget{class_game_manager}{}\label{class_game_manager}\index{GameManager@{GameManager}}
+
+
+Inheritance diagram for Game\+Manager:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{class_game_manager__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Game\+Manager:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{class_game_manager__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576}{Difficulty}} \{ \doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576a7f943921724d63dc0ac9c6febf99fa88}{Easy}}
+, \doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576a87f8a6ab85c9ced3702b4ea641ad4bb5}{Medium}}
+, \doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576a3656183169810334a96b91129dc9d881}{Hard}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \doxymbox{\hyperlink{class_game_manager_afb225eff942b6dc6031938ee4c492705}{Get\+Version}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_manager_ac947d0586616b03ba1811a3416e2eb91}{Set\+Volume}} (float value)
+\item 
+float \doxymbox{\hyperlink{class_game_manager_aa9493689deee019e17884444ded356a7}{Get\+Volume}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_manager_a2758166f2a8fd718ce7e3c084951b8dd}{Add\+Death}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_manager_a1a59058034610ffb0b2e0fa08f09acc6}{Set\+Death\+Count}} (int value)
+\item 
+int \doxymbox{\hyperlink{class_game_manager_a7e19d2e61c3a1561c607201f2389b51a}{Get\+Death\+Count}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_manager_a5aeebbbe3a1cd70f965e9323aab1a354}{Save\+Level\+Stars}} (string level\+Name, int stars\+Earned)
+\item 
+int \doxymbox{\hyperlink{class_game_manager_af7554fa4bdef257e24139556895e5b67}{Get\+Level\+Stars}} (string level\+Name)
+\item 
+void \doxymbox{\hyperlink{class_game_manager_a51d903a9edb6804b281deffeaff6aad4}{Reset\+All\+Data}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576}{Difficulty}} \doxymbox{\hyperlink{class_game_manager_aba2388394fe32276e9e33c51b2f16ae6}{current\+Difficulty}} = \doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576a87f8a6ab85c9ced3702b4ea641ad4bb5}{Difficulty.\+Medium}}
+\item 
+bool \doxymbox{\hyperlink{class_game_manager_a4c4f9b5bb35f0d70f68c993c436ca7a2}{is\+Misty\+Enabled}} = false
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_game_manager}{Game\+Manager}} \doxymbox{\hyperlink{class_game_manager_ad3e717f4fb0f378b969f4457de81f23e}{Instance}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{class_game_manager_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_game_manager_a622d6198217a616ad5c18c0fc1788576}\index{GameManager@{GameManager}!Difficulty@{Difficulty}}
+\index{Difficulty@{Difficulty}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{Difficulty}{Difficulty}}
+{\footnotesize\ttfamily \label{class_game_manager_a622d6198217a616ad5c18c0fc1788576} 
+enum \doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576}{Game\+Manager.\+Difficulty}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Easy@{Easy}!GameManager@{GameManager}}
+\index{GameManager@{GameManager}!Easy@{Easy}}
+}\Hypertarget{class_game_manager_a622d6198217a616ad5c18c0fc1788576a7f943921724d63dc0ac9c6febf99fa88}\label{class_game_manager_a622d6198217a616ad5c18c0fc1788576a7f943921724d63dc0ac9c6febf99fa88} 
+Easy&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Medium@{Medium}!GameManager@{GameManager}}
+\index{GameManager@{GameManager}!Medium@{Medium}}
+}\Hypertarget{class_game_manager_a622d6198217a616ad5c18c0fc1788576a87f8a6ab85c9ced3702b4ea641ad4bb5}\label{class_game_manager_a622d6198217a616ad5c18c0fc1788576a87f8a6ab85c9ced3702b4ea641ad4bb5} 
+Medium&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Hard@{Hard}!GameManager@{GameManager}}
+\index{GameManager@{GameManager}!Hard@{Hard}}
+}\Hypertarget{class_game_manager_a622d6198217a616ad5c18c0fc1788576a3656183169810334a96b91129dc9d881}\label{class_game_manager_a622d6198217a616ad5c18c0fc1788576a3656183169810334a96b91129dc9d881} 
+Hard&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_manager_a2758166f2a8fd718ce7e3c084951b8dd}\index{GameManager@{GameManager}!AddDeath@{AddDeath}}
+\index{AddDeath@{AddDeath}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{AddDeath()}{AddDeath()}}
+{\footnotesize\ttfamily \label{class_game_manager_a2758166f2a8fd718ce7e3c084951b8dd} 
+void Game\+Manager.\+Add\+Death (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_game_manager_a2758166f2a8fd718ce7e3c084951b8dd_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_game_manager_a7e19d2e61c3a1561c607201f2389b51a}\index{GameManager@{GameManager}!GetDeathCount@{GetDeathCount}}
+\index{GetDeathCount@{GetDeathCount}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{GetDeathCount()}{GetDeathCount()}}
+{\footnotesize\ttfamily \label{class_game_manager_a7e19d2e61c3a1561c607201f2389b51a} 
+int Game\+Manager.\+Get\+Death\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_manager_af7554fa4bdef257e24139556895e5b67}\index{GameManager@{GameManager}!GetLevelStars@{GetLevelStars}}
+\index{GetLevelStars@{GetLevelStars}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{GetLevelStars()}{GetLevelStars()}}
+{\footnotesize\ttfamily \label{class_game_manager_af7554fa4bdef257e24139556895e5b67} 
+int Game\+Manager.\+Get\+Level\+Stars (\begin{DoxyParamCaption}\item[{string}]{level\+Name}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_game_manager_af7554fa4bdef257e24139556895e5b67_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_game_manager_afb225eff942b6dc6031938ee4c492705}\index{GameManager@{GameManager}!GetVersion@{GetVersion}}
+\index{GetVersion@{GetVersion}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{GetVersion()}{GetVersion()}}
+{\footnotesize\ttfamily \label{class_game_manager_afb225eff942b6dc6031938ee4c492705} 
+string Game\+Manager.\+Get\+Version (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_manager_aa9493689deee019e17884444ded356a7}\index{GameManager@{GameManager}!GetVolume@{GetVolume}}
+\index{GetVolume@{GetVolume}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{GetVolume()}{GetVolume()}}
+{\footnotesize\ttfamily \label{class_game_manager_aa9493689deee019e17884444ded356a7} 
+float Game\+Manager.\+Get\+Volume (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_manager_a51d903a9edb6804b281deffeaff6aad4}\index{GameManager@{GameManager}!ResetAllData@{ResetAllData}}
+\index{ResetAllData@{ResetAllData}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{ResetAllData()}{ResetAllData()}}
+{\footnotesize\ttfamily \label{class_game_manager_a51d903a9edb6804b281deffeaff6aad4} 
+void Game\+Manager.\+Reset\+All\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_game_manager_a51d903a9edb6804b281deffeaff6aad4_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_game_manager_a5aeebbbe3a1cd70f965e9323aab1a354}\index{GameManager@{GameManager}!SaveLevelStars@{SaveLevelStars}}
+\index{SaveLevelStars@{SaveLevelStars}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{SaveLevelStars()}{SaveLevelStars()}}
+{\footnotesize\ttfamily \label{class_game_manager_a5aeebbbe3a1cd70f965e9323aab1a354} 
+void Game\+Manager.\+Save\+Level\+Stars (\begin{DoxyParamCaption}\item[{string}]{level\+Name}{, }\item[{int}]{stars\+Earned}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_game_manager_a5aeebbbe3a1cd70f965e9323aab1a354_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_game_manager_a1a59058034610ffb0b2e0fa08f09acc6}\index{GameManager@{GameManager}!SetDeathCount@{SetDeathCount}}
+\index{SetDeathCount@{SetDeathCount}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{SetDeathCount()}{SetDeathCount()}}
+{\footnotesize\ttfamily \label{class_game_manager_a1a59058034610ffb0b2e0fa08f09acc6} 
+void Game\+Manager.\+Set\+Death\+Count (\begin{DoxyParamCaption}\item[{int}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_manager_ac947d0586616b03ba1811a3416e2eb91}\index{GameManager@{GameManager}!SetVolume@{SetVolume}}
+\index{SetVolume@{SetVolume}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{SetVolume()}{SetVolume()}}
+{\footnotesize\ttfamily \label{class_game_manager_ac947d0586616b03ba1811a3416e2eb91} 
+void Game\+Manager.\+Set\+Volume (\begin{DoxyParamCaption}\item[{float}]{value}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_manager_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_manager_aba2388394fe32276e9e33c51b2f16ae6}\index{GameManager@{GameManager}!currentDifficulty@{currentDifficulty}}
+\index{currentDifficulty@{currentDifficulty}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{currentDifficulty}{currentDifficulty}}
+{\footnotesize\ttfamily \label{class_game_manager_aba2388394fe32276e9e33c51b2f16ae6} 
+\doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576}{Difficulty}} Game\+Manager.\+current\+Difficulty = \doxymbox{\hyperlink{class_game_manager_a622d6198217a616ad5c18c0fc1788576a87f8a6ab85c9ced3702b4ea641ad4bb5}{Difficulty.\+Medium}}}
+
+\Hypertarget{class_game_manager_ad3e717f4fb0f378b969f4457de81f23e}\index{GameManager@{GameManager}!Instance@{Instance}}
+\index{Instance@{Instance}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{Instance}{Instance}}
+{\footnotesize\ttfamily \label{class_game_manager_ad3e717f4fb0f378b969f4457de81f23e} 
+\doxymbox{\hyperlink{class_game_manager}{Game\+Manager}} Game\+Manager.\+Instance\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_manager_a4c4f9b5bb35f0d70f68c993c436ca7a2}\index{GameManager@{GameManager}!isMistyEnabled@{isMistyEnabled}}
+\index{isMistyEnabled@{isMistyEnabled}!GameManager@{GameManager}}
+\doxysubsubsection{\texorpdfstring{isMistyEnabled}{isMistyEnabled}}
+{\footnotesize\ttfamily \label{class_game_manager_a4c4f9b5bb35f0d70f68c993c436ca7a2} 
+bool Game\+Manager.\+is\+Misty\+Enabled = false}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Koni/\+\+Documents/\+\+Git\+Hub/\+\+Konisoft-\/\+Speedruns/\+lumi/\+scripts/\+\doxymbox{\hyperlink{_game_manager_8cs}{Game\+Manager.\+cs}}\end{DoxyCompactItemize}

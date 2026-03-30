@@ -1,0 +1,7 @@
+<map id="PlayerController.PlayerDeath" name="PlayerController.PlayerDeath">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,196,61"/>
+<area shape="rect" id="Node000002" href="$class_game_manager.html#a2758166f2a8fd718ce7e3c084951b8dd" title=" " alt="" coords="244,5,412,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,33,231,31,226,32,196,38"/>
+<area shape="rect" id="Node000003" href="$class_player_controller.html#a549acfd88ce7f2e702397f408b35d66f" title=" " alt="" coords="248,56,408,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,58,235,65,230,65,196,63"/>
+</map>

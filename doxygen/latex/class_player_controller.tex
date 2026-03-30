@@ -1,0 +1,931 @@
+\doxysection{Player\+Controller Class Reference}
+\hypertarget{class_player_controller}{}\label{class_player_controller}\index{PlayerController@{PlayerController}}
+
+
+Inheritance diagram for Player\+Controller:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{class_player_controller__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Player\+Controller:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=278pt]{class_player_controller__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_player_controller_a050967f0e5c2340cb21861e4c8c788a1}{Awake}} ()
+\item 
+void \doxymbox{\hyperlink{class_player_controller_ae8bc83dffb99867a04be016473ed2c43}{Update}} ()
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_abcb56509947005adeed03dc18095c8c6}{Movement\+Allowance}} ()
+\item 
+void \doxymbox{\hyperlink{class_player_controller_a549acfd88ce7f2e702397f408b35d66f}{Vibrate\+Controller}} (float duration, float frequency)
+\item 
+void \doxymbox{\hyperlink{class_player_controller_a36b22e671015f331e9bb1337a0f75ff7}{Start\+Timer}} ()
+\item 
+IEnumerator \doxymbox{\hyperlink{class_player_controller_a4fac145c410c17863674db3bea00d9e5}{Delay\+Timer\+Start}} ()
+\item 
+IEnumerator \doxymbox{\hyperlink{class_player_controller_a3fa9c04407dbb844fbacacf55c81b8f1}{Move}} (Vector2 target\+Position)
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a29fc6b7079569156fcbe4d2130fddb00}{Check\+Position}} (Vector2 target\+Position)
+\item 
+IEnumerator \doxymbox{\hyperlink{class_player_controller_abf80c294f47b5f56784f6c0a4258c21a}{Trace\+Player}} ()
+\item 
+IEnumerator \doxymbox{\hyperlink{class_player_controller_ad4314e47525bb74459232a3e6eba2958}{Movement\+Manager}} (Vector2 \doxymbox{\hyperlink{class_player_controller_a898bdd09e03eee9339383fb98695aca8}{direction}})
+\item 
+IEnumerator \doxymbox{\hyperlink{class_player_controller_a28828828147d152732c14557dfe44b86}{Trigger\+Obstacle}} (Vector2 \doxymbox{\hyperlink{class_player_controller_a898bdd09e03eee9339383fb98695aca8}{direction}})
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_aaa3cd35753e8e5669ecc86507d7ad528}{Hit\+Wall}} (Vector2 \doxymbox{\hyperlink{class_player_controller_a898bdd09e03eee9339383fb98695aca8}{direction}}, float distance)
+\item 
+IEnumerator \doxymbox{\hyperlink{class_player_controller_ac9ea734a03b6b48f1738fa3cd519c1cc}{Load\+Next\+Level}} ()
+\item 
+IEnumerator \doxymbox{\hyperlink{class_player_controller_adf8ef53ad5c37325570500afd5e45fc4}{Player\+Death}} ()
+\item 
+void \doxymbox{\hyperlink{class_player_controller_a54ca6ee2fb695ff954cb3fbebcdcce8f}{Generate\+Level\+Values}} ()
+\item 
+void \doxymbox{\hyperlink{class_player_controller_ac5c1dde8da7de826d5ef155f0d60167b}{Save\+Stars}} (int stars\+Earned)
+\item 
+void \doxymbox{\hyperlink{class_player_controller_acc2ef9ba8d786be0eb6fb1c315232ba9}{Star\+Rating\+System}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Input\+System\+\_\+\+Actions \doxymbox{\hyperlink{class_player_controller_a928f97c8826082e83351b19d923b50d5}{player\+Controls}}
+\item 
+Input\+Action \doxymbox{\hyperlink{class_player_controller_adc6702143d7a46b41374734fef020871}{player\+Interactions}}
+\item 
+Input\+Action \doxymbox{\hyperlink{class_player_controller_aa5fec01fa1241758f550b7d47f70be37}{player\+Move}}
+\item 
+Vector2 \doxymbox{\hyperlink{class_player_controller_a898bdd09e03eee9339383fb98695aca8}{direction}}
+\item 
+Vector2 \doxymbox{\hyperlink{class_player_controller_a3dc5edf1e60b85bcc321f9000295f6ef}{freezed\+Zero\+Dir}}
+\item 
+Layer\+Mask \doxymbox{\hyperlink{class_player_controller_a0a36977944a05817fc7e76b5775ebc5d}{layer\+Mask}}
+\item 
+Layer\+Mask \doxymbox{\hyperlink{class_player_controller_a322c5db4a92a6723f4aeb03b63b645e2}{enemy\+Layer\+Mask}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a91451641cb153b8e16577a0c7bcf2be4}{shut\+Down\+Compiler}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a544eb37f78bc66b2722ece025cefdaf9}{is\+Moving}} = false
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a14bb057d727180f87728bd6fe62dffc9}{can\+Move}}
+\item 
+int \doxymbox{\hyperlink{class_player_controller_a0f0bbb8c8cfb7b4f3d1a0099b85fb531}{freezed\+Zero\+Dis}}
+\item 
+float \doxymbox{\hyperlink{class_player_controller_abb12e85ca1b12efdbc8684bff2e19c4c}{move\+Speed}}
+\item 
+Audio\+Clip \doxymbox{\hyperlink{class_player_controller_ae30206bb2f8a396348ef46d81dc71c53}{whoosh}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a0adb5c072ded58299c088608c1aff748}{cinematic\+Camera}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_ae317457b6e6c53194b4ebf41e456e793}{oriental\+Camera}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_af943a12acce9747ba7088c8ea69daca8}{game\+Over\+Camera}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a9f8a53859df2bfe6f3d5d4dfe18ef6f0}{star\+TPTriggered}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a01d7f07fd97834925082def88ca56ece}{obstacle\+Moving}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_aefaac98db3923651f29f8d6c03ae8b13}{freeze\+Movement}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a6925a35a80d2f7d103fe75da27483d0a}{obstacle\+Detection}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a89d66b2ea39dba6dd2db7c48cfeb4175}{trigger\+Up}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_aefdcbb8b21a62d4c0d57874afe6cb45b}{trigger\+Down}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_aeb0ba97889d0c9803ff24d0887751d32}{trigger\+Right}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a569019d40c0218b4d0334a06337db27d}{trigger\+Left}}
+\item 
+float \doxymbox{\hyperlink{class_player_controller_a8c59dcb043ee3d8b64ea6dfcde5734b5}{fade\+Speed}} = 0.\+5f
+\item 
+int \doxymbox{\hyperlink{class_player_controller_ac37d7f4d4fc102434400881067620365}{current\+Step\+Counts}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a09e6f449a76c8c58eedb1fa1751c7740}{trace\+Object}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a41829be11eee0ffda5e78cc3de7b48f8}{cool\+Down\+Trace}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a9b2aad378af534a57f32caea71192b2e}{question\+Mark}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a88fa7c230d2339e7c224a71ed33378a9}{Summoning\+Circle}}
+\item 
+int \doxymbox{\hyperlink{class_player_controller_a4323ad1d948d14be74ce4b691031d815}{Orbs}}
+\item 
+Text \doxymbox{\hyperlink{class_player_controller_a31a09962aa3945d15d2a1eb66dacfc80}{Score\+Text}}
+\item 
+Audio\+Clip \doxymbox{\hyperlink{class_player_controller_a024b243b17d4b73b862694f29589d293}{orb\+Clip}}
+\item 
+int \doxymbox{\hyperlink{class_player_controller_a5aa0a7991d9a5e8e2e61083747015e09}{Doughnuts}}
+\item 
+Audio\+Clip \doxymbox{\hyperlink{class_player_controller_af3fc31c18cfffb90bcb8f5d2461d05fc}{doughnut\+Clip}}
+\item 
+Text \doxymbox{\hyperlink{class_player_controller_ad44d5d9173567c2d6f4c5517c5c0df8b}{doughnut\+Text}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a6a5fd8d825df3e257319425590ef0bb5}{End\+Screen}}
+\item 
+Animator \doxymbox{\hyperlink{class_player_controller_af24a8820ce6558138208255b27d948d3}{animator}}
+\item 
+Audio\+Source \doxymbox{\hyperlink{class_player_controller_a87c421c67c2b3736edd1753ec135f23a}{audio\+Source}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_ac7edba266798766fda9aa9752031c586}{player\+Won}}
+\item 
+Audio\+Clip \doxymbox{\hyperlink{class_player_controller_adebf0e759d4e6b02165ab2ae2dac5801}{win\+Clip}}
+\item 
+\doxymbox{\hyperlink{class_win_zoom}{Win\+Zoom}} \doxymbox{\hyperlink{class_player_controller_a44f8f9f07090b217158f67f3944f09da}{win\+Zoom\+Script}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_aa01cfbc61e45f5fe875d7c503347ee49}{player\+Camera}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a721c5f894d739c7cdb560cf08fa6ac0d}{generic\+UIElements}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a9b5c133994b687f5b796e74d35c19433}{wining}} = false
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_ab89997bc6b98ff1203f84b8e1a530803}{aperture\+Set}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a018911ea8db92f36b73fba3df60edfed}{stop\+Actions}}
+\item 
+float \doxymbox{\hyperlink{class_player_controller_a58d01965f1672ef4a1c026f923cda2c0}{fade\+Out\+Timer\+Delay}}
+\item 
+Text \doxymbox{\hyperlink{class_player_controller_ac679467163e3ef2832137dbdecf2c3db}{timer\+Text}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a18c6b0c38e86d5c739f32bf1dade3b5b}{timer\+Stop}}
+\item 
+Text \doxymbox{\hyperlink{class_player_controller_ad58d53252c5f831381e2b7a64ac7902c}{end\+Orbs}}
+\item 
+Text \doxymbox{\hyperlink{class_player_controller_a0729bc38e476b4c77142bb1278bb7d3c}{end\+Doughnuts}}
+\item 
+Text \doxymbox{\hyperlink{class_player_controller_a96cdfa43b367edd0cfe98089e1baaf71}{end\+Time}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_ab34198dc409ca443fadf4be4d503941e}{Star\+Level\+One}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a2ad9c3c3216fa01f88889d62c0314418}{Star\+Level\+Two}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a1b6c8b58cfe2960888e559ccd635cd08}{Star\+Level\+Three}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_af199bbbcab5cf44138ab6818cfeaed2f}{close\+Death}} = false
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_a43389f0ae68e92509bdf43e34ed5a794}{player\+Dead}}
+\item 
+bool \doxymbox{\hyperlink{class_player_controller_aa4d5fc5f67e52a97d1f5cd1afc0aaf6e}{player\+Restart}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_aef72610028cb53c3e04b8ff6d5fc4bad}{fade\+Out}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a961ce77a26c014f945187e0cbcb62221}{loading\+Cherry}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_aa87851a01a46d11de92a1b79c938b80d}{game\+Over\+Sound}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a8325ffb7c21e4f5fdaff5b14e1e901cd}{death\+Thunder}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a51e9bed35331e4d463e507be6d7874ce}{all\+UI}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_ac29bf1b40892c484bcecdee88ddacbe2}{Win\+Bubble}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a41ac57109d6a89f86874d68540de9bac}{Pause\+Button}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a60cb7ebcecbce29b058a85ba62adf87c}{golden\+Doughnut\+UI}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_aeedab53321e983a5f38281889a1e0a0a}{descriptor\+Manager}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a39899b0625381dd7837a0a9edb2cef06}{camera\+Object}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a590538edc8d01429c5eb9aa806b7f6a2}{eye\+Object}}
+\item 
+Game\+Object \doxymbox{\hyperlink{class_player_controller_a9c8d5a2c53b7826fcabb869d68a0cf77}{trigger\+Object}}
+\item 
+Slider \doxymbox{\hyperlink{class_player_controller_a996155cf83959d235cdd1e3892622a23}{timer\+Slider}}
+\item 
+float \doxymbox{\hyperlink{class_player_controller_a64d5e844d41faf2d1bdec1b51feb2c5b}{start\+Time\+In\+Seconds}}
+\item 
+string \doxymbox{\hyperlink{class_player_controller_aa4aab5c5e9f096fdb35bb9ed89b80d46}{override\+Scene\+Name}} = "{}"{}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_player_controller_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_player_controller_a050967f0e5c2340cb21861e4c8c788a1}\index{PlayerController@{PlayerController}!Awake@{Awake}}
+\index{Awake@{Awake}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_player_controller_a050967f0e5c2340cb21861e4c8c788a1} 
+void Player\+Controller.\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_player_controller_a29fc6b7079569156fcbe4d2130fddb00}\index{PlayerController@{PlayerController}!CheckPosition@{CheckPosition}}
+\index{CheckPosition@{CheckPosition}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{CheckPosition()}{CheckPosition()}}
+{\footnotesize\ttfamily \label{class_player_controller_a29fc6b7079569156fcbe4d2130fddb00} 
+bool Player\+Controller.\+Check\+Position (\begin{DoxyParamCaption}\item[{Vector2}]{target\+Position}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_a29fc6b7079569156fcbe4d2130fddb00_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_a4fac145c410c17863674db3bea00d9e5}\index{PlayerController@{PlayerController}!DelayTimerStart@{DelayTimerStart}}
+\index{DelayTimerStart@{DelayTimerStart}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{DelayTimerStart()}{DelayTimerStart()}}
+{\footnotesize\ttfamily \label{class_player_controller_a4fac145c410c17863674db3bea00d9e5} 
+IEnumerator Player\+Controller.\+Delay\+Timer\+Start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_a4fac145c410c17863674db3bea00d9e5_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_a54ca6ee2fb695ff954cb3fbebcdcce8f}\index{PlayerController@{PlayerController}!GenerateLevelValues@{GenerateLevelValues}}
+\index{GenerateLevelValues@{GenerateLevelValues}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{GenerateLevelValues()}{GenerateLevelValues()}}
+{\footnotesize\ttfamily \label{class_player_controller_a54ca6ee2fb695ff954cb3fbebcdcce8f} 
+void Player\+Controller.\+Generate\+Level\+Values (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_player_controller_aaa3cd35753e8e5669ecc86507d7ad528}\index{PlayerController@{PlayerController}!HitWall@{HitWall}}
+\index{HitWall@{HitWall}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{HitWall()}{HitWall()}}
+{\footnotesize\ttfamily \label{class_player_controller_aaa3cd35753e8e5669ecc86507d7ad528} 
+bool Player\+Controller.\+Hit\+Wall (\begin{DoxyParamCaption}\item[{Vector2}]{direction}{, }\item[{float}]{distance}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_aaa3cd35753e8e5669ecc86507d7ad528_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_ac9ea734a03b6b48f1738fa3cd519c1cc}\index{PlayerController@{PlayerController}!LoadNextLevel@{LoadNextLevel}}
+\index{LoadNextLevel@{LoadNextLevel}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{LoadNextLevel()}{LoadNextLevel()}}
+{\footnotesize\ttfamily \label{class_player_controller_ac9ea734a03b6b48f1738fa3cd519c1cc} 
+IEnumerator Player\+Controller.\+Load\+Next\+Level (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_ac9ea734a03b6b48f1738fa3cd519c1cc_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_a3fa9c04407dbb844fbacacf55c81b8f1}\index{PlayerController@{PlayerController}!Move@{Move}}
+\index{Move@{Move}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{Move()}{Move()}}
+{\footnotesize\ttfamily \label{class_player_controller_a3fa9c04407dbb844fbacacf55c81b8f1} 
+IEnumerator Player\+Controller.\+Move (\begin{DoxyParamCaption}\item[{Vector2}]{target\+Position}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_a3fa9c04407dbb844fbacacf55c81b8f1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_a3fa9c04407dbb844fbacacf55c81b8f1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_abcb56509947005adeed03dc18095c8c6}\index{PlayerController@{PlayerController}!MovementAllowance@{MovementAllowance}}
+\index{MovementAllowance@{MovementAllowance}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{MovementAllowance()}{MovementAllowance()}}
+{\footnotesize\ttfamily \label{class_player_controller_abcb56509947005adeed03dc18095c8c6} 
+bool Player\+Controller.\+Movement\+Allowance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_abcb56509947005adeed03dc18095c8c6_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_ad4314e47525bb74459232a3e6eba2958}\index{PlayerController@{PlayerController}!MovementManager@{MovementManager}}
+\index{MovementManager@{MovementManager}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{MovementManager()}{MovementManager()}}
+{\footnotesize\ttfamily \label{class_player_controller_ad4314e47525bb74459232a3e6eba2958} 
+IEnumerator Player\+Controller.\+Movement\+Manager (\begin{DoxyParamCaption}\item[{Vector2}]{direction}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_ad4314e47525bb74459232a3e6eba2958_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_ad4314e47525bb74459232a3e6eba2958_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_adf8ef53ad5c37325570500afd5e45fc4}\index{PlayerController@{PlayerController}!PlayerDeath@{PlayerDeath}}
+\index{PlayerDeath@{PlayerDeath}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{PlayerDeath()}{PlayerDeath()}}
+{\footnotesize\ttfamily \label{class_player_controller_adf8ef53ad5c37325570500afd5e45fc4} 
+IEnumerator Player\+Controller.\+Player\+Death (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_adf8ef53ad5c37325570500afd5e45fc4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_adf8ef53ad5c37325570500afd5e45fc4_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_ac5c1dde8da7de826d5ef155f0d60167b}\index{PlayerController@{PlayerController}!SaveStars@{SaveStars}}
+\index{SaveStars@{SaveStars}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{SaveStars()}{SaveStars()}}
+{\footnotesize\ttfamily \label{class_player_controller_ac5c1dde8da7de826d5ef155f0d60167b} 
+void Player\+Controller.\+Save\+Stars (\begin{DoxyParamCaption}\item[{int}]{stars\+Earned}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_ac5c1dde8da7de826d5ef155f0d60167b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_ac5c1dde8da7de826d5ef155f0d60167b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_acc2ef9ba8d786be0eb6fb1c315232ba9}\index{PlayerController@{PlayerController}!StarRatingSystem@{StarRatingSystem}}
+\index{StarRatingSystem@{StarRatingSystem}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{StarRatingSystem()}{StarRatingSystem()}}
+{\footnotesize\ttfamily \label{class_player_controller_acc2ef9ba8d786be0eb6fb1c315232ba9} 
+void Player\+Controller.\+Star\+Rating\+System (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_acc2ef9ba8d786be0eb6fb1c315232ba9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_acc2ef9ba8d786be0eb6fb1c315232ba9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_a36b22e671015f331e9bb1337a0f75ff7}\index{PlayerController@{PlayerController}!StartTimer@{StartTimer}}
+\index{StartTimer@{StartTimer}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{StartTimer()}{StartTimer()}}
+{\footnotesize\ttfamily \label{class_player_controller_a36b22e671015f331e9bb1337a0f75ff7} 
+void Player\+Controller.\+Start\+Timer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_a36b22e671015f331e9bb1337a0f75ff7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_abf80c294f47b5f56784f6c0a4258c21a}\index{PlayerController@{PlayerController}!TracePlayer@{TracePlayer}}
+\index{TracePlayer@{TracePlayer}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{TracePlayer()}{TracePlayer()}}
+{\footnotesize\ttfamily \label{class_player_controller_abf80c294f47b5f56784f6c0a4258c21a} 
+IEnumerator Player\+Controller.\+Trace\+Player (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_abf80c294f47b5f56784f6c0a4258c21a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_a28828828147d152732c14557dfe44b86}\index{PlayerController@{PlayerController}!TriggerObstacle@{TriggerObstacle}}
+\index{TriggerObstacle@{TriggerObstacle}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{TriggerObstacle()}{TriggerObstacle()}}
+{\footnotesize\ttfamily \label{class_player_controller_a28828828147d152732c14557dfe44b86} 
+IEnumerator Player\+Controller.\+Trigger\+Obstacle (\begin{DoxyParamCaption}\item[{Vector2}]{direction}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_a28828828147d152732c14557dfe44b86_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_ae8bc83dffb99867a04be016473ed2c43}\index{PlayerController@{PlayerController}!Update@{Update}}
+\index{Update@{Update}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_player_controller_ae8bc83dffb99867a04be016473ed2c43} 
+void Player\+Controller.\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_ae8bc83dffb99867a04be016473ed2c43_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_player_controller_a549acfd88ce7f2e702397f408b35d66f}\index{PlayerController@{PlayerController}!VibrateController@{VibrateController}}
+\index{VibrateController@{VibrateController}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{VibrateController()}{VibrateController()}}
+{\footnotesize\ttfamily \label{class_player_controller_a549acfd88ce7f2e702397f408b35d66f} 
+void Player\+Controller.\+Vibrate\+Controller (\begin{DoxyParamCaption}\item[{float}]{duration}{, }\item[{float}]{frequency}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_controller_a549acfd88ce7f2e702397f408b35d66f_icgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_player_controller_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_player_controller_a51e9bed35331e4d463e507be6d7874ce}\index{PlayerController@{PlayerController}!allUI@{allUI}}
+\index{allUI@{allUI}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{allUI}{allUI}}
+{\footnotesize\ttfamily \label{class_player_controller_a51e9bed35331e4d463e507be6d7874ce} 
+Game\+Object Player\+Controller.\+all\+UI}
+
+\Hypertarget{class_player_controller_af24a8820ce6558138208255b27d948d3}\index{PlayerController@{PlayerController}!animator@{animator}}
+\index{animator@{animator}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{animator}{animator}}
+{\footnotesize\ttfamily \label{class_player_controller_af24a8820ce6558138208255b27d948d3} 
+Animator Player\+Controller.\+animator}
+
+\Hypertarget{class_player_controller_ab89997bc6b98ff1203f84b8e1a530803}\index{PlayerController@{PlayerController}!apertureSet@{apertureSet}}
+\index{apertureSet@{apertureSet}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{apertureSet}{apertureSet}}
+{\footnotesize\ttfamily \label{class_player_controller_ab89997bc6b98ff1203f84b8e1a530803} 
+bool Player\+Controller.\+aperture\+Set}
+
+\Hypertarget{class_player_controller_a87c421c67c2b3736edd1753ec135f23a}\index{PlayerController@{PlayerController}!audioSource@{audioSource}}
+\index{audioSource@{audioSource}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{audioSource}{audioSource}}
+{\footnotesize\ttfamily \label{class_player_controller_a87c421c67c2b3736edd1753ec135f23a} 
+Audio\+Source Player\+Controller.\+audio\+Source}
+
+\Hypertarget{class_player_controller_a39899b0625381dd7837a0a9edb2cef06}\index{PlayerController@{PlayerController}!cameraObject@{cameraObject}}
+\index{cameraObject@{cameraObject}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{cameraObject}{cameraObject}}
+{\footnotesize\ttfamily \label{class_player_controller_a39899b0625381dd7837a0a9edb2cef06} 
+Game\+Object Player\+Controller.\+camera\+Object}
+
+\Hypertarget{class_player_controller_a14bb057d727180f87728bd6fe62dffc9}\index{PlayerController@{PlayerController}!canMove@{canMove}}
+\index{canMove@{canMove}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{canMove}{canMove}}
+{\footnotesize\ttfamily \label{class_player_controller_a14bb057d727180f87728bd6fe62dffc9} 
+bool Player\+Controller.\+can\+Move}
+
+\Hypertarget{class_player_controller_a0adb5c072ded58299c088608c1aff748}\index{PlayerController@{PlayerController}!cinematicCamera@{cinematicCamera}}
+\index{cinematicCamera@{cinematicCamera}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{cinematicCamera}{cinematicCamera}}
+{\footnotesize\ttfamily \label{class_player_controller_a0adb5c072ded58299c088608c1aff748} 
+Game\+Object Player\+Controller.\+cinematic\+Camera}
+
+\Hypertarget{class_player_controller_af199bbbcab5cf44138ab6818cfeaed2f}\index{PlayerController@{PlayerController}!closeDeath@{closeDeath}}
+\index{closeDeath@{closeDeath}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{closeDeath}{closeDeath}}
+{\footnotesize\ttfamily \label{class_player_controller_af199bbbcab5cf44138ab6818cfeaed2f} 
+bool Player\+Controller.\+close\+Death = false}
+
+\Hypertarget{class_player_controller_a41829be11eee0ffda5e78cc3de7b48f8}\index{PlayerController@{PlayerController}!coolDownTrace@{coolDownTrace}}
+\index{coolDownTrace@{coolDownTrace}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{coolDownTrace}{coolDownTrace}}
+{\footnotesize\ttfamily \label{class_player_controller_a41829be11eee0ffda5e78cc3de7b48f8} 
+bool Player\+Controller.\+cool\+Down\+Trace}
+
+\Hypertarget{class_player_controller_ac37d7f4d4fc102434400881067620365}\index{PlayerController@{PlayerController}!currentStepCounts@{currentStepCounts}}
+\index{currentStepCounts@{currentStepCounts}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{currentStepCounts}{currentStepCounts}}
+{\footnotesize\ttfamily \label{class_player_controller_ac37d7f4d4fc102434400881067620365} 
+int Player\+Controller.\+current\+Step\+Counts}
+
+\Hypertarget{class_player_controller_a8325ffb7c21e4f5fdaff5b14e1e901cd}\index{PlayerController@{PlayerController}!deathThunder@{deathThunder}}
+\index{deathThunder@{deathThunder}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{deathThunder}{deathThunder}}
+{\footnotesize\ttfamily \label{class_player_controller_a8325ffb7c21e4f5fdaff5b14e1e901cd} 
+Game\+Object Player\+Controller.\+death\+Thunder}
+
+\Hypertarget{class_player_controller_aeedab53321e983a5f38281889a1e0a0a}\index{PlayerController@{PlayerController}!descriptorManager@{descriptorManager}}
+\index{descriptorManager@{descriptorManager}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{descriptorManager}{descriptorManager}}
+{\footnotesize\ttfamily \label{class_player_controller_aeedab53321e983a5f38281889a1e0a0a} 
+Game\+Object Player\+Controller.\+descriptor\+Manager}
+
+\Hypertarget{class_player_controller_a898bdd09e03eee9339383fb98695aca8}\index{PlayerController@{PlayerController}!direction@{direction}}
+\index{direction@{direction}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{direction}{direction}}
+{\footnotesize\ttfamily \label{class_player_controller_a898bdd09e03eee9339383fb98695aca8} 
+Vector2 Player\+Controller.\+direction}
+
+\Hypertarget{class_player_controller_af3fc31c18cfffb90bcb8f5d2461d05fc}\index{PlayerController@{PlayerController}!doughnutClip@{doughnutClip}}
+\index{doughnutClip@{doughnutClip}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{doughnutClip}{doughnutClip}}
+{\footnotesize\ttfamily \label{class_player_controller_af3fc31c18cfffb90bcb8f5d2461d05fc} 
+Audio\+Clip Player\+Controller.\+doughnut\+Clip}
+
+\Hypertarget{class_player_controller_a5aa0a7991d9a5e8e2e61083747015e09}\index{PlayerController@{PlayerController}!Doughnuts@{Doughnuts}}
+\index{Doughnuts@{Doughnuts}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{Doughnuts}{Doughnuts}}
+{\footnotesize\ttfamily \label{class_player_controller_a5aa0a7991d9a5e8e2e61083747015e09} 
+int Player\+Controller.\+Doughnuts}
+
+\Hypertarget{class_player_controller_ad44d5d9173567c2d6f4c5517c5c0df8b}\index{PlayerController@{PlayerController}!doughnutText@{doughnutText}}
+\index{doughnutText@{doughnutText}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{doughnutText}{doughnutText}}
+{\footnotesize\ttfamily \label{class_player_controller_ad44d5d9173567c2d6f4c5517c5c0df8b} 
+Text Player\+Controller.\+doughnut\+Text}
+
+\Hypertarget{class_player_controller_a0729bc38e476b4c77142bb1278bb7d3c}\index{PlayerController@{PlayerController}!endDoughnuts@{endDoughnuts}}
+\index{endDoughnuts@{endDoughnuts}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{endDoughnuts}{endDoughnuts}}
+{\footnotesize\ttfamily \label{class_player_controller_a0729bc38e476b4c77142bb1278bb7d3c} 
+Text Player\+Controller.\+end\+Doughnuts}
+
+\Hypertarget{class_player_controller_ad58d53252c5f831381e2b7a64ac7902c}\index{PlayerController@{PlayerController}!endOrbs@{endOrbs}}
+\index{endOrbs@{endOrbs}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{endOrbs}{endOrbs}}
+{\footnotesize\ttfamily \label{class_player_controller_ad58d53252c5f831381e2b7a64ac7902c} 
+Text Player\+Controller.\+end\+Orbs}
+
+\Hypertarget{class_player_controller_a6a5fd8d825df3e257319425590ef0bb5}\index{PlayerController@{PlayerController}!EndScreen@{EndScreen}}
+\index{EndScreen@{EndScreen}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{EndScreen}{EndScreen}}
+{\footnotesize\ttfamily \label{class_player_controller_a6a5fd8d825df3e257319425590ef0bb5} 
+Game\+Object Player\+Controller.\+End\+Screen}
+
+\Hypertarget{class_player_controller_a96cdfa43b367edd0cfe98089e1baaf71}\index{PlayerController@{PlayerController}!endTime@{endTime}}
+\index{endTime@{endTime}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{endTime}{endTime}}
+{\footnotesize\ttfamily \label{class_player_controller_a96cdfa43b367edd0cfe98089e1baaf71} 
+Text Player\+Controller.\+end\+Time}
+
+\Hypertarget{class_player_controller_a322c5db4a92a6723f4aeb03b63b645e2}\index{PlayerController@{PlayerController}!enemyLayerMask@{enemyLayerMask}}
+\index{enemyLayerMask@{enemyLayerMask}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{enemyLayerMask}{enemyLayerMask}}
+{\footnotesize\ttfamily \label{class_player_controller_a322c5db4a92a6723f4aeb03b63b645e2} 
+Layer\+Mask Player\+Controller.\+enemy\+Layer\+Mask}
+
+\Hypertarget{class_player_controller_a590538edc8d01429c5eb9aa806b7f6a2}\index{PlayerController@{PlayerController}!eyeObject@{eyeObject}}
+\index{eyeObject@{eyeObject}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{eyeObject}{eyeObject}}
+{\footnotesize\ttfamily \label{class_player_controller_a590538edc8d01429c5eb9aa806b7f6a2} 
+Game\+Object Player\+Controller.\+eye\+Object}
+
+\Hypertarget{class_player_controller_aef72610028cb53c3e04b8ff6d5fc4bad}\index{PlayerController@{PlayerController}!fadeOut@{fadeOut}}
+\index{fadeOut@{fadeOut}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{fadeOut}{fadeOut}}
+{\footnotesize\ttfamily \label{class_player_controller_aef72610028cb53c3e04b8ff6d5fc4bad} 
+Game\+Object Player\+Controller.\+fade\+Out}
+
+\Hypertarget{class_player_controller_a58d01965f1672ef4a1c026f923cda2c0}\index{PlayerController@{PlayerController}!fadeOutTimerDelay@{fadeOutTimerDelay}}
+\index{fadeOutTimerDelay@{fadeOutTimerDelay}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{fadeOutTimerDelay}{fadeOutTimerDelay}}
+{\footnotesize\ttfamily \label{class_player_controller_a58d01965f1672ef4a1c026f923cda2c0} 
+float Player\+Controller.\+fade\+Out\+Timer\+Delay}
+
+\Hypertarget{class_player_controller_a8c59dcb043ee3d8b64ea6dfcde5734b5}\index{PlayerController@{PlayerController}!fadeSpeed@{fadeSpeed}}
+\index{fadeSpeed@{fadeSpeed}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{fadeSpeed}{fadeSpeed}}
+{\footnotesize\ttfamily \label{class_player_controller_a8c59dcb043ee3d8b64ea6dfcde5734b5} 
+float Player\+Controller.\+fade\+Speed = 0.\+5f}
+
+\Hypertarget{class_player_controller_a3dc5edf1e60b85bcc321f9000295f6ef}\index{PlayerController@{PlayerController}!freezedZeroDir@{freezedZeroDir}}
+\index{freezedZeroDir@{freezedZeroDir}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{freezedZeroDir}{freezedZeroDir}}
+{\footnotesize\ttfamily \label{class_player_controller_a3dc5edf1e60b85bcc321f9000295f6ef} 
+Vector2 Player\+Controller.\+freezed\+Zero\+Dir}
+
+\Hypertarget{class_player_controller_a0f0bbb8c8cfb7b4f3d1a0099b85fb531}\index{PlayerController@{PlayerController}!freezedZeroDis@{freezedZeroDis}}
+\index{freezedZeroDis@{freezedZeroDis}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{freezedZeroDis}{freezedZeroDis}}
+{\footnotesize\ttfamily \label{class_player_controller_a0f0bbb8c8cfb7b4f3d1a0099b85fb531} 
+int Player\+Controller.\+freezed\+Zero\+Dis}
+
+\Hypertarget{class_player_controller_aefaac98db3923651f29f8d6c03ae8b13}\index{PlayerController@{PlayerController}!freezeMovement@{freezeMovement}}
+\index{freezeMovement@{freezeMovement}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{freezeMovement}{freezeMovement}}
+{\footnotesize\ttfamily \label{class_player_controller_aefaac98db3923651f29f8d6c03ae8b13} 
+bool Player\+Controller.\+freeze\+Movement}
+
+\Hypertarget{class_player_controller_af943a12acce9747ba7088c8ea69daca8}\index{PlayerController@{PlayerController}!gameOverCamera@{gameOverCamera}}
+\index{gameOverCamera@{gameOverCamera}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{gameOverCamera}{gameOverCamera}}
+{\footnotesize\ttfamily \label{class_player_controller_af943a12acce9747ba7088c8ea69daca8} 
+Game\+Object Player\+Controller.\+game\+Over\+Camera}
+
+\Hypertarget{class_player_controller_aa87851a01a46d11de92a1b79c938b80d}\index{PlayerController@{PlayerController}!gameOverSound@{gameOverSound}}
+\index{gameOverSound@{gameOverSound}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{gameOverSound}{gameOverSound}}
+{\footnotesize\ttfamily \label{class_player_controller_aa87851a01a46d11de92a1b79c938b80d} 
+Game\+Object Player\+Controller.\+game\+Over\+Sound}
+
+\Hypertarget{class_player_controller_a721c5f894d739c7cdb560cf08fa6ac0d}\index{PlayerController@{PlayerController}!genericUIElements@{genericUIElements}}
+\index{genericUIElements@{genericUIElements}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{genericUIElements}{genericUIElements}}
+{\footnotesize\ttfamily \label{class_player_controller_a721c5f894d739c7cdb560cf08fa6ac0d} 
+Game\+Object Player\+Controller.\+generic\+UIElements}
+
+\Hypertarget{class_player_controller_a60cb7ebcecbce29b058a85ba62adf87c}\index{PlayerController@{PlayerController}!goldenDoughnutUI@{goldenDoughnutUI}}
+\index{goldenDoughnutUI@{goldenDoughnutUI}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{goldenDoughnutUI}{goldenDoughnutUI}}
+{\footnotesize\ttfamily \label{class_player_controller_a60cb7ebcecbce29b058a85ba62adf87c} 
+Game\+Object Player\+Controller.\+golden\+Doughnut\+UI}
+
+\Hypertarget{class_player_controller_a544eb37f78bc66b2722ece025cefdaf9}\index{PlayerController@{PlayerController}!isMoving@{isMoving}}
+\index{isMoving@{isMoving}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{isMoving}{isMoving}}
+{\footnotesize\ttfamily \label{class_player_controller_a544eb37f78bc66b2722ece025cefdaf9} 
+bool Player\+Controller.\+is\+Moving = false}
+
+\Hypertarget{class_player_controller_a0a36977944a05817fc7e76b5775ebc5d}\index{PlayerController@{PlayerController}!layerMask@{layerMask}}
+\index{layerMask@{layerMask}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{layerMask}{layerMask}}
+{\footnotesize\ttfamily \label{class_player_controller_a0a36977944a05817fc7e76b5775ebc5d} 
+Layer\+Mask Player\+Controller.\+layer\+Mask}
+
+\Hypertarget{class_player_controller_a961ce77a26c014f945187e0cbcb62221}\index{PlayerController@{PlayerController}!loadingCherry@{loadingCherry}}
+\index{loadingCherry@{loadingCherry}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{loadingCherry}{loadingCherry}}
+{\footnotesize\ttfamily \label{class_player_controller_a961ce77a26c014f945187e0cbcb62221} 
+Game\+Object Player\+Controller.\+loading\+Cherry}
+
+\Hypertarget{class_player_controller_abb12e85ca1b12efdbc8684bff2e19c4c}\index{PlayerController@{PlayerController}!moveSpeed@{moveSpeed}}
+\index{moveSpeed@{moveSpeed}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{moveSpeed}{moveSpeed}}
+{\footnotesize\ttfamily \label{class_player_controller_abb12e85ca1b12efdbc8684bff2e19c4c} 
+float Player\+Controller.\+move\+Speed}
+
+\Hypertarget{class_player_controller_a6925a35a80d2f7d103fe75da27483d0a}\index{PlayerController@{PlayerController}!obstacleDetection@{obstacleDetection}}
+\index{obstacleDetection@{obstacleDetection}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{obstacleDetection}{obstacleDetection}}
+{\footnotesize\ttfamily \label{class_player_controller_a6925a35a80d2f7d103fe75da27483d0a} 
+bool Player\+Controller.\+obstacle\+Detection}
+
+\Hypertarget{class_player_controller_a01d7f07fd97834925082def88ca56ece}\index{PlayerController@{PlayerController}!obstacleMoving@{obstacleMoving}}
+\index{obstacleMoving@{obstacleMoving}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{obstacleMoving}{obstacleMoving}}
+{\footnotesize\ttfamily \label{class_player_controller_a01d7f07fd97834925082def88ca56ece} 
+bool Player\+Controller.\+obstacle\+Moving}
+
+\Hypertarget{class_player_controller_a024b243b17d4b73b862694f29589d293}\index{PlayerController@{PlayerController}!orbClip@{orbClip}}
+\index{orbClip@{orbClip}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{orbClip}{orbClip}}
+{\footnotesize\ttfamily \label{class_player_controller_a024b243b17d4b73b862694f29589d293} 
+Audio\+Clip Player\+Controller.\+orb\+Clip}
+
+\Hypertarget{class_player_controller_a4323ad1d948d14be74ce4b691031d815}\index{PlayerController@{PlayerController}!Orbs@{Orbs}}
+\index{Orbs@{Orbs}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{Orbs}{Orbs}}
+{\footnotesize\ttfamily \label{class_player_controller_a4323ad1d948d14be74ce4b691031d815} 
+int Player\+Controller.\+Orbs}
+
+\Hypertarget{class_player_controller_ae317457b6e6c53194b4ebf41e456e793}\index{PlayerController@{PlayerController}!orientalCamera@{orientalCamera}}
+\index{orientalCamera@{orientalCamera}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{orientalCamera}{orientalCamera}}
+{\footnotesize\ttfamily \label{class_player_controller_ae317457b6e6c53194b4ebf41e456e793} 
+Game\+Object Player\+Controller.\+oriental\+Camera}
+
+\Hypertarget{class_player_controller_aa4aab5c5e9f096fdb35bb9ed89b80d46}\index{PlayerController@{PlayerController}!overrideSceneName@{overrideSceneName}}
+\index{overrideSceneName@{overrideSceneName}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{overrideSceneName}{overrideSceneName}}
+{\footnotesize\ttfamily \label{class_player_controller_aa4aab5c5e9f096fdb35bb9ed89b80d46} 
+string Player\+Controller.\+override\+Scene\+Name = "{}"{}}
+
+\Hypertarget{class_player_controller_a41ac57109d6a89f86874d68540de9bac}\index{PlayerController@{PlayerController}!PauseButton@{PauseButton}}
+\index{PauseButton@{PauseButton}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{PauseButton}{PauseButton}}
+{\footnotesize\ttfamily \label{class_player_controller_a41ac57109d6a89f86874d68540de9bac} 
+Game\+Object Player\+Controller.\+Pause\+Button}
+
+\Hypertarget{class_player_controller_aa01cfbc61e45f5fe875d7c503347ee49}\index{PlayerController@{PlayerController}!playerCamera@{playerCamera}}
+\index{playerCamera@{playerCamera}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{playerCamera}{playerCamera}}
+{\footnotesize\ttfamily \label{class_player_controller_aa01cfbc61e45f5fe875d7c503347ee49} 
+Game\+Object Player\+Controller.\+player\+Camera}
+
+\Hypertarget{class_player_controller_a928f97c8826082e83351b19d923b50d5}\index{PlayerController@{PlayerController}!playerControls@{playerControls}}
+\index{playerControls@{playerControls}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{playerControls}{playerControls}}
+{\footnotesize\ttfamily \label{class_player_controller_a928f97c8826082e83351b19d923b50d5} 
+Input\+System\+\_\+\+Actions Player\+Controller.\+player\+Controls}
+
+\Hypertarget{class_player_controller_a43389f0ae68e92509bdf43e34ed5a794}\index{PlayerController@{PlayerController}!playerDead@{playerDead}}
+\index{playerDead@{playerDead}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{playerDead}{playerDead}}
+{\footnotesize\ttfamily \label{class_player_controller_a43389f0ae68e92509bdf43e34ed5a794} 
+bool Player\+Controller.\+player\+Dead}
+
+\Hypertarget{class_player_controller_adc6702143d7a46b41374734fef020871}\index{PlayerController@{PlayerController}!playerInteractions@{playerInteractions}}
+\index{playerInteractions@{playerInteractions}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{playerInteractions}{playerInteractions}}
+{\footnotesize\ttfamily \label{class_player_controller_adc6702143d7a46b41374734fef020871} 
+Input\+Action Player\+Controller.\+player\+Interactions}
+
+\Hypertarget{class_player_controller_aa5fec01fa1241758f550b7d47f70be37}\index{PlayerController@{PlayerController}!playerMove@{playerMove}}
+\index{playerMove@{playerMove}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{playerMove}{playerMove}}
+{\footnotesize\ttfamily \label{class_player_controller_aa5fec01fa1241758f550b7d47f70be37} 
+Input\+Action Player\+Controller.\+player\+Move}
+
+\Hypertarget{class_player_controller_aa4d5fc5f67e52a97d1f5cd1afc0aaf6e}\index{PlayerController@{PlayerController}!playerRestart@{playerRestart}}
+\index{playerRestart@{playerRestart}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{playerRestart}{playerRestart}}
+{\footnotesize\ttfamily \label{class_player_controller_aa4d5fc5f67e52a97d1f5cd1afc0aaf6e} 
+bool Player\+Controller.\+player\+Restart}
+
+\Hypertarget{class_player_controller_ac7edba266798766fda9aa9752031c586}\index{PlayerController@{PlayerController}!playerWon@{playerWon}}
+\index{playerWon@{playerWon}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{playerWon}{playerWon}}
+{\footnotesize\ttfamily \label{class_player_controller_ac7edba266798766fda9aa9752031c586} 
+bool Player\+Controller.\+player\+Won}
+
+\Hypertarget{class_player_controller_a9b2aad378af534a57f32caea71192b2e}\index{PlayerController@{PlayerController}!questionMark@{questionMark}}
+\index{questionMark@{questionMark}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{questionMark}{questionMark}}
+{\footnotesize\ttfamily \label{class_player_controller_a9b2aad378af534a57f32caea71192b2e} 
+Game\+Object Player\+Controller.\+question\+Mark}
+
+\Hypertarget{class_player_controller_a31a09962aa3945d15d2a1eb66dacfc80}\index{PlayerController@{PlayerController}!ScoreText@{ScoreText}}
+\index{ScoreText@{ScoreText}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{ScoreText}{ScoreText}}
+{\footnotesize\ttfamily \label{class_player_controller_a31a09962aa3945d15d2a1eb66dacfc80} 
+Text Player\+Controller.\+Score\+Text}
+
+\Hypertarget{class_player_controller_a91451641cb153b8e16577a0c7bcf2be4}\index{PlayerController@{PlayerController}!shutDownCompiler@{shutDownCompiler}}
+\index{shutDownCompiler@{shutDownCompiler}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{shutDownCompiler}{shutDownCompiler}}
+{\footnotesize\ttfamily \label{class_player_controller_a91451641cb153b8e16577a0c7bcf2be4} 
+bool Player\+Controller.\+shut\+Down\+Compiler}
+
+\Hypertarget{class_player_controller_ab34198dc409ca443fadf4be4d503941e}\index{PlayerController@{PlayerController}!StarLevelOne@{StarLevelOne}}
+\index{StarLevelOne@{StarLevelOne}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{StarLevelOne}{StarLevelOne}}
+{\footnotesize\ttfamily \label{class_player_controller_ab34198dc409ca443fadf4be4d503941e} 
+Game\+Object Player\+Controller.\+Star\+Level\+One}
+
+\Hypertarget{class_player_controller_a1b6c8b58cfe2960888e559ccd635cd08}\index{PlayerController@{PlayerController}!StarLevelThree@{StarLevelThree}}
+\index{StarLevelThree@{StarLevelThree}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{StarLevelThree}{StarLevelThree}}
+{\footnotesize\ttfamily \label{class_player_controller_a1b6c8b58cfe2960888e559ccd635cd08} 
+Game\+Object Player\+Controller.\+Star\+Level\+Three}
+
+\Hypertarget{class_player_controller_a2ad9c3c3216fa01f88889d62c0314418}\index{PlayerController@{PlayerController}!StarLevelTwo@{StarLevelTwo}}
+\index{StarLevelTwo@{StarLevelTwo}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{StarLevelTwo}{StarLevelTwo}}
+{\footnotesize\ttfamily \label{class_player_controller_a2ad9c3c3216fa01f88889d62c0314418} 
+Game\+Object Player\+Controller.\+Star\+Level\+Two}
+
+\Hypertarget{class_player_controller_a9f8a53859df2bfe6f3d5d4dfe18ef6f0}\index{PlayerController@{PlayerController}!starTPTriggered@{starTPTriggered}}
+\index{starTPTriggered@{starTPTriggered}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{starTPTriggered}{starTPTriggered}}
+{\footnotesize\ttfamily \label{class_player_controller_a9f8a53859df2bfe6f3d5d4dfe18ef6f0} 
+bool Player\+Controller.\+star\+TPTriggered}
+
+\Hypertarget{class_player_controller_a64d5e844d41faf2d1bdec1b51feb2c5b}\index{PlayerController@{PlayerController}!startTimeInSeconds@{startTimeInSeconds}}
+\index{startTimeInSeconds@{startTimeInSeconds}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{startTimeInSeconds}{startTimeInSeconds}}
+{\footnotesize\ttfamily \label{class_player_controller_a64d5e844d41faf2d1bdec1b51feb2c5b} 
+float Player\+Controller.\+start\+Time\+In\+Seconds}
+
+\Hypertarget{class_player_controller_a018911ea8db92f36b73fba3df60edfed}\index{PlayerController@{PlayerController}!stopActions@{stopActions}}
+\index{stopActions@{stopActions}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{stopActions}{stopActions}}
+{\footnotesize\ttfamily \label{class_player_controller_a018911ea8db92f36b73fba3df60edfed} 
+bool Player\+Controller.\+stop\+Actions}
+
+\Hypertarget{class_player_controller_a88fa7c230d2339e7c224a71ed33378a9}\index{PlayerController@{PlayerController}!SummoningCircle@{SummoningCircle}}
+\index{SummoningCircle@{SummoningCircle}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{SummoningCircle}{SummoningCircle}}
+{\footnotesize\ttfamily \label{class_player_controller_a88fa7c230d2339e7c224a71ed33378a9} 
+Game\+Object Player\+Controller.\+Summoning\+Circle}
+
+\Hypertarget{class_player_controller_a996155cf83959d235cdd1e3892622a23}\index{PlayerController@{PlayerController}!timerSlider@{timerSlider}}
+\index{timerSlider@{timerSlider}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{timerSlider}{timerSlider}}
+{\footnotesize\ttfamily \label{class_player_controller_a996155cf83959d235cdd1e3892622a23} 
+Slider Player\+Controller.\+timer\+Slider}
+
+\Hypertarget{class_player_controller_a18c6b0c38e86d5c739f32bf1dade3b5b}\index{PlayerController@{PlayerController}!timerStop@{timerStop}}
+\index{timerStop@{timerStop}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{timerStop}{timerStop}}
+{\footnotesize\ttfamily \label{class_player_controller_a18c6b0c38e86d5c739f32bf1dade3b5b} 
+bool Player\+Controller.\+timer\+Stop}
+
+\Hypertarget{class_player_controller_ac679467163e3ef2832137dbdecf2c3db}\index{PlayerController@{PlayerController}!timerText@{timerText}}
+\index{timerText@{timerText}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{timerText}{timerText}}
+{\footnotesize\ttfamily \label{class_player_controller_ac679467163e3ef2832137dbdecf2c3db} 
+Text Player\+Controller.\+timer\+Text}
+
+\Hypertarget{class_player_controller_a09e6f449a76c8c58eedb1fa1751c7740}\index{PlayerController@{PlayerController}!traceObject@{traceObject}}
+\index{traceObject@{traceObject}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{traceObject}{traceObject}}
+{\footnotesize\ttfamily \label{class_player_controller_a09e6f449a76c8c58eedb1fa1751c7740} 
+Game\+Object Player\+Controller.\+trace\+Object}
+
+\Hypertarget{class_player_controller_aefdcbb8b21a62d4c0d57874afe6cb45b}\index{PlayerController@{PlayerController}!triggerDown@{triggerDown}}
+\index{triggerDown@{triggerDown}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{triggerDown}{triggerDown}}
+{\footnotesize\ttfamily \label{class_player_controller_aefdcbb8b21a62d4c0d57874afe6cb45b} 
+Game\+Object Player\+Controller.\+trigger\+Down}
+
+\Hypertarget{class_player_controller_a569019d40c0218b4d0334a06337db27d}\index{PlayerController@{PlayerController}!triggerLeft@{triggerLeft}}
+\index{triggerLeft@{triggerLeft}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{triggerLeft}{triggerLeft}}
+{\footnotesize\ttfamily \label{class_player_controller_a569019d40c0218b4d0334a06337db27d} 
+Game\+Object Player\+Controller.\+trigger\+Left}
+
+\Hypertarget{class_player_controller_a9c8d5a2c53b7826fcabb869d68a0cf77}\index{PlayerController@{PlayerController}!triggerObject@{triggerObject}}
+\index{triggerObject@{triggerObject}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{triggerObject}{triggerObject}}
+{\footnotesize\ttfamily \label{class_player_controller_a9c8d5a2c53b7826fcabb869d68a0cf77} 
+Game\+Object Player\+Controller.\+trigger\+Object}
+
+\Hypertarget{class_player_controller_aeb0ba97889d0c9803ff24d0887751d32}\index{PlayerController@{PlayerController}!triggerRight@{triggerRight}}
+\index{triggerRight@{triggerRight}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{triggerRight}{triggerRight}}
+{\footnotesize\ttfamily \label{class_player_controller_aeb0ba97889d0c9803ff24d0887751d32} 
+Game\+Object Player\+Controller.\+trigger\+Right}
+
+\Hypertarget{class_player_controller_a89d66b2ea39dba6dd2db7c48cfeb4175}\index{PlayerController@{PlayerController}!triggerUp@{triggerUp}}
+\index{triggerUp@{triggerUp}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{triggerUp}{triggerUp}}
+{\footnotesize\ttfamily \label{class_player_controller_a89d66b2ea39dba6dd2db7c48cfeb4175} 
+Game\+Object Player\+Controller.\+trigger\+Up}
+
+\Hypertarget{class_player_controller_ae30206bb2f8a396348ef46d81dc71c53}\index{PlayerController@{PlayerController}!whoosh@{whoosh}}
+\index{whoosh@{whoosh}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{whoosh}{whoosh}}
+{\footnotesize\ttfamily \label{class_player_controller_ae30206bb2f8a396348ef46d81dc71c53} 
+Audio\+Clip Player\+Controller.\+whoosh}
+
+\Hypertarget{class_player_controller_ac29bf1b40892c484bcecdee88ddacbe2}\index{PlayerController@{PlayerController}!WinBubble@{WinBubble}}
+\index{WinBubble@{WinBubble}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{WinBubble}{WinBubble}}
+{\footnotesize\ttfamily \label{class_player_controller_ac29bf1b40892c484bcecdee88ddacbe2} 
+Game\+Object Player\+Controller.\+Win\+Bubble}
+
+\Hypertarget{class_player_controller_adebf0e759d4e6b02165ab2ae2dac5801}\index{PlayerController@{PlayerController}!winClip@{winClip}}
+\index{winClip@{winClip}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{winClip}{winClip}}
+{\footnotesize\ttfamily \label{class_player_controller_adebf0e759d4e6b02165ab2ae2dac5801} 
+Audio\+Clip Player\+Controller.\+win\+Clip}
+
+\Hypertarget{class_player_controller_a9b5c133994b687f5b796e74d35c19433}\index{PlayerController@{PlayerController}!wining@{wining}}
+\index{wining@{wining}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{wining}{wining}}
+{\footnotesize\ttfamily \label{class_player_controller_a9b5c133994b687f5b796e74d35c19433} 
+bool Player\+Controller.\+wining = false}
+
+\Hypertarget{class_player_controller_a44f8f9f07090b217158f67f3944f09da}\index{PlayerController@{PlayerController}!winZoomScript@{winZoomScript}}
+\index{winZoomScript@{winZoomScript}!PlayerController@{PlayerController}}
+\doxysubsubsection{\texorpdfstring{winZoomScript}{winZoomScript}}
+{\footnotesize\ttfamily \label{class_player_controller_a44f8f9f07090b217158f67f3944f09da} 
+\doxymbox{\hyperlink{class_win_zoom}{Win\+Zoom}} Player\+Controller.\+win\+Zoom\+Script}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Koni/\+\+Documents/\+\+Git\+Hub/\+\+Konisoft-\/\+Speedruns/\+lumi/\+scripts/\+\doxymbox{\hyperlink{_player_controller_8cs}{Player\+Controller.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,11 @@
+<map id="PlayerController" name="PlayerController">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,279,120,305"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="36,5,148,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,46,69,180,65,279,60,278,64,180,84,49"/>
+<area shape="rect" id="Node000003" href="$class_win_zoom.html" title=" " alt="" coords="78,180,156,207"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="98,46,118,180,113,180,94,50"/>
+<area shape="rect" id="Node000004" href="$class_camera_controller.html" title=" " alt="" coords="129,81,252,108"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="121,39,177,80,172,82,121,44"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="105,220,72,280,67,277,100,221"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="174,118,129,181,124,178,170,122"/>
+</map>

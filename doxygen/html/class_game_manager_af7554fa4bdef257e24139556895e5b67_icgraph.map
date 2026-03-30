@@ -1,0 +1,5 @@
+<map id="GameManager.GetLevelStars" name="GameManager.GetLevelStars">
+<area shape="rect" id="Node000001" title=" " alt="" coords="216,5,409,32"/>
+<area shape="rect" id="Node000002" href="$class_star_rating_panel.html#a2a6092d5ee1c8ef82d8b549fce23f303" title=" " alt="" coords="5,5,168,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,19,168,21,168,16,203,19"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="ContinueTimer" name="ContinueTimer">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,377,112,404"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="58,5,169,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,43,51,65,43,78,40,94,40,293,46,339,57,377,51,377,41,341,35,294,35,93,38,76,46,61,75,38"/>
+<area shape="rect" id="Node000003" href="$class_player_controller.html" title=" " alt="" coords="75,279,189,305"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="112,45,112,119,116,206,131,278,126,278,111,207,106,119,111,50"/>
+<area shape="rect" id="Node000004" href="$class_win_zoom.html" title=" " alt="" coords="125,180,202,207"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="122,45,163,180,158,180,120,49"/>
+<area shape="rect" id="Node000005" href="$class_camera_controller.html" title=" " alt="" coords="176,81,299,108"/>
+<area shape="poly" id="edge7_Node000005_Node000002" title=" " alt="" coords="147,37,218,80,214,82,147,43"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="116,318,70,379,66,375,111,318"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="157,219,138,280,134,277,153,223"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="217,123,175,181,171,178,220,118"/>
+</map>

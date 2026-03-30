@@ -1,0 +1,5 @@
+<map id="PlayerController.Move" name="PlayerController.Move">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,156,32"/>
+<area shape="rect" id="Node000002" href="$class_player_controller.html#a29fc6b7079569156fcbe4d2130fddb00" title=" " alt="" coords="204,5,407,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,16,190,19,185,19,156,21"/>
+</map>

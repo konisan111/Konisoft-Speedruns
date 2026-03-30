@@ -1,0 +1,6 @@
+<map id="RemoveSaves.OnClick" name="RemoveSaves.OnClick">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,164,56"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="47,29,40,21,45,11,60,5,85,3,111,5,126,14,121,14,109,10,84,8,61,10,49,15,46,20,52,29"/>
+<area shape="rect" id="Node000002" href="$class_game_manager.html#a51d903a9edb6804b281deffeaff6aad4" title=" " alt="" coords="212,29,400,56"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="164,40,199,43,193,43,164,45"/>
+</map>

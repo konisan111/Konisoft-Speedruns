@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['raycastoffset_0',['raycastOffset',['../class_obstacle.html#aebd82675908efb456742b7f72a48f3a3',1,'Obstacle.raycastOffset'],['../class_prism_slide.html#abcab0aa14acfcd870836a2b626121e3e',1,'PrismSlide.raycastOffset']]],
+  ['reference_1',['reference',['../class_eye_movement.html#a1d740d7e8376c5e5e56bcd4200de648f',1,'EyeMovement']]],
+  ['reflectingobject_2',['reflectingObject',['../class_reflection_camera.html#a62b172c5e02ab0b06c9763fb7ed2d659',1,'ReflectionCamera']]],
+  ['releasetext_3',['releaseText',['../class_version_display.html#a9507daf28c6be6b56fe8ba6f8ac828e1',1,'VersionDisplay']]],
+  ['requiredholdduration_4',['requiredHoldDuration',['../class_holding_zoomer.html#a67f701249c064b78ba0521f920ff0bad',1,'HoldingZoomer']]],
+  ['requiredlaserpoints_5',['requiredLaserPoints',['../class_laser_manager.html#a7ce56251121f8543901c855a9fa67ffb',1,'LaserManager']]],
+  ['requiredpushpoints_6',['requiredPushPoints',['../class_push_manager.html#a81b3abd38fb3739f12f8902bfdf6af2b',1,'PushManager']]],
+  ['resolutionslider_7',['resolutionSlider',['../class_resolution_slider.html#a161aa87c2e778365e5ae8f92a3a80d66',1,'ResolutionSlider']]],
+  ['resolutiontext_8',['resolutionText',['../class_resolution_slider.html#a360df9ad7fc406f8a0a7e94c787384ff',1,'ResolutionSlider']]],
+  ['respawneffect_9',['respawnEffect',['../class_respawn_particle.html#a767872234fc0a858b84984f0a06aa51f',1,'RespawnParticle']]],
+  ['restartlevel_10',['restartLevel',['../class_load_in_game.html#ab32f39d07753cb449ebce89bc418a206',1,'LoadInGame']]],
+  ['reversex_11',['ReverseX',['../class_rotator.html#a03b953cd7b67a361fca21467c0defe33',1,'Rotator']]],
+  ['reversey_12',['ReverseY',['../class_rotator.html#afb7e8942b9926983a194167ada814d2f',1,'Rotator']]],
+  ['reversez_13',['ReverseZ',['../class_rotator.html#ad1b2ebeeea045b7266bdafb0fa4cf576',1,'Rotator']]],
+  ['rightidlesprite_14',['rightIdleSprite',['../class_keyboard_manager.html#ad1ffb7677ff786663a7f400aa60d89d1',1,'KeyboardManager']]],
+  ['rightpressedsprite_15',['rightPressedSprite',['../class_keyboard_manager.html#a75d07c25fef69f0064ece5fd3f30e17c',1,'KeyboardManager']]],
+  ['righttriggername_16',['rightTriggerName',['../class_bat_controller.html#af659cd257e3e41d11a9f34203ae4fb41',1,'BatController']]],
+  ['rotationspeed_17',['rotationSpeed',['../class_camera_shake.html#a8a4c5c8e1f19d59508535e6e1e0f83df',1,'CameraShake.rotationSpeed'],['../class_gate_camera_controler.html#a404898da31d39664f0dbcff4988dd8ce',1,'GateCameraControler.rotationSpeed']]]
+];

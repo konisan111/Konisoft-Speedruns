@@ -1,0 +1,5 @@
+<map id="CutsceneCameraControl.VibrateController" name="CutsceneCameraControl.VibrateController">
+<area shape="rect" id="Node000001" title=" " alt="" coords="269,5,479,48"/>
+<area shape="rect" id="Node000002" href="$class_cutscene_camera_control.html#a071ceaad2adddb571724c3c21511ad9a" title=" " alt="" coords="5,5,221,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="251,27,221,29,221,24,256,27"/>
+</map>

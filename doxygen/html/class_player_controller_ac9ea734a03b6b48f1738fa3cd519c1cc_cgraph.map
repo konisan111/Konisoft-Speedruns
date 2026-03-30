@@ -1,0 +1,9 @@
+<map id="PlayerController.LoadNextLevel" name="PlayerController.LoadNextLevel">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,180,48"/>
+<area shape="rect" id="Node000002" href="$class_player_controller.html#acc2ef9ba8d786be0eb6fb1c315232ba9" title=" " alt="" coords="228,5,408,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,24,215,26,210,27,180,29"/>
+<area shape="rect" id="Node000003" href="$class_player_controller.html#ac5c1dde8da7de826d5ef155f0d60167b" title=" " alt="" coords="456,13,635,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="408,24,443,27,438,27,408,29"/>
+<area shape="rect" id="Node000004" href="$class_game_manager.html#a5aeebbbe3a1cd70f965e9323aab1a354" title=" " alt="" coords="683,13,886,40"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="636,24,670,27,665,27,636,29"/>
+</map>

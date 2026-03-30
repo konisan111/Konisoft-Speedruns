@@ -1,0 +1,7 @@
+<map id="PlayerController.HitWall" name="PlayerController.HitWall">
+<area shape="rect" id="Node000001" title=" " alt="" coords="441,13,601,40"/>
+<area shape="rect" id="Node000002" href="$class_player_controller.html#ad4314e47525bb74459232a3e6eba2958" title=" " alt="" coords="214,5,393,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="423,27,393,29,393,24,429,27"/>
+<area shape="rect" id="Node000003" href="$class_player_controller.html#ae8bc83dffb99867a04be016473ed2c43" title=" " alt="" coords="5,13,166,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="195,27,166,29,166,24,201,26"/>
+</map>

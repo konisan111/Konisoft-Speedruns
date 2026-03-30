@@ -1,0 +1,5 @@
+<map id="PlayerController.SaveStars" name="PlayerController.SaveStars">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,185,32"/>
+<area shape="rect" id="Node000002" href="$class_game_manager.html#a5aeebbbe3a1cd70f965e9323aab1a354" title=" " alt="" coords="233,5,435,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,16,220,19,214,19,185,21"/>
+</map>
