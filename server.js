@@ -23,6 +23,8 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const { NodeHttpHandler } = require("@smithy/node-http-handler");
 const { v4: uuidv4 } = require("uuid"); // We have to install UUIDs
 require("dotenv").config();
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
 
 const { OAuth2Client } = require("google-auth-library");
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -548,9 +550,6 @@ app.get("/me", authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Error retrieving profile" });
   }
 });
-
-const multer = require("multer");
-const upload = multer({ storage: multer.memoryStorage() });
 
 // --- Storage Configuration (Cloudflare R2) ---
 const s3 = new S3Client({
