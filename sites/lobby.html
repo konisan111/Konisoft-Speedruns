@@ -208,7 +208,7 @@ user profiles, and provides video upload functionality.
 
                 <div id="leaderboard-card-container">
                 </div>
-</div>
+            </div>
 
         <!-- --- User Profile Section --- -->
         <div id="profile-container" class="hidden">
@@ -229,15 +229,17 @@ user profiles, and provides video upload functionality.
                 </div>
                 <button id="profile-logout-button">Logout</button>
                 <button id="profile-edit-button">Edit Profile</button>
+                <br>
+                <a href="#" id="delete-account-link" style="text-align: center; color: #ff4444; font-size: 12px; text-decoration: none; margin-top: 10px; display: inline-block;">Delete Account</a>
             </div>
         </div>
 
         <div id="delete-account-modal" class="modal-overlay">
-            <div class="modal-content" style="text-align: center; border: 1px solid #ff4444;">
-                <h2 style="color: #ff4444;">Are you sure?</h2>
-                <p>This action is permanent and will remove all your data from our database.</p>
+            <div class="modal-content">
+                <h2 id="delete-title">Are you sure?</h2>
+                <p id="delete-sub">This action is permanent and will remove all your data from our database.</p>
                 <div class="modal-buttons">
-                    <button id="confirm-delete-btn" class="menu-button" style="background: #ff4444;">Yes, Delete Everything</button>
+                    <button id="confirm-delete-btn" class="menu-button">Yes, Delete Everything</button>
                     <button id="cancel-delete-btn" class="menu-button">Cancel</button>
                 </div>
             </div>

@@ -39,7 +39,7 @@ app.use(
       "http://localhost:5500",
       "https://konisoft.hu",
     ],
-    methods: ["GET", "POST"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   }),
 );

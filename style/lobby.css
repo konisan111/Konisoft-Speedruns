@@ -349,6 +349,47 @@ nav {
     justify-content: center;
 }
 
+#confirm-delete-btn {
+        position: relative;
+    z-index: 10;
+    background-color: var(--secondary-background);
+    border: 1px solid var(--global-border);
+    color: var(--text-color);
+    border-radius: 0.8rem;
+    padding: 1.2rem 2.5rem;
+    font-family: "Oxanium", sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    transition: box-shadow 0.3s ease;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 6px red;
+    justify-content: center;
+}
+
+#cancel-delete-btn {
+        position: relative;
+    z-index: 10;
+    background-color: var(--secondary-background);
+    border: 1px solid var(--global-border);
+    color: var(--text-color);
+    border-radius: 0.8rem;
+    padding: 1.2rem 2.5rem;
+    font-family: "Oxanium", sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    transition: box-shadow 0.3s ease;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* NAVBAR USER PROFILE */
 
 
