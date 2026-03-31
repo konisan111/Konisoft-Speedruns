@@ -731,10 +731,16 @@ app.get("/mod-leaderboard", async (req, res) => {
 
 app.delete('/delete-account', authenticateToken, async (req, res) => {
     try {
-        await User.findByIdAndDelete(req.user.id);
+        const result = await User.findByIdAndDelete(req.user.id);
+        
+        if (!result) {
+            return res.status(404).send("User not found");
+        }
+
         res.status(200).send("Deleted");
     } catch (error) {
-        res.status(500).send("Error");
+        console.error(error);
+        res.status(500).send("Server error during deletion");
     }
 });
 
