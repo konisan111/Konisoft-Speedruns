@@ -119,30 +119,47 @@ saveProfileBtn?.addEventListener("click", async () => {
   const nationality = editCountryDropdown.value;
   const file = pfpFileInput.files[0];
 
-  const formData = new FormData();
-  formData.append("username", username);
-  formData.append("nationality", nationality);
-  if (file) formData.append("avatar", file);
+  const sendData = {
+    username: username,
+    nationality: nationality
+  };
 
-  saveProfileBtn.disabled = true;
-  
-  try {
-    const response = await fetch("https://konisoftspeedruns.onrender.com/update-profile", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-
-    if (response.ok) {
-      showToast(isHungarian ? "Profil frissítve!" : "Profile updated!", "success");
-      location.reload();
-    } else {
-      showToast(isHungarian ? "Hiba a mentés során!" : "Error while saving!", "error");
+  const uploadAndSave = async (base64Data = null, fileName = null) => {
+    if (base64Data) {
+      sendData.imageData = base64Data;
+      sendData.fileName = fileName;
     }
-  } catch (err) {
-    showToast(isHungarian ? "Szerver hiba!" : "Server error!", "error");
-  } finally {
-    saveProfileBtn.disabled = false;
+
+    try {
+      const response = await fetch("https://konisoftspeedruns.onrender.com/update-profile", {
+        method: "POST",
+        headers: { 
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(sendData),
+      });
+
+      if (response.ok) {
+        showToast(isHungarian ? "Profil frissítve!" : "Profile updated!", "success");
+        setTimeout(() => location.reload(), 1500);
+      } else {
+        showToast(isHungarian ? "Hiba a mentés során!" : "Error while saving!", "error");
+      }
+    } catch (err) {
+      showToast(isHungarian ? "Szerver hiba!" : "Server error!", "error");
+    }
+  };
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result.split(",")[1];
+      uploadAndSave(base64String, file.name);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    uploadAndSave();
   }
 });
 

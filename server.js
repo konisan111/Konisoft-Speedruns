@@ -490,45 +490,52 @@ app.post("/update-pfp", authenticateToken, async (req, res) => {
   }
 });
 
-app.post("/update-profile", authenticateToken, upload.single("avatar"), async (req, res) => {
+app.post("/update-profile", authenticateToken, async (req, res) => {
   try {
-    const { username, nationality } = req.body;
-    const user = await User.findOne({ userId: req.user.userId });
+    const { username, nationality, imageData, fileName } = req.body;
+    const userId = req.user.userId;
+    let profileImageUrl = null;
 
-    if (!user) return res.status(404).json({ error: "User not found" });
-
-    if (username) user.username = username;
-    if (nationality) user.nationality = nationality;
-
-    if (req.file) {
-      const fileKey = `avatars/${uuidv4()}-${req.file.originalname}`;
-      
-      await s3.send(new PutObjectCommand({
-        Bucket: process.env.R2_BUCKET_NAME,
+    if (imageData && fileName) {
+      const fileKey = `avatars/${userId}-${Date.now()}-${fileName}`;
+      const uploadParams = {
+        Bucket: process.env.R2_BUCKET,
         Key: fileKey,
-        Body: req.file.buffer,
-        ContentType: req.file.mimetype,
-      }));
+        Body: Buffer.from(imageData, "base64"),
+        ContentType: "image/png",
+      };
 
+      await s3.send(new PutObjectCommand(uploadParams));
+      
       const baseUrl = process.env.R2_PUBLIC_URL.endsWith("/") 
         ? process.env.R2_PUBLIC_URL 
         : `${process.env.R2_PUBLIC_URL}/`;
-
-      user.avatarUrl = `${baseUrl}${fileKey}`;
+        
+      profileImageUrl = `${baseUrl}${fileKey}`;
     }
 
-    await user.save();
-    
-    res.status(200).json({ 
-      message: "Profile updated", 
-      user: { 
-        username: user.username, 
-        nationality: user.nationality, 
-        avatarUrl: user.avatarUrl 
-      } 
+    const updateData = {};
+    if (username) updateData.username = username;
+    if (nationality) updateData.nationality = nationality;
+    if (profileImageUrl) updateData.avatarUrl = profileImageUrl;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { userId: userId },
+      { $set: updateData },
+      { new: true }
+    );
+
+    res.json({
+      message: "Profile updated!",
+      user: {
+        username: updatedUser.username,
+        nationality: updatedUser.nationality,
+        avatarUrl: updatedUser.avatarUrl
+      }
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("[SPEEDRUNS]> ", err);
+    res.status(500).json({ error: "Failed to update profile" });
   }
 });
 
