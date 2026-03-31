@@ -1040,7 +1040,7 @@ main {
 
 #leaderboard-titlebar, .leaderboard-card {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 85px max-content;
+    grid-template-columns: 2fr 1fr 1fr 1fr 85px max-content;
     gap: 1.5rem;
     align-items: center;
     width: 100%;

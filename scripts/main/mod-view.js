@@ -1,17 +1,16 @@
-//  _           _         ___ _   
-// | |_ ___ ___|_|___ ___|  _| |_ 
+//  _           _         ___ _
+// | |_ ___ ___|_|___ ___|  _| |_
 // | '_| . |   | |_ -| . |  _|  _|
 // |_,_|___|_|_|_|___|___|_| |_|
 // Konisoft Speedruns Platform
 // If you want it, then you'll have to take it.
-// 
+//
 /**
  * mod-view.js
  * Handles the moderator view, including video uploads, theme management, 
  * leaderboard generation, and user profile interactions.
  */
 
-// --- Module Imports ---
 import { getCountryCode } from "../flagcdn-api/get-country.js";
 import { showToast } from "../elements/toast-error.js";
 import { countries } from "../data/translations.js";
@@ -33,7 +32,7 @@ const getTranslatedCountry = (englishName, lang) => {
 };
 
 // --- DOM Elements: Video Upload ---
-const uploadBtn = document.getElementById("nav-upload");
+const uploadBtn = document.getElementById("welcome-upload-btn");
 const uploadBtnMobile = document.getElementById("nav-upload-mobile");
 const uploadModal = document.getElementById("upload-modal");
 const closeUploadModal = document.getElementById("close-upload-modal");
@@ -42,6 +41,23 @@ const videoFileInput = document.getElementById("video-file-input");
 const startUploadBtn = document.getElementById("start-upload-btn");
 const cancelUploadBtn = document.getElementById("cancel-upload-btn");
 const fileNameDisplay = document.getElementById("selected-file-name");
+const welcomeContainer = document.getElementById("welcome-container");
+const editProfileBtn = document.getElementById("profile-edit-button");
+const editProfileModal = document.getElementById("edit-profile-modal");
+const closeEditModal = document.getElementById("close-edit-modal");
+const saveProfileBtn = document.getElementById("save-profile-btn");
+const selectPfpBtn = document.getElementById("select-pfp-btn");
+const pfpFileInput = document.getElementById("pfp-file-input");
+const editCountryDropdown = document.getElementById("edit-country");
+const editUsernameInput = document.getElementById("edit-username");
+const tooltip = document.getElementById("user-tooltip");
+const tooltipPfp = document.getElementById("tooltip-pfp");
+const tooltipName = document.getElementById("tooltip-username");
+const tooltipDate = document.getElementById("tooltip-date");
+const deleteLink = document.getElementById("delete-account-link");
+const deleteModal = document.getElementById("delete-account-modal");
+const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
 
 [uploadBtn, uploadBtnMobile].forEach((btn) => {
   btn?.addEventListener("click", (e) => {
@@ -50,7 +66,6 @@ const fileNameDisplay = document.getElementById("selected-file-name");
   });
 });
 
-// --- Event Listeners: Modal Controls ---
 closeUploadModal?.addEventListener("click", () =>
   uploadModal.classList.remove("show"),
 );
@@ -65,10 +80,90 @@ uploadModal?.addEventListener("click", (e) => {
 });
 
 selectVideoBtn?.addEventListener("click", () => videoFileInput.click());
-// Update display when a video file is selected
+
 videoFileInput?.addEventListener("change", () => {
   if (videoFileInput.files.length > 0) {
     fileNameDisplay.textContent = videoFileInput.files[0].name;
+  }
+});
+
+const populateCountryDropdown = () => {
+  if (!editCountryDropdown) return;
+  editCountryDropdown.innerHTML = "";
+  countries.forEach((country) => {
+    const option = document.createElement("option");
+    option.value = country.en;
+    option.textContent = isHungarian ? country.hu : country.en;
+    editCountryDropdown.appendChild(option);
+  });
+};
+
+editProfileBtn?.addEventListener("click", () => {
+  if (currentProfileData) {
+    editUsernameInput.value = currentProfileData.username;
+    populateCountryDropdown();
+    editCountryDropdown.value = currentProfileData.nationality || "Hungary";
+  }
+  editProfileModal.classList.add("show");
+});
+
+[closeEditModal, editProfileModal].forEach((el) => {
+  el?.addEventListener("click", (e) => {
+    if (e.target === el || e.target === closeEditModal) {
+      editProfileModal.classList.remove("show");
+    }
+  });
+});
+
+selectPfpBtn?.addEventListener("click", () => pfpFileInput.click());
+
+saveProfileBtn?.addEventListener("click", async () => {
+  const token = localStorage.getItem("token");
+  const username = editUsernameInput.value;
+  const nationality = editCountryDropdown.value;
+  const file = pfpFileInput.files[0];
+
+  const sendData = {
+    username: username,
+    nationality: nationality
+  };
+
+  const uploadAndSave = async (base64Data = null, fileName = null) => {
+    if (base64Data) {
+      sendData.imageData = base64Data;
+      sendData.fileName = fileName;
+    }
+
+    try {
+      const response = await fetch("https://konisoftspeedruns.onrender.com/update-profile", {
+        method: "POST",
+        headers: { 
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(sendData),
+      });
+
+      if (response.ok) {
+        showToast(isHungarian ? "Profil frissítve!" : "Profile updated!", "success");
+        setTimeout(() => location.reload(), 1500);
+      } else {
+        showToast(isHungarian ? "Hiba a mentés során!" : "Error while saving!", "error");
+      }
+    } catch (err) {
+      showToast(isHungarian ? "Szerver hiba!" : "Server error!", "error");
+    }
+  };
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result.split(",")[1];
+      uploadAndSave(base64String, file.name);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    uploadAndSave();
   }
 });
 
@@ -103,7 +198,6 @@ startUploadBtn?.addEventListener("click", async () => {
     : "Uploading...";
 
   try {
-    // Submit the video and speedrun data to the backend
     const response = await fetch(
       "https://konisoftspeedruns.onrender.com/upload-video",
       {
@@ -142,18 +236,67 @@ startUploadBtn?.addEventListener("click", async () => {
   }
 });
 
-// --- DOM Elements: Settings & Navigation ---
+// --- Theme & Asset Configuration ---
+const themes = {
+  light: "../style/light-theme.css",
+  dark: "../style/dark-theme.css",
+};
+
+const timeForImage = 5;
+let currentImageIndex = 0;
+
 let settingsMobile = document.getElementById("settings-mobile");
 const menuButtons = document.querySelectorAll(".menu-button");
-// --- DOM Elements: Dropdown Menus ---
 const dropdownMenuButtons = document.querySelectorAll(".dropdown-menu-button");
 const dropdownMenu = document.getElementById("dropdown-menu");
 
-// --- Theme Configuration ---
+/**
+ * Preloads an array of image URLs to ensure smooth transitions.
+ * @param {string[]} urls - Array of image URLs to preload.
+ * @returns {Promise} - A promise that resolves when all images are loaded.
+ */
+function preloadImages(urls) {
+  const unique = Array.from(new Set(urls.filter(Boolean)));
+  const loaders = unique.map(
+    (url) =>
+      new Promise((resolve) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve;
+        img.src = url;
+      }),
+  );
+  return Promise.all(loaders);
+}
+
+// --- Window Load Initialization ---
+window.addEventListener("load", async () => {
+  document.querySelectorAll(".fade-in").forEach((element, i) => {
+    const baseDelay = 0;
+    const step = 0.0;
+    element.style.animationDelay = baseDelay + i * step + "s";
+  });
+
+  const domImgSrcs = Array.from(document.images).map((img) => img.src);
+  const gameCovers = [];
+  await preloadImages([...domImgSrcs, ...gameCovers]);
+
+  document
+    .querySelectorAll(".text-loading")
+    .forEach((el) => el.classList.remove("text-loading"));
+  document
+    .querySelectorAll(".image-loading")
+    .forEach((el) => el.classList.remove("image-loading"));
+  document
+    .querySelectorAll(".video-loading")
+    .forEach((el) => el.classList.remove("video-loading"));
+});
+
 const THEME_FILES = {
   light: "../style/light-theme.css",
   dark: "../style/dark-theme.css",
 };
+
 let themeLink = document.getElementById("theme-css");
 if (!themeLink) {
   themeLink = document.createElement("link");
@@ -196,7 +339,7 @@ setTheme(initialTheme(), false);
   if (el) el.addEventListener("click", toggle);
 });
 
-// --- Dropdown Menu Logic ---
+// --- UI Navigation Logic ---
 function SelectOption(selectedButton, fromDropdown = false) {
   menuButtons.forEach((button) => (button.style.fontWeight = "500"));
   dropdownMenuButtons.forEach((button) => (button.style.fontWeight = "normal"));
@@ -239,6 +382,7 @@ if (settingsMobile) {
   });
 }
 
+// --- Dropdown Menu Logic ---
 function ToggleDropdown(button) {
   if (dropdownMenu.classList.contains("dropdown-menu-down")) {
     dropdownMenu.classList.add("dropdown-menu-up");
@@ -257,22 +401,44 @@ function ToggleDropdown(button) {
   }
 }
 
-// --- Lobby Initialization ---
+/**
+ * Initializes the lobby UI, including language, texts, and the main leaderboard.
+ */
 const initLobby = () => {
   const languageButtons = [
     document.getElementById("language"),
     document.getElementById("language-mobile"),
   ];
 
-  // --- Localization Data ---
   const uiTranslations = {
     en: {
+      "": "",
+      "btn-approve": "Approve",
+      "btn-delete": "Delete",
+      "btn-unapprove": "Unapprove",
+      "leaderboard-recordings-title": "Recordings",
+      "leaderboard-approving-title": "Approving",
+      "save-profile-btn": "Save Changes",
+      "select-pfp-btn": "Change Profile Picture",
+      "edit-country-text": "Country",
+      "edit-username": "Username",
+      "edit-profile-title": "Edit Profile",
+      "confirm-delete-btn": "Yes, Delete Everything!",
+      "cancel-delete-btn": "No, Cancel",
+      "delete-title": "Are you sure?",
+      "delete-sub": "This action is permanent and will remove all your data from our database.",
+      "delete-account-link": "Delete Account",
+      "nav-profile": "Profile",
+      "profile-edit-button": "Edit Profile",
+      "welcome-title": "Welcome",
+      "welcome-subtitle": "to the mod view!",
       "nav-home": "Leaderboard",
       "nav-upload": "Upload your time",
       "nav-logout": "Logout",
       "nav-home-mobile": "Leaderboard",
       "nav-upload-mobile": "Upload your time",
       "nav-logout-mobile": "Logout",
+      "refresh-leaderboard": "Refresh Leaderboard",
       "leaderboard-main-title": "Leaderboard",
       "leaderboard-recordings-title": "Recordings",
       "leaderboard-scope": "global",
@@ -309,12 +475,33 @@ const initLobby = () => {
       "watch-text": "WATCH VIDEO",
     },
     hu: {
+      "": "",
+      "btn-approve": "Elfogadás",
+      "btn-delete": "Törlés",
+      "btn-unapprove": "Visszavonás",
+      "leaderboard-recordings-title": "Felvételek",
+      "leaderboard-approving-title": "Jóváhagyás",  
+      "save-profile-btn": "Változtatások Mentése",
+      "select-pfp-btn": "Profilkép Változtatása", 
+      "edit-country-text": "Nemzetiség",
+      "edit-username": "Felhasználónév",
+      "edit-profile-title": "Profil Szerkesztése",
+      "confirm-delete-btn": "Igen, Töröljön Mindent!",
+      "cancel-delete-btn": "Nem, inkább mégsem",
+      "delete-title": "Biztos vagy benne?",
+      "delete-sub": "Ez a folyamat nem visszafordítható, minden adatod törlődni fog!",
+      "delete-account-link": "Fiók Törlése",
+      "nav-profile": "Profil",
+      "profile-edit-button": "Profil Szerkesztése",
+      "welcome-title": "Üdv",
+      "welcome-subtitle": "a moderátori nézetben!",
       "nav-home": "Ranglista",
       "nav-upload": "Idő feltöltése",
       "nav-logout": "Kijelentkezés",
       "nav-home-mobile": "Ranglista",
       "nav-upload-mobile": "Idő feltöltése",
       "nav-logout-mobile": "Kijelentkezés",
+      "refresh-leaderboard": "Ranglista Frissítése",
       "leaderboard-main-title": "Ranglista",
       "leaderboard-recordings-title": "Felvételek",
       "leaderboard-scope": "globális",
@@ -352,7 +539,6 @@ const initLobby = () => {
     },
   };
 
-  // Default language state
   let currentLanguage = "en";
 
   // Update all UI text elements based on the current language
@@ -441,7 +627,50 @@ const initLobby = () => {
     });
   });
 
-  // --- Leaderboard Generation ---
+  /**
+   * Helper function to handle video approval/rejection API calls.
+   */
+  const handleVideoVerification = async (e, isApproved) => {
+      const btn = e.target;
+      const email = btn.getAttribute('data-email');
+      const videoUrl = btn.getAttribute('data-url');
+      
+      // Prevent spam clicking
+      btn.style.pointerEvents = "none";
+      btn.style.opacity = "0.5";
+
+      try {
+          const response = await fetch("https://konisoftspeedruns.onrender.com/verify-video", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, videoUrl, approved: isApproved })
+          });
+          
+          if (response.ok) {
+              showToast(
+                  isHungarian 
+                      ? (isApproved ? "Videó jóváhagyva!" : "Videó elutasítva/törölve!") 
+                      : (isApproved ? "Video approved!" : "Video rejected/deleted!"), 
+                  "success"
+              );
+              // Reload the leaderboard to reflect changes smoothly
+              generateLeaderboard(false);
+          } else {
+              showToast(isHungarian ? "Hiba a művelet során!" : "Error processing action!", "error");
+              btn.style.pointerEvents = "auto";
+              btn.style.opacity = "1";
+          }
+      } catch (error) {
+          showToast(isHungarian ? "Szerver hiba!" : "Server error!", "error");
+          btn.style.pointerEvents = "auto";
+          btn.style.opacity = "1";
+      }
+  };
+
+  /**
+   * Fetches and renders the mod leaderboard (approved and unapproved).
+   * @param {boolean} animate - Whether to apply entry animations to the cards.
+   */
   const generateLeaderboard = async (animate = true) => {
     const wrapper = document.getElementById("leaderboard-card-container");
     if (!wrapper) return;
@@ -449,142 +678,203 @@ const initLobby = () => {
     wrapper.innerHTML = "";
 
     try {
-      // Retrieve the latest speedrun data for moderators
-      const response = await fetch(
-        "https://konisoftspeedruns.onrender.com/mod-leaderboard",
-      );
-      if (!response.ok) throw new Error("Hiba a letöltéskor");
-
-      const rawData = await response.json();
-
-      // Extract current filter values from the UI
-      const nationFilterEl = document.getElementById("opt-nation");
-      const nationFilterValue = nationFilterEl?.dataset.value;
-      const timeFilterText = document.getElementById("opt-time")?.textContent;
-      const uploadFilterText =
-        document.getElementById("opt-upload")?.textContent;
-
-      let realData = rawData;
-
-      // Apply nation-based filtering
-      if (nationFilterValue && nationFilterValue !== "Global") {
-        realData = rawData.filter(
-          (entry) => entry.nationality === nationFilterValue,
+        // Changed endpoint to /mod-leaderboard to get pending videos and user emails
+        const response = await fetch(
+            "https://konisoftspeedruns.onrender.com/mod-leaderboard",
         );
-      }
+        if (!response.ok) throw new Error("Hiba a letöltéskor");
+        const currentUser = document.getElementById("profile-username")?.textContent;
+        const rawData = await response.json();
 
-      const newestTextEN = uiTranslations.en["opt-upload-1"];
-      const newestTextHU = uiTranslations.hu["opt-upload-1"];
-      const oldestTextEN = uiTranslations.en["opt-upload-2"];
-      const oldestTextHU = uiTranslations.hu["opt-upload-2"];
+        const nationFilterEl = document.getElementById("opt-nation");
+        const nationFilterValue = nationFilterEl?.dataset.value;
+        const timeFilterText = document.getElementById("opt-time")?.textContent;
+        const uploadFilterText = document.getElementById("opt-upload")?.textContent;
 
-      const longestTextEN = uiTranslations.en["opt-time-2"];
-      const longestTextHU = uiTranslations.hu["opt-time-2"];
+        let realData = rawData;
 
-      // Sort data based on selected criteria (Upload Date or Time)
-      if (
-        uploadFilterText === newestTextEN ||
-        uploadFilterText === newestTextHU
-      ) {
-        realData.sort(
-          (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate),
-        );
-      } else if (
-        uploadFilterText === oldestTextEN ||
-        uploadFilterText === oldestTextHU
-      ) {
-        realData.sort(
-          (a, b) => new Date(a.uploadDate) - new Date(b.uploadDate),
-        );
-      } else if (
-        timeFilterText === longestTextEN ||
-        timeFilterText === longestTextHU
-      ) {
-        realData.sort((a, b) => b.speedrunTime - a.speedrunTime);
-      } else {
-        realData.sort((a, b) => a.speedrunTime - b.speedrunTime);
-      }
+        if (nationFilterValue && nationFilterValue !== "Global") {
+            realData = rawData.filter(
+                (entry) => entry.nationality === nationFilterValue,
+            );
+        }
 
-      const currentUser =
-        document.getElementById("profile-username")?.textContent || "";
+        const newestTextEN = uiTranslations.en["opt-upload-1"];
+        const newestTextHU = uiTranslations.hu["opt-upload-1"];
+        const oldestTextEN = uiTranslations.en["opt-upload-2"];
+        const oldestTextHU = uiTranslations.hu["opt-upload-2"];
 
-      realData.forEach((entry, index) => {
-        // Map data fields to local variables
-        const formattedTime = formatSpeedrunTime(entry.speedrunTime);
-        const countryCode = getCountryCode(entry.nationality);
-        const flagUrl =
-          countryCode === "un"
-            ? "../images/lang_en.webp"
-            : `https://flagcdn.com/w80/${countryCode}.png`;
-        const avatarUrl =
-          entry.avatarUrl || "https://katona-konstanti.imgbb.com/";
-        const videoLink = entry.videoUrl || entry.url || "#";
-        const translatedCountryName = getTranslatedCountry(
-          entry.nationality,
-          currentLanguage,
-        );
+        const longestTextEN = uiTranslations.en["opt-time-2"];
+        const longestTextHU = uiTranslations.hu["opt-time-2"];
 
-        const placement = index + 1;
-        const isUser = entry.username === currentUser;
-
-        const card = document.createElement("div");
-        card.className = `leaderboard-card ${isUser ? "highlight-user" : ""}`;
-
-        // Apply status-based styling (Approved vs. Pending)
-        if (entry.approved) {
-          card.style.backgroundColor = "rgba(0, 100, 0, 0.4)";
+        if (
+            uploadFilterText === newestTextEN ||
+            uploadFilterText === newestTextHU
+        ) {
+            realData.sort(
+                (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate),
+            );
+        } else if (
+            uploadFilterText === oldestTextEN ||
+            uploadFilterText === oldestTextHU
+        ) {
+            realData.sort(
+                (a, b) => new Date(a.uploadDate) - new Date(b.uploadDate),
+            );
+        } else if (
+            timeFilterText === longestTextEN ||
+            timeFilterText === longestTextHU
+        ) {
+            realData.sort((a, b) => b.speedrunTime - a.speedrunTime);
         } else {
-          card.style.backgroundColor = "rgba(139, 0, 0, 0.4)";
+            realData.sort((a, b) => a.speedrunTime - b.speedrunTime);
         }
 
-        // Apply entry animations for leaderboard cards
-        if (animate) {
-          card.style.opacity = "0";
-          card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.05}s`;
-        }
-        // Generate the HTML structure for each leaderboard entry
-        card.innerHTML = `
-                <div class="leaderboard-user-information">
-                    <div class="leaderboard-placement" style="font-weight: 800; margin-right: 10px; min-width: 25px; ${isUser ? "color: red;" : ""}">#${placement}</div>
-                    <div class="leaderboard-profile-picture" style="background-image: url('${avatarUrl}'); background-size: cover; background-position: center;"></div>
-                    <div class="leaderboard-username">${entry.username}</div>
-                </div>
-                <div class="leaderboard-country">
-                    <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
-                    <span class="leaderboard-country-name">${translatedCountryName}</span>
-                </div>
-                <div class="leaderboard-game">Lumi Dungeon of Dreadspire</div>
-                <div class="leaderboard-datetime">
-                    <div class="leaderboard-date">${entry.uploadDate ? new Date(entry.uploadDate).toLocaleDateString() : new Date().toLocaleDateString()}</div>
-                    <div class="leaderboard-time">${formattedTime}</div>
-                </div>
-                <div class="mod-controls" style="display: flex; align-items: center; gap: 15px;">
-                    <a href="${videoLink}" target="_blank" class="leaderboard-watch-link">${uiTranslations[currentLanguage]["watch-text"]}</a>
-                    ${
-                      !entry.approved
-                        ? `
-                        <img src="../images/check_icon.png" class="mod-icon" title="Approve" onclick="verifyVideo('${entry.email}', '${entry.videoUrl}', true)" style="width: 20px; height: 20px; cursor: pointer;">
-                        <img src="../images/error_icon.png" class="mod-icon" title="Reject" onclick="verifyVideo('${entry.email}', '${entry.videoUrl}', false)" style="width: 20px; height: 20px; cursor: pointer;">
-                    `
-                        : ""
-                    }
-                </div>
-            `;
-        wrapper.appendChild(card);
+        realData.forEach((entry, index) => {
+          const formattedTime = formatSpeedrunTime(entry.speedrunTime);
+          const countryCode = getCountryCode(entry.nationality);
+          const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
+          const avatarUrl = entry.avatarUrl || "https://katona-konstanti.imgbb.com/";
+          const videoLink = entry.videoUrl || entry.url || "#";
+          const translatedCountryName = getTranslatedCountry(entry.nationality, currentLanguage);
+
+          const placement = index + 1;
+          const isUser = entry.username === currentUser;
+
+          // Color logic based on approval status
+          let placementColor = entry.approved ? "#00FF00" : "#FF4444";
+          let cardBackground = entry.approved 
+              ? "linear-gradient(90deg, rgba(0, 255, 0, 0.15) 0%, var(--secondary-background) 100%)" 
+              : "linear-gradient(90deg, rgba(255, 68, 68, 0.15) 0%, var(--secondary-background) 100%)";
+
+          const card = document.createElement("div");
+          card.className = `leaderboard-card ${isUser ? "highlight-user" : ""}`;
+
+          card.style.background = cardBackground;
+          card.style.borderLeft = `4px solid ${placementColor}`;
+
+          if (animate) {
+              card.style.opacity = "0";
+              card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.05}s`;
+          }
+
+          // Build Action Buttons
+          let actionButtonsHTML = "";
+          const approveText = uiTranslations[currentLanguage]["btn-approve"];
+          const deleteText = uiTranslations[currentLanguage]["btn-delete"];
+          const unapproveText = uiTranslations[currentLanguage]["btn-unapprove"];
+
+          if (entry.approved) {
+              actionButtonsHTML = `
+                  <div class="action-btn-container reject-btn" data-email="${entry.email}" data-url="${entry.videoUrl}" style="display: flex; align-items: center; cursor: pointer; gap: 5px; color: #FF4444;">
+                      <img src="../../images/error_icon.png" style="width: 20px; height: 20px;" alt="X">
+                      <span style="font-size: 0.85rem; font-weight: 600;">${unapproveText}</span>
+                  </div>
+              `;
+          } else {
+              actionButtonsHTML = `
+                  <div class="action-btn-container approve-btn" data-email="${entry.email}" data-url="${entry.videoUrl}" style="display: flex; align-items: center; cursor: pointer; gap: 5px; color: #00FF00; margin-right: 15px;">
+                      <img src="../../images/check_icon.png" style="width: 20px; height: 20px;" alt="Check">
+                      <span style="font-size: 0.85rem; font-weight: 600;">${approveText}</span>
+                  </div>
+                  <div class="action-btn-container reject-btn" data-email="${entry.email}" data-url="${entry.videoUrl}" style="display: flex; align-items: center; cursor: pointer; gap: 5px; color: #FF4444;">
+                      <img src="../../images/error_icon.png" style="width: 20px; height: 20px;" alt="X">
+                      <span style="font-size: 0.85rem; font-weight: 600;">${deleteText}</span>
+                  </div>
+              `;
+          }
+
+          card.innerHTML = `
+              <div class="leaderboard-user-information">
+                  <div class="leaderboard-placement" style="font-weight: 800; margin-right: 10px; width: 35px; flex-shrink: 0; color: ${placementColor};">#${placement}</div>
+                  <div class="leaderboard-profile-picture" style="background-image: url('${avatarUrl}'); background-size: cover; background-position: center;"></div>
+                  <div class="leaderboard-username" style="${isUser ? "font-weight: bold;" : ""}">${entry.username}</div>
+              </div>
+              <div class="leaderboard-country">
+                  <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
+                  <span class="leaderboard-country-name">${translatedCountryName}</span>
+              </div>
+              <div class="leaderboard-game">Lumi Dungeon of Dreadspire</div>
+              
+              <div class="leaderboard-datetime" style="display: flex; flex-direction: column; gap: 2px; justify-content: center; line-height: 1.1;">
+                  <div class="leaderboard-date" style="font-size: 0.9rem;">${entry.uploadDate ? new Date(entry.uploadDate).toLocaleDateString() : new Date().toLocaleDateString()}</div>
+                  <div class="leaderboard-time" style="font-size: 0.9rem; font-weight: bold;">${formattedTime}</div>
+              </div>
+              
+              <a href="${videoLink}" target="_blank" class="leaderboard-watch-link">${uiTranslations[currentLanguage]["watch-text"]}</a>
+              
+              <div class="mod-actions" style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                  ${actionButtonsHTML}
+              </div>
+          `;
+
+          card.innerHTML = `
+              <div class="leaderboard-user-information">
+                  <div class="leaderboard-placement" style="font-weight: 800; margin-right: 10px; width: 35px; flex-shrink: 0; color: ${placementColor};">#${placement}</div>
+                  <div class="leaderboard-profile-picture" style="background-image: url('${avatarUrl}'); background-size: cover; background-position: center;"></div>
+                  <div class="leaderboard-username" style="${isUser ? "font-weight: bold;" : ""}">${entry.username}</div>
+              </div>
+              <div class="leaderboard-country">
+                  <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
+                  <span class="leaderboard-country-name">${translatedCountryName}</span>
+              </div>
+              <div class="leaderboard-game">Lumi Dungeon of Dreadspire</div>
+              <div class="leaderboard-datetime">
+                  <div class="leaderboard-date">${entry.uploadDate ? new Date(entry.uploadDate).toLocaleDateString() : new Date().toLocaleDateString()}</div>
+                  <div class="leaderboard-time">${formattedTime}</div>
+              </div>
+              <a href="${videoLink}" target="_blank" class="leaderboard-watch-link">${uiTranslations[currentLanguage]["watch-text"]}</a>
+              <div class="mod-actions" style="display: flex; align-items: center; margin-left: 15px;">
+                  ${actionButtonsHTML}
+              </div>
+          `;
+          wrapper.appendChild(card);
+          
+          // Hover Tooltip Logic
+          const pfpElement = card.querySelector(".leaderboard-profile-picture");
+            pfpElement.addEventListener("mouseenter", (e) => {
+                const dateObj = new Date(entry.uploadDate || entry.accountCreation);
+                const formattedDate = isHungarian 
+                    ? dateObj.toLocaleDateString("hu-HU") 
+                    : dateObj.toLocaleDateString("en-US");
+
+                tooltipPfp.src = entry.avatarUrl || "../images/pfp_placeholder.webp";
+                tooltipName.textContent = entry.username;
+                tooltipDate.textContent = (isHungarian ? "Tagság: " : "Member since: ") + formattedDate;
+                
+                tooltip.classList.remove("hidden");
+            });
+
+            pfpElement.addEventListener("mousemove", (e) => {
+                tooltip.style.left = (e.clientX + 15) + "px";
+                tooltip.style.top = (e.clientY + 15) + "px";
+            });
+
+            pfpElement.addEventListener("mouseleave", () => {
+                tooltip.classList.add("hidden");
+            });
       });
+
+      // Bind click events to the containers
+      document.querySelectorAll('.approve-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => handleVideoVerification(e, true));
+      });
+      
+      document.querySelectorAll('.reject-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => handleVideoVerification(e, false));
+      });
+
     } catch (err) {
-      showToast(
-        isHungarian
-          ? "Nem sikerült betölteni a ranglistát!"
-          : "Loading the leaderboard was unsuccessful!",
-        "error",
-      );
-      wrapper.innerHTML =
-        "<p style='color: red;'>Hiba történt a ranglista betöltésekor.</p>";
+        showToast(
+            isHungarian
+                ? "Nem sikerült betölteni a ranglistát!"
+                : "Loading the leaderboard was unsuccessful!",
+            "error",
+        );
+        wrapper.innerHTML =
+            `<p style='color: red;'>${isHungarian ? "Hiba történt a ranglista betöltésekor." : "An error occurred while loading the leaderboard."}</p>`;
     }
   };
-
-  // We have to update everything to be displayed correctly.
   updateTexts();
   updateFlags();
   generateLeaderboard(true);
@@ -596,7 +886,38 @@ const initLobby = () => {
   const navHomeMobileBtn = document.getElementById("nav-home-mobile");
   const navProfileBtn = document.getElementById("nav-profile");
   const navProfileMobileBtn = document.getElementById("nav-profile-mobile");
-
+  /**
+   * Refreshing the leaderboard to check the changes.
+   */
+  const refreshBtn = document.getElementById("refresh-holder");
+  if (refreshBtn) {
+      refreshBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          
+          const wrapper = document.getElementById("leaderboard-card-container");
+          if (wrapper) {
+              wrapper.innerHTML = "";
+          }
+          
+          generateLeaderboard(true);
+      });
+  }
+  const refreshBtnMbl = document.getElementById("refresh-holder-mobile");
+  if (refreshBtnMbl) {
+      refreshBtnMbl.addEventListener("click", (e) => {
+          e.preventDefault();
+          
+          const wrapper = document.getElementById("leaderboard-card-container");
+          if (wrapper) {
+              wrapper.innerHTML = "";
+          }
+          
+          generateLeaderboard(true);
+      });
+  }
+  /**
+   * Handles smooth view transitions between Leaderboard and Profile.
+   */
   const switchView = (fromEl, toEl, onStartFadeIn) => {
     if (fromEl.isAnimating || toEl.isAnimating) return;
     fromEl.isAnimating = true;
@@ -697,57 +1018,90 @@ const initLobby = () => {
   if (navHomeMobileBtn)
     navHomeMobileBtn.addEventListener("click", openHomeView);
 
+  navHomeBtn?.addEventListener("click", () => {
+      welcomeContainer.classList.remove("welcome-hidden");
+  });
+
+  navHomeMobileBtn?.addEventListener("click", () => {
+      welcomeContainer.classList.remove("welcome-hidden");
+  });
+
+  navProfileBtn?.addEventListener("click", () => {
+      welcomeContainer.classList.add("welcome-hidden");
+  });
+
+  navProfileMobileBtn?.addEventListener("click", () => {
+      welcomeContainer.classList.add("welcome-hidden");
+});
+
   // --- Mini Leaderboard (Profile View) ---
   const generateMiniLeaderboard = async () => {
-    const miniWrapper = document.getElementById("mini-leaderboard-cards");
-    if (!miniWrapper) return;
-    miniWrapper.innerHTML = "";
+      const miniWrapper = document.getElementById("mini-leaderboard-cards");
+      if (!miniWrapper) return;
+      miniWrapper.innerHTML = "";
 
-    try {
-      const response = await fetch(
-        "https://konisoftspeedruns.onrender.com/mod-leaderboard",
-      );
-      if (!response.ok) throw new Error("Failed to fetch");
+      try {
+          const response = await fetch(
+              "https://konisoftspeedruns.onrender.com/leaderboard",
+          );
+          if (!response.ok) throw new Error("Failed to fetch");
 
-      const miniData = await response.json();
+          const miniData = await response.json();
+          miniData.sort((a, b) => a.speedrunTime - b.speedrunTime);
 
-      miniData.sort((a, b) => a.speedrunTime - b.speedrunTime);
+          const currentUser = document.getElementById("profile-username").textContent;
+          
+          const isDarkMode = document.documentElement.dataset.theme === "dark";
 
-      const currentUser =
-        document.getElementById("profile-username").textContent;
+          miniData.forEach((entry, index) => {
+              const formattedTime = formatSpeedrunTime(entry.speedrunTime);
+              const countryCode = getCountryCode(entry.nationality);
+              const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
 
-      miniData.forEach((entry, index) => {
-        // Map data fields to local variables
-        const formattedTime = formatSpeedrunTime(entry.speedrunTime);
-        const countryCode = getCountryCode(entry.nationality);
-        const flagUrl =
-          countryCode === "un"
-            ? "../images/lang_en.webp"
-            : `https://flagcdn.com/w80/${countryCode}.png`;
+              const isUser = entry.username === currentUser;
+              const placement = index + 1;
 
-        const isUser = entry.username === currentUser;
-        const placement = index + 1;
+              let placementColor = "";
+              let cardBackground = "";
 
-        const card = document.createElement("div");
-        card.className = `leaderboard-card mini-card ${isUser ? "highlight-user" : ""}`;
+              if (placement === 1) {
+                  placementColor = "#FFD700";
+                  cardBackground = `linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, var(--secondary-background) 100%)`;
+              } else if (placement === 2) {
+                  placementColor = "#C0C0C0";
+                  cardBackground = `linear-gradient(90deg, rgba(192, 192, 192, 0.2) 0%, var(--secondary-background) 100%)`;
+              } else if (placement === 3) {
+                  placementColor = "#CD7F32"
+                  cardBackground = `linear-gradient(90deg, rgba(205, 127, 50, 0.2) 0%, var(--secondary-background) 100%)`;
+              } else if (isUser) {
+                  placementColor = "#FF4444";
+                  cardBackground = `linear-gradient(90deg, rgba(255, 68, 68, 0.2) 0%, var(--secondary-background) 100%)`;
+              }
 
-        // Generate the HTML structure for each leaderboard entry
-        card.innerHTML = `
-                <div class="mini-placement" ${isUser ? 'style="color: red;"' : ""}>#${placement}</div>
-                <div class="leaderboard-user-information">
-                    <div class="leaderboard-profile-picture" style="background-image: url('${entry.avatarUrl || ""}'); background-size: cover; background-position: center;"></div>
-                    <div class="leaderboard-username">${entry.username}</div>
-                </div>
-                <div class="leaderboard-country">
-                    <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
-                </div>
-                <div class="leaderboard-time">${formattedTime}</div>
-            `;
-        miniWrapper.appendChild(card);
-      });
-    } catch (err) {
-      miniWrapper.innerHTML = "<p>Error loading data.</p>";
-    }
+              const card = document.createElement("div");
+              card.className = `leaderboard-card mini-card ${isUser && placement > 3 ? "highlight-user" : ""}`;
+
+              if (cardBackground) {
+                  card.style.background = cardBackground;
+                  card.style.borderLeft = `3px solid ${placementColor}`;
+              }
+
+              card.innerHTML = `
+                  <div class="mini-placement" style="font-weight: 800; width: 35px; flex-shrink: 0; color: ${placementColor || "inherit"};">#${placement}</div>
+                  <div class="leaderboard-user-information">
+                      <div class="leaderboard-profile-picture" style="background-image: url('${entry.avatarUrl || ""}'); background-size: cover; background-position: center;"></div>
+                      <div class="leaderboard-username" style="${isUser ? "font-weight: bold;" : ""}">${entry.username}</div>
+                  </div>
+                  <div class="leaderboard-country">
+                      <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
+                  </div>
+                  <div class="leaderboard-time" style="margin-left: auto;">${formattedTime}</div>
+              `;
+              miniWrapper.appendChild(card);
+          });
+      } catch (err) {
+          miniWrapper.innerHTML = `<p>${isHungarian ? "Hiba az adatok betöltésekor." : "Error loading data."}</p>`;
+      }
   };
 
   // Populate the nation filter dropdown with translated country names
@@ -768,6 +1122,7 @@ const initLobby = () => {
 
   // --- Custom Dropdown UI Components ---
   const customDropdowns = document.querySelectorAll(".custom-dropdown");
+
   customDropdowns.forEach((dropdown) => {
     const header = dropdown.querySelector(".custom-dropdown-header");
     const items = dropdown.querySelectorAll(".custom-dropdown-item");
@@ -843,8 +1198,7 @@ if (document.readyState === "loading") {
   initLobby();
 }
 
-// --- App Entry Point ---
-// --- User Profile Initialization ---
+// --- User Session Initialization ---
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
 
@@ -854,18 +1208,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    // Fetch current user data from the backend
     const response = await fetch("https://konisoftspeedruns.onrender.com/me", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
     if (response.ok) {
       const userData = await response.json();
 
-      // Map profile-specific DOM elements
       const profileName = document.getElementById("profile-username");
       const profileImg = document.getElementById("profile-picture");
       const profileNat = document.getElementById("profile-country-name-static");
@@ -880,7 +1231,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           "https://i.ibb.co/20fL10wk/no-pfp.png";
       }
 
-      // Format and display account creation date
       if (profileDate) {
         if (userData.accountCreation) {
           const dateObj = new Date(userData.accountCreation);
@@ -908,7 +1258,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.updateTextsExternal();
       }
 
-      // --- Navigation Bar Profile Sync ---
       const navUserProfile = document.getElementById("nav-user-profile");
       const navUsername = document.getElementById("nav-username");
       const navProfilePicture = document.getElementById("nav-profile-picture");
@@ -948,11 +1297,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         navProfilePictureMobile.style.backgroundImage = `url('${userData.avatarUrl}')`;
       }
 
-      // Dynamically set profile background color based on avatar palette
       if (userData.avatarUrl) {
         const img = new Image();
         img.crossOrigin = "Anonymous";
-        img.src = userData.avatarUrl;
+        img.src = userData.avatarUrl + "?t=" + new Date().getTime();
 
         img.onload = () => {
           const canvas = document.createElement("canvas");
@@ -1004,7 +1352,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
       }
 
-      // --- Authentication ---
       if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
           localStorage.removeItem("token");
@@ -1019,6 +1366,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         "error",
       );
     }
+
   } catch (err) {
     showToast(isHungarian ? "Hiba történt!" : "There was an error!", "error");
   }
@@ -1037,28 +1385,41 @@ const formatSpeedrunTime = (ms) => {
   return `${minutes}:${seconds.toString().padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
 };
 
-/**
- * Moderator action: Approve or Reject a submitted video.
- */
-window.verifyVideo = async (email, videoUrl, approved) => {
-  try {
-    const response = await fetch(
-      "https://konisoftspeedruns.onrender.com/verify-video",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, videoUrl, approved }),
-      },
-    );
+deleteLink?.addEventListener("click", (e) => {
+    e.preventDefault();
+    deleteModal.classList.add("show");
+});
 
-    if (response.ok) {
-      showToast(
-        isHungarian ? "Állapot frissítve!" : "Status updated!",
-        "success",
-      );
-      location.reload();
+cancelDeleteBtn?.addEventListener("click", () => {
+    deleteModal.classList.remove("show");
+});
+
+confirmDeleteBtn?.addEventListener("click", async () => {
+    const token = localStorage.getItem("token");
+    
+    confirmDeleteBtn.disabled = true;
+    confirmDeleteBtn.textContent = isHungarian ? "Törlés..." : "Deleting...";
+
+    try {
+        const response = await fetch("https://konisoftspeedruns.onrender.com/delete-account", {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            showToast(isHungarian ? "Fiók törölve!" : "Account deleted!", "success");
+            localStorage.removeItem("token");
+            setTimeout(() => {
+                window.location.href = "../../index.html";
+            }, 2000);
+        } else {
+            showToast(isHungarian ? "Hiba a törlés során!" : "Error deleting account!", "error");
+            confirmDeleteBtn.disabled = false;
+        }
+    } catch (err) {
+        showToast(isHungarian ? "Szerver hiba!" : "Server error!", "error");
+        confirmDeleteBtn.disabled = false;
     }
-  } catch (err) {
-    console.log(err);
-  }
-};
+});

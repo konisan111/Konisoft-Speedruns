@@ -412,6 +412,21 @@ const initLobby = () => {
 
   const uiTranslations = {
     en: {
+      "": "",
+      "save-profile-btn": "Save Changes",
+      "select-pfp-btn": "Change Profile Picture",
+      "edit-country-text": "Country",
+      "edit-username": "Username",
+      "edit-profile-title": "Edit Profile",
+      "confirm-delete-btn": "Yes, Delete Everything!",
+      "cancel-delete-btn": "No, Cancel",
+      "delete-title": "Are you sure?",
+      "delete-sub": "This action is permanent and will remove all your data from our database.",
+      "delete-account-link": "Delete Account",
+      "nav-profile": "Profile",
+      "profile-edit-button": "Edit Profile",
+      "welcome-title": "Welcome",
+      "welcome-subtitle": "to Konisoft Speedruns!",
       "nav-home": "Leaderboard",
       "nav-upload": "Upload your time",
       "nav-logout": "Logout",
@@ -455,6 +470,21 @@ const initLobby = () => {
       "watch-text": "WATCH VIDEO",
     },
     hu: {
+      "": "",
+      "save-profile-btn": "Változtatások Mentése",
+      "select-pfp-btn": "Profilkép Változtatása",
+      "edit-country-text": "Nemzetiség",
+      "edit-username": "Felhasználónév",
+      "edit-profile-title": "Profil Szerkesztése",
+      "confirm-delete-btn": "Igen, Töröljön Mindent!",
+      "cancel-delete-btn": "Nem, inkább mégsem",
+      "delete-title": "Biztos vagy benne?",
+      "delete-sub": "Ez a folyamat nem visszafordítható, minden adatod törlődni fog!",
+      "delete-account-link": "Fiók Törlése",
+      "nav-profile": "Profil",
+      "profile-edit-button": "Profil Szerkesztése",
+      "welcome-title": "Üdv",
+      "welcome-subtitle": "a Konisoft Speedruns-on!",
       "nav-home": "Ranglista",
       "nav-upload": "Idő feltöltése",
       "nav-logout": "Kijelentkezés",
@@ -663,24 +693,21 @@ const initLobby = () => {
             let placementColor = "";
             let cardBackground = "";
 
-            // PRIORITÁS: Először a Top 3 színei
             if (placement === 1) {
-                placementColor = "#FFD700"; // Arany
+                placementColor = "#FFD700";
                 cardBackground = `linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, var(--secondary-background) 100%)`;
             } else if (placement === 2) {
-                placementColor = "#C0C0C0"; // Ezüst
+                placementColor = "#C0C0C0";
                 cardBackground = `linear-gradient(90deg, rgba(192, 192, 192, 0.2) 0%, var(--secondary-background) 100%)`;
             } else if (placement === 3) {
-                placementColor = "#CD7F32"; // Bronz
+                placementColor = "#CD7F32";
                 cardBackground = `linear-gradient(90deg, rgba(205, 127, 50, 0.2) 0%, var(--secondary-background) 100%)`;
             } else if (isUser) {
-                placementColor = "#FF4444"; // Saját piros
+                placementColor = "#FF4444";
                 cardBackground = `linear-gradient(90deg, rgba(255, 68, 68, 0.2) 0%, var(--secondary-background) 100%)`;
             }
 
             const card = document.createElement("div");
-            // A "highlight-user" osztályt csak akkor adjuk hozzá, ha nem vagyunk a top3-ban, 
-            // hogy a CSS-ed ne rontsa el a különleges hátteret
             card.className = `leaderboard-card ${isUser && placement > 3 ? "highlight-user" : ""}`;
 
             if (cardBackground) {
@@ -713,14 +740,14 @@ const initLobby = () => {
             wrapper.appendChild(card);
             const pfpElement = card.querySelector(".leaderboard-profile-picture");
               pfpElement.addEventListener("mouseenter", (e) => {
-                  const dateObj = new Date(entry.uploadDate || entry.accountCreation); // Használd az entry adatait
+                  const dateObj = new Date(entry.uploadDate || entry.accountCreation)
                   const formattedDate = isHungarian 
                       ? dateObj.toLocaleDateString("hu-HU") 
                       : dateObj.toLocaleDateString("en-US");
 
                   tooltipPfp.src = entry.avatarUrl || "../images/pfp_placeholder.webp";
                   tooltipName.textContent = entry.username;
-                  tooltipDate.textContent = (isHungarian ? "Tag mióta: " : "Member since: ") + formattedDate;
+                  tooltipDate.textContent = (isHungarian ? "Tagság: " : "Member since: ") + formattedDate;
                   
                   tooltip.classList.remove("hidden");
               });
@@ -921,7 +948,6 @@ const initLobby = () => {
 
           const currentUser = document.getElementById("profile-username").textContent;
           
-          // Megnézzük, hogy sötét vagy világos mód van-e érvényben
           const isDarkMode = document.documentElement.dataset.theme === "dark";
 
           miniData.forEach((entry, index) => {
@@ -935,18 +961,17 @@ const initLobby = () => {
               let placementColor = "";
               let cardBackground = "";
 
-              // Szín és gradiens beállítás a téma függvényében
               if (placement === 1) {
-                  placementColor = "#FFD700"; // Arany
+                  placementColor = "#FFD700";
                   cardBackground = `linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, var(--secondary-background) 100%)`;
               } else if (placement === 2) {
-                  placementColor = "#C0C0C0"; // Ezüst
+                  placementColor = "#C0C0C0";
                   cardBackground = `linear-gradient(90deg, rgba(192, 192, 192, 0.2) 0%, var(--secondary-background) 100%)`;
               } else if (placement === 3) {
-                  placementColor = "#CD7F32"; // Bronz
+                  placementColor = "#CD7F32"
                   cardBackground = `linear-gradient(90deg, rgba(205, 127, 50, 0.2) 0%, var(--secondary-background) 100%)`;
               } else if (isUser) {
-                  placementColor = "#FF4444"; // Saját piros
+                  placementColor = "#FF4444";
                   cardBackground = `linear-gradient(90deg, rgba(255, 68, 68, 0.2) 0%, var(--secondary-background) 100%)`;
               }
 

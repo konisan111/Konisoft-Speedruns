@@ -696,25 +696,49 @@ app.post("/verify-video", async (req, res) => {
   const { email, videoUrl, approved } = req.body;
 
   try {
+    const user = await User.findOne({ email });
+    if (!user) {
+        return res.status(404).json({ error: "User not found" });
+    }
+
+    const videoIndex = user.videos.findIndex((v) => v.videoUrl === videoUrl);
+    if (videoIndex === -1) {
+        return res.status(404).json({ error: "Video not found" });
+    }
+
+    const video = user.videos[videoIndex];
+
+    // --- LOGIC: If moderator clicks the Cross (approved: false) ---
     if (approved === false) {
-      await User.findOneAndUpdate(
-        { email },
-        { $pull: { videos: { videoUrl: videoUrl } } },
-      );
-      return res.status(200).json({ message: "Video deleted" });
-    } else {
-      const user = await User.findOne({ email });
-      if (!user) return res.status(404).json({ error: "User not found" });
+      if (video.approved === true) {
+        // If it was approved, just make it unapproved (pending) again
+        video.approved = false;
+        await user.save();
+        return res.status(200).json({ message: "Video moved back to pending" });
+      } else {
+        // If it was already unapproved, delete it from the array
+        user.videos.splice(videoIndex, 1);
+        await user.save();
+        return res.status(200).json({ message: "Video deleted successfully" });
+      }
+    }
 
-      const video = user.videos.find((v) => v.videoUrl === videoUrl);
-      if (!video) return res.status(404).json({ error: "Video not found" });
-
+    // --- LOGIC: If moderator clicks the Check (approved: true) ---
+    if (approved === true) {
       video.approved = true;
       await user.save();
-      return res.status(200).json({ message: "Video approved" });
+      return res.status(200).json({ message: "Video approved successfully" });
     }
+
+    // If 'approved' was missing or invalid
+    return res.status(400).json({ error: "Invalid status provided" });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Verification Error:", err);
+    // Crucial: Only send 500 if headers haven't been sent yet
+    if (!res.headersSent) {
+        return res.status(500).json({ error: "Internal server error" });
+    }
   }
 });
 
@@ -746,6 +770,14 @@ app.get("/mod-leaderboard", async (req, res) => {
     res.status(500).json({ error: "Error" });
   }
 });
+
+if (approved === false) {
+  await User.findOneAndUpdate(
+    { email },
+    { $pull: { videos: { videoUrl: videoUrl } } },
+  );
+  return res.status(200).json({ message: "Video deleted" });
+}
 
 // --- Server Initialization ---
 const PORT = process.env.PORT || 3000;
