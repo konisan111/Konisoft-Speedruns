@@ -729,6 +729,15 @@ app.get("/mod-leaderboard", async (req, res) => {
   }
 });
 
+app.delete('/delete-account', authenticateToken, async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user.id);
+        res.status(200).send("Deleted");
+    } catch (error) {
+        res.status(500).send("Error");
+    }
+});
+
 // --- Server Initialization ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

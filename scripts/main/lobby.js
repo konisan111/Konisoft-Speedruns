@@ -54,6 +54,14 @@ const selectPfpBtn = document.getElementById("select-pfp-btn");
 const pfpFileInput = document.getElementById("pfp-file-input");
 const editCountryDropdown = document.getElementById("edit-country");
 const editUsernameInput = document.getElementById("edit-username");
+const tooltip = document.getElementById("user-tooltip");
+const tooltipPfp = document.getElementById("tooltip-pfp");
+const tooltipName = document.getElementById("tooltip-username");
+const tooltipDate = document.getElementById("tooltip-date");
+const leaderboardImg = document.getElementById("leaderboard-profile-picture");
+const deleteModal = document.getElementById("delete-account-modal");
+const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
 
 [uploadBtn, uploadBtnMobile].forEach((btn) => {
   btn?.addEventListener("click", (e) => {
@@ -707,6 +715,28 @@ const initLobby = () => {
                 <a href="${videoLink}" target="_blank" class="leaderboard-watch-link">${uiTranslations[currentLanguage]["watch-text"]}</a>
             `;
             wrapper.appendChild(card);
+            const pfpElement = card.querySelector(".leaderboard-profile-picture");
+              pfpElement.addEventListener("mouseenter", (e) => {
+                  const dateObj = new Date(entry.uploadDate || entry.accountCreation); // Használd az entry adatait
+                  const formattedDate = isHungarian 
+                      ? dateObj.toLocaleDateString("hu-HU") 
+                      : dateObj.toLocaleDateString("en-US");
+
+                  tooltipPfp.src = entry.avatarUrl || "../images/pfp_placeholder.webp";
+                  tooltipName.textContent = entry.username;
+                  tooltipDate.textContent = (isHungarian ? "Tag mióta: " : "Member since: ") + formattedDate;
+                  
+                  tooltip.classList.remove("hidden");
+              });
+
+              pfpElement.addEventListener("mousemove", (e) => {
+                  tooltip.style.left = (e.clientX + 15) + "px";
+                  tooltip.style.top = (e.clientY + 15) + "px";
+              });
+
+              pfpElement.addEventListener("mouseleave", () => {
+                  tooltip.classList.add("hidden");
+              });
         });
       } catch (err) {
           showToast(
@@ -1230,3 +1260,42 @@ const formatSpeedrunTime = (ms) => {
 
   return `${minutes}:${seconds.toString().padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
 };
+
+deleteLink?.addEventListener("click", (e) => {
+    e.preventDefault();
+    deleteModal.classList.add("show");
+});
+
+cancelDeleteBtn?.addEventListener("click", () => {
+    deleteModal.classList.remove("show");
+});
+
+confirmDeleteBtn?.addEventListener("click", async () => {
+    const token = localStorage.getItem("token");
+    
+    confirmDeleteBtn.disabled = true;
+    confirmDeleteBtn.textContent = isHungarian ? "Törlés..." : "Deleting...";
+
+    try {
+        const response = await fetch("https://konisoftspeedruns.onrender.com/delete-account", {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            showToast(isHungarian ? "Fiók törölve!" : "Account deleted!", "success");
+            localStorage.removeItem("token");
+            setTimeout(() => {
+                window.location.href = "../../index.html";
+            }, 2000);
+        } else {
+            showToast(isHungarian ? "Hiba a törlés során!" : "Error deleting account!", "error");
+            confirmDeleteBtn.disabled = false;
+        }
+    } catch (err) {
+        showToast(isHungarian ? "Szerver hiba!" : "Server error!", "error");
+        confirmDeleteBtn.disabled = false;
+    }
+});
