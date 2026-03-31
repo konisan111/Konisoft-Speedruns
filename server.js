@@ -540,6 +540,24 @@ app.post("/update-profile", authenticateToken, async (req, res) => {
 });
 
 /**
+ * Deletes the User's profile from the database.
+ */
+app.delete('/delete-account', authenticateToken, async (req, res) => {
+    try {
+        const result = await User.findByIdAndDelete(req.user.id);
+        
+        if (!result) {
+            return res.status(404).send("User not found");
+        }
+
+        res.status(200).send("Deleted");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server error during deletion");
+    }
+});
+
+/**
  * Retrieves the authenticated user's profile data.
  */
 app.get("/me", authenticateToken, async (req, res) => {
@@ -727,21 +745,6 @@ app.get("/mod-leaderboard", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Error" });
   }
-});
-
-app.delete('/delete-account', authenticateToken, async (req, res) => {
-    try {
-        const result = await User.findByIdAndDelete(req.user.id);
-        
-        if (!result) {
-            return res.status(404).send("User not found");
-        }
-
-        res.status(200).send("Deleted");
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Server error during deletion");
-    }
 });
 
 // --- Server Initialization ---
