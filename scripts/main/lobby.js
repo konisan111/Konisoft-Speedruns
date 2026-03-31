@@ -32,7 +32,7 @@ const getTranslatedCountry = (englishName, lang) => {
 };
 
 // --- DOM Elements: Video Upload ---
-const uploadBtn = document.getElementById("nav-upload");
+const uploadBtn = document.getElementById("welcome-upload-btn");
 const uploadBtnMobile = document.getElementById("nav-upload-mobile");
 const uploadModal = document.getElementById("upload-modal");
 const closeUploadModal = document.getElementById("close-upload-modal");
@@ -41,6 +41,19 @@ const videoFileInput = document.getElementById("video-file-input");
 const startUploadBtn = document.getElementById("start-upload-btn");
 const cancelUploadBtn = document.getElementById("cancel-upload-btn");
 const fileNameDisplay = document.getElementById("selected-file-name");
+const welcomeContainer = document.getElementById("welcome-container");
+const navHomeBtn = document.getElementById("nav-home");
+const navProfileBtn = document.getElementById("nav-profile");
+const navHomeMobileBtn = document.getElementById("nav-home-mobile");
+const navProfileMobileBtn = document.getElementById("nav-profile-mobile");
+const editProfileBtn = document.getElementById("profile-edit-button");
+const editProfileModal = document.getElementById("edit-profile-modal");
+const closeEditModal = document.getElementById("close-edit-modal");
+const saveProfileBtn = document.getElementById("save-profile-btn");
+const selectPfpBtn = document.getElementById("select-pfp-btn");
+const pfpFileInput = document.getElementById("pfp-file-input");
+const editCountryDropdown = document.getElementById("edit-country");
+const editUsernameInput = document.getElementById("edit-username");
 
 [uploadBtn, uploadBtnMobile].forEach((btn) => {
   btn?.addEventListener("click", (e) => {
@@ -67,6 +80,69 @@ selectVideoBtn?.addEventListener("click", () => videoFileInput.click());
 videoFileInput?.addEventListener("change", () => {
   if (videoFileInput.files.length > 0) {
     fileNameDisplay.textContent = videoFileInput.files[0].name;
+  }
+});
+
+const populateCountryDropdown = () => {
+  if (!editCountryDropdown) return;
+  editCountryDropdown.innerHTML = "";
+  countries.forEach((country) => {
+    const option = document.createElement("option");
+    option.value = country.en;
+    option.textContent = isHungarian ? country.hu : country.en;
+    editCountryDropdown.appendChild(option);
+  });
+};
+
+editProfileBtn?.addEventListener("click", () => {
+  if (currentProfileData) {
+    editUsernameInput.value = currentProfileData.username;
+    populateCountryDropdown();
+    editCountryDropdown.value = currentProfileData.nationality || "Hungary";
+  }
+  editProfileModal.classList.add("show");
+});
+
+[closeEditModal, editProfileModal].forEach((el) => {
+  el?.addEventListener("click", (e) => {
+    if (e.target === el || e.target === closeEditModal) {
+      editProfileModal.classList.remove("show");
+    }
+  });
+});
+
+selectPfpBtn?.addEventListener("click", () => pfpFileInput.click());
+
+saveProfileBtn?.addEventListener("click", async () => {
+  const token = localStorage.getItem("token");
+  const username = editUsernameInput.value;
+  const nationality = editCountryDropdown.value;
+  const file = pfpFileInput.files[0];
+
+  const formData = new FormData();
+  formData.append("username", username);
+  formData.append("nationality", nationality);
+  if (file) formData.append("avatar", file);
+
+  saveProfileBtn.disabled = true;
+  
+  try {
+    const response = await fetch("https://konisoftspeedruns.onrender.com/update-profile", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+
+    if (response.ok) {
+      showToast(isHungarian ? "Profil frissítve!" : "Profile updated!", "success");
+      location.reload();
+    } else {
+      showToast(isHungarian ? "Hiba a mentés során!" : "Error while saving!", "error");
+    }
+  } catch (err) {
+    showToast(isHungarian ? "Szerver hiba!" : "Server error!", "error");
+  } finally {
+    saveProfileBtn.disabled = false;
   }
 });
 
@@ -321,6 +397,7 @@ const initLobby = () => {
       "nav-home-mobile": "Leaderboard",
       "nav-upload-mobile": "Upload your time",
       "nav-logout-mobile": "Logout",
+      "refresh-leaderboard": "Refresh Leaderboard",
       "leaderboard-main-title": "Leaderboard",
       "leaderboard-recordings-title": "Recordings",
       "leaderboard-scope": "global",
@@ -363,6 +440,7 @@ const initLobby = () => {
       "nav-home-mobile": "Ranglista",
       "nav-upload-mobile": "Idő feltöltése",
       "nav-logout-mobile": "Kijelentkezés",
+      "refresh-leaderboard": "Ranglista Frissítése",
       "leaderboard-main-title": "Ranglista",
       "leaderboard-recordings-title": "Felvételek",
       "leaderboard-scope": "globális",
@@ -491,100 +569,114 @@ const initLobby = () => {
   /**
    * Fetches and renders the global leaderboard.
    * @param {boolean} animate - Whether to apply entry animations to the cards.
-   */
-  const generateLeaderboard = async (animate = true) => {
-    const wrapper = document.getElementById("leaderboard-card-container");
-    if (!wrapper) return;
+    */
+    const generateLeaderboard = async (animate = true) => {
+      const wrapper = document.getElementById("leaderboard-card-container");
+      if (!wrapper) return;
 
-    wrapper.innerHTML = "";
+      wrapper.innerHTML = "";
 
-    try {
-      const response = await fetch(
-        "https://konisoftspeedruns.onrender.com/leaderboard",
-      );
-      if (!response.ok) throw new Error("Hiba a letöltéskor");
+      try {
+        
+          const response = await fetch(
+              "https://konisoftspeedruns.onrender.com/leaderboard",
+          );
+          if (!response.ok) throw new Error("Hiba a letöltéskor");
+          const currentUser = document.getElementById("profile-username").textContent;
+          const rawData = await response.json();
 
-      const rawData = await response.json();
+          const nationFilterEl = document.getElementById("opt-nation");
+          const nationFilterValue = nationFilterEl?.dataset.value;
+          const timeFilterText = document.getElementById("opt-time")?.textContent;
+          const uploadFilterText = document.getElementById("opt-upload")?.textContent;
 
-      const nationFilterEl = document.getElementById("opt-nation");
-      const nationFilterValue = nationFilterEl?.dataset.value;
-      const timeFilterText = document.getElementById("opt-time")?.textContent;
-      const uploadFilterText =
-        document.getElementById("opt-upload")?.textContent;
+          let realData = rawData;
 
-      let realData = rawData;
+          if (nationFilterValue && nationFilterValue !== "Global") {
+              realData = rawData.filter(
+                  (entry) => entry.nationality === nationFilterValue,
+              );
+          }
 
-      if (nationFilterValue && nationFilterValue !== "Global") {
-        realData = rawData.filter(
-          (entry) => entry.nationality === nationFilterValue,
-        );
-      }
+          const newestTextEN = uiTranslations.en["opt-upload-1"];
+          const newestTextHU = uiTranslations.hu["opt-upload-1"];
+          const oldestTextEN = uiTranslations.en["opt-upload-2"];
+          const oldestTextHU = uiTranslations.hu["opt-upload-2"];
 
-      const newestTextEN = uiTranslations.en["opt-upload-1"];
-      const newestTextHU = uiTranslations.hu["opt-upload-1"];
-      const oldestTextEN = uiTranslations.en["opt-upload-2"];
-      const oldestTextHU = uiTranslations.hu["opt-upload-2"];
+          const longestTextEN = uiTranslations.en["opt-time-2"];
+          const longestTextHU = uiTranslations.hu["opt-time-2"];
 
-      const longestTextEN = uiTranslations.en["opt-time-2"];
-      const longestTextHU = uiTranslations.hu["opt-time-2"];
+          if (
+              uploadFilterText === newestTextEN ||
+              uploadFilterText === newestTextHU
+          ) {
+              realData.sort(
+                  (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate),
+              );
+          } else if (
+              uploadFilterText === oldestTextEN ||
+              uploadFilterText === oldestTextHU
+          ) {
+              realData.sort(
+                  (a, b) => new Date(a.uploadDate) - new Date(b.uploadDate),
+              );
+          } else if (
+              timeFilterText === longestTextEN ||
+              timeFilterText === longestTextHU
+          ) {
+              realData.sort((a, b) => b.speedrunTime - a.speedrunTime);
+          } else {
+              realData.sort((a, b) => a.speedrunTime - b.speedrunTime);
+          }
+          realData.forEach((entry, index) => {
+            const formattedTime = formatSpeedrunTime(entry.speedrunTime);
+            const countryCode = getCountryCode(entry.nationality);
+            const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
+            const avatarUrl = entry.avatarUrl || "https://katona-konstanti.imgbb.com/";
+            const videoLink = entry.videoUrl || entry.url || "#";
+            const translatedCountryName = getTranslatedCountry(entry.nationality, currentLanguage);
 
-      if (
-        uploadFilterText === newestTextEN ||
-        uploadFilterText === newestTextHU
-      ) {
-        realData.sort(
-          (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate),
-        );
-      } else if (
-        uploadFilterText === oldestTextEN ||
-        uploadFilterText === oldestTextHU
-      ) {
-        realData.sort(
-          (a, b) => new Date(a.uploadDate) - new Date(b.uploadDate),
-        );
-      } else if (
-        timeFilterText === longestTextEN ||
-        timeFilterText === longestTextHU
-      ) {
-        realData.sort((a, b) => b.speedrunTime - a.speedrunTime);
-      } else {
-        realData.sort((a, b) => a.speedrunTime - b.speedrunTime);
-      }
+            const placement = index + 1;
+            const isUser = entry.username === currentUser;
 
-      const currentUser =
-        document.getElementById("profile-username")?.textContent || "";
+            let placementColor = "";
+            let cardBackground = "";
 
-      realData.forEach((entry, index) => {
-        const formattedTime = formatSpeedrunTime(entry.speedrunTime);
-        const countryCode = getCountryCode(entry.nationality);
-        const flagUrl =
-          countryCode === "un"
-            ? "../images/lang_en.webp"
-            : `https://flagcdn.com/w80/${countryCode}.png`;
-        const avatarUrl =
-          entry.avatarUrl || "https://katona-konstanti.imgbb.com/";
-        const videoLink = entry.videoUrl || entry.url || "#";
-        const translatedCountryName = getTranslatedCountry(
-          entry.nationality,
-          currentLanguage,
-        );
+            // PRIORITÁS: Először a Top 3 színei
+            if (placement === 1) {
+                placementColor = "#FFD700"; // Arany
+                cardBackground = `linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, var(--secondary-background) 100%)`;
+            } else if (placement === 2) {
+                placementColor = "#C0C0C0"; // Ezüst
+                cardBackground = `linear-gradient(90deg, rgba(192, 192, 192, 0.2) 0%, var(--secondary-background) 100%)`;
+            } else if (placement === 3) {
+                placementColor = "#CD7F32"; // Bronz
+                cardBackground = `linear-gradient(90deg, rgba(205, 127, 50, 0.2) 0%, var(--secondary-background) 100%)`;
+            } else if (isUser) {
+                placementColor = "#FF4444"; // Saját piros
+                cardBackground = `linear-gradient(90deg, rgba(255, 68, 68, 0.2) 0%, var(--secondary-background) 100%)`;
+            }
 
-        const placement = index + 1;
-        const isUser = entry.username === currentUser;
+            const card = document.createElement("div");
+            // A "highlight-user" osztályt csak akkor adjuk hozzá, ha nem vagyunk a top3-ban, 
+            // hogy a CSS-ed ne rontsa el a különleges hátteret
+            card.className = `leaderboard-card ${isUser && placement > 3 ? "highlight-user" : ""}`;
 
-        const card = document.createElement("div");
-        card.className = `leaderboard-card ${isUser ? "highlight-user" : ""}`;
+            if (cardBackground) {
+                card.style.background = cardBackground;
+                card.style.borderLeft = `4px solid ${placementColor}`;
+            }
 
-        if (animate) {
-          card.style.opacity = "0";
-          card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.05}s`;
-        }
+            if (animate) {
+                card.style.opacity = "0";
+                card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.05}s`;
+            }
 
-        card.innerHTML = `
+            card.innerHTML = `
                 <div class="leaderboard-user-information">
-                    <div class="leaderboard-placement" style="font-weight: 800; margin-right: 10px; min-width: 25px; ${isUser ? "color: red;" : ""}">#${placement}</div>
+                    <div class="leaderboard-placement" style="font-weight: 800; margin-right: 10px; width: 35px; flex-shrink: 0; color: ${placementColor || "inherit"};">#${placement}</div>
                     <div class="leaderboard-profile-picture" style="background-image: url('${avatarUrl}'); background-size: cover; background-position: center;"></div>
-                    <div class="leaderboard-username">${entry.username}</div>
+                    <div class="leaderboard-username" style="${isUser ? "font-weight: bold;" : ""}">${entry.username}</div>
                 </div>
                 <div class="leaderboard-country">
                     <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
@@ -597,18 +689,18 @@ const initLobby = () => {
                 </div>
                 <a href="${videoLink}" target="_blank" class="leaderboard-watch-link">${uiTranslations[currentLanguage]["watch-text"]}</a>
             `;
-        wrapper.appendChild(card);
-      });
-    } catch (err) {
-      showToast(
-        isHungarian
-          ? "Nem sikerült betölteni a ranglistát!"
-          : "Loading the leaderboard was unsuccessful!",
-        "error",
-      );
-      wrapper.innerHTML =
-        "<p style='color: red;'>Hiba történt a ranglista betöltésekor.</p>";
-    }
+            wrapper.appendChild(card);
+        });
+      } catch (err) {
+          showToast(
+              isHungarian
+                  ? "Nem sikerült betölteni a ranglistát!"
+                  : "Loading the leaderboard was unsuccessful!",
+              "error",
+          );
+          wrapper.innerHTML =
+              `<p style='color: red;'>${isHungarian ? "Hiba történt a ranglista betöltésekor." : "An error occurred while loading the leaderboard."}</p>`;
+      }
   };
   updateTexts();
   updateFlags();
@@ -621,7 +713,35 @@ const initLobby = () => {
   const navHomeMobileBtn = document.getElementById("nav-home-mobile");
   const navProfileBtn = document.getElementById("nav-profile");
   const navProfileMobileBtn = document.getElementById("nav-profile-mobile");
-
+  /**
+   * Refreshing the leaderboard to check the changes.
+   */
+  const refreshBtn = document.getElementById("refresh-holder");
+  if (refreshBtn) {
+      refreshBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          
+          const wrapper = document.getElementById("leaderboard-card-container");
+          if (wrapper) {
+              wrapper.innerHTML = "";
+          }
+          
+          generateLeaderboard(true);
+      });
+  }
+  const refreshBtnMbl = document.getElementById("refresh-holder-mobile");
+  if (refreshBtnMbl) {
+      refreshBtnMbl.addEventListener("click", (e) => {
+          e.preventDefault();
+          
+          const wrapper = document.getElementById("leaderboard-card-container");
+          if (wrapper) {
+              wrapper.innerHTML = "";
+          }
+          
+          generateLeaderboard(true);
+      });
+  }
   /**
    * Handles smooth view transitions between Leaderboard and Profile.
    */
@@ -725,55 +845,92 @@ const initLobby = () => {
   if (navHomeMobileBtn)
     navHomeMobileBtn.addEventListener("click", openHomeView);
 
+  navHomeBtn?.addEventListener("click", () => {
+      welcomeContainer.classList.remove("welcome-hidden");
+  });
+
+  navHomeMobileBtn?.addEventListener("click", () => {
+      welcomeContainer.classList.remove("welcome-hidden");
+  });
+
+  navProfileBtn?.addEventListener("click", () => {
+      welcomeContainer.classList.add("welcome-hidden");
+  });
+
+  navProfileMobileBtn?.addEventListener("click", () => {
+      welcomeContainer.classList.add("welcome-hidden");
+});
+
   // --- Mini Leaderboard (Profile View) ---
   const generateMiniLeaderboard = async () => {
-    const miniWrapper = document.getElementById("mini-leaderboard-cards");
-    if (!miniWrapper) return;
-    miniWrapper.innerHTML = "";
+      const miniWrapper = document.getElementById("mini-leaderboard-cards");
+      if (!miniWrapper) return;
+      miniWrapper.innerHTML = "";
 
-    try {
-      const response = await fetch(
-        "https://konisoftspeedruns.onrender.com/leaderboard",
-      );
-      if (!response.ok) throw new Error("Failed to fetch");
+      try {
+          const response = await fetch(
+              "https://konisoftspeedruns.onrender.com/leaderboard",
+          );
+          if (!response.ok) throw new Error("Failed to fetch");
 
-      const miniData = await response.json();
+          const miniData = await response.json();
+          miniData.sort((a, b) => a.speedrunTime - b.speedrunTime);
 
-      miniData.sort((a, b) => a.speedrunTime - b.speedrunTime);
+          const currentUser = document.getElementById("profile-username").textContent;
+          
+          // Megnézzük, hogy sötét vagy világos mód van-e érvényben
+          const isDarkMode = document.documentElement.dataset.theme === "dark";
 
-      const currentUser =
-        document.getElementById("profile-username").textContent;
+          miniData.forEach((entry, index) => {
+              const formattedTime = formatSpeedrunTime(entry.speedrunTime);
+              const countryCode = getCountryCode(entry.nationality);
+              const flagUrl = countryCode === "un" ? "../images/lang_en.webp" : `https://flagcdn.com/w80/${countryCode}.png`;
 
-      miniData.forEach((entry, index) => {
-        const formattedTime = formatSpeedrunTime(entry.speedrunTime);
-        const countryCode = getCountryCode(entry.nationality);
-        const flagUrl =
-          countryCode === "un"
-            ? "../images/lang_en.webp"
-            : `https://flagcdn.com/w80/${countryCode}.png`;
+              const isUser = entry.username === currentUser;
+              const placement = index + 1;
 
-        const isUser = entry.username === currentUser;
-        const placement = index + 1;
+              let placementColor = "";
+              let cardBackground = "";
 
-        const card = document.createElement("div");
-        card.className = `leaderboard-card mini-card ${isUser ? "highlight-user" : ""}`;
+              // Szín és gradiens beállítás a téma függvényében
+              if (placement === 1) {
+                  placementColor = "#FFD700"; // Arany
+                  cardBackground = `linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, var(--secondary-background) 100%)`;
+              } else if (placement === 2) {
+                  placementColor = "#C0C0C0"; // Ezüst
+                  cardBackground = `linear-gradient(90deg, rgba(192, 192, 192, 0.2) 0%, var(--secondary-background) 100%)`;
+              } else if (placement === 3) {
+                  placementColor = "#CD7F32"; // Bronz
+                  cardBackground = `linear-gradient(90deg, rgba(205, 127, 50, 0.2) 0%, var(--secondary-background) 100%)`;
+              } else if (isUser) {
+                  placementColor = "#FF4444"; // Saját piros
+                  cardBackground = `linear-gradient(90deg, rgba(255, 68, 68, 0.2) 0%, var(--secondary-background) 100%)`;
+              }
 
-        card.innerHTML = `
-                <div class="mini-placement" ${isUser ? 'style="color: red;"' : ""}>#${placement}</div>
-                <div class="leaderboard-user-information">
-                    <div class="leaderboard-profile-picture" style="background-image: url('${entry.avatarUrl || ""}'); background-size: cover; background-position: center;"></div>
-                    <div class="leaderboard-username">${entry.username}</div>
-                </div>
-                <div class="leaderboard-country">
-                    <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
-                </div>
-                <div class="leaderboard-time">${formattedTime}</div>
-            `;
-        miniWrapper.appendChild(card);
-      });
-    } catch (err) {
-      miniWrapper.innerHTML = "<p>Error loading data.</p>";
-    }
+              const card = document.createElement("div");
+              card.className = `leaderboard-card mini-card ${isUser && placement > 3 ? "highlight-user" : ""}`;
+
+              if (cardBackground) {
+                  card.style.background = cardBackground;
+                  card.style.borderLeft = `3px solid ${placementColor}`;
+              }
+
+              card.innerHTML = `
+                  <div class="mini-placement" style="font-weight: 800; width: 35px; flex-shrink: 0; color: ${placementColor || "inherit"};">#${placement}</div>
+                  <div class="leaderboard-user-information">
+                      <div class="leaderboard-profile-picture" style="background-image: url('${entry.avatarUrl || ""}'); background-size: cover; background-position: center;"></div>
+                      <div class="leaderboard-username" style="${isUser ? "font-weight: bold;" : ""}">${entry.username}</div>
+                  </div>
+                  <div class="leaderboard-country">
+                      <div class="leaderboard-flag" style="background-image: url('${flagUrl}'); background-size: cover; background-position: center;"></div>
+                  </div>
+                  <div class="leaderboard-time" style="margin-left: auto;">${formattedTime}</div>
+              `;
+              miniWrapper.appendChild(card);
+          });
+      } catch (err) {
+          miniWrapper.innerHTML = `<p>${isHungarian ? "Hiba az adatok betöltésekor." : "Error loading data."}</p>`;
+      }
   };
 
   // Populate the nation filter dropdown with translated country names
@@ -886,7 +1043,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     if (response.ok) {
       const userData = await response.json();
 
@@ -973,7 +1129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (userData.avatarUrl) {
         const img = new Image();
         img.crossOrigin = "Anonymous";
-        img.src = userData.avatarUrl;
+        img.src = userData.avatarUrl + "?t=" + new Date().getTime();
 
         img.onload = () => {
           const canvas = document.createElement("canvas");
@@ -1039,85 +1195,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         "error",
       );
     }
+
   } catch (err) {
     showToast(isHungarian ? "Hiba történt!" : "There was an error!", "error");
   }
-
-  const loadLeaderboard = async () => {
-    try {
-      const response = await fetch(
-        "https://konisoftspeedruns.onrender.com/leaderboard",
-      );
-
-      if (response.ok) {
-        const leaderboardData = await response.json();
-        const leaderboardContainer = document.getElementById(
-          "leaderboard-container",
-        );
-
-        if (!leaderboardContainer) return;
-
-        leaderboardContainer.innerHTML = "";
-
-        leaderboardData.forEach((entry, index) => {
-          const formattedTime = formatSpeedrunTime(entry.speedrunTime);
-          const countryCode = getCountryCode(entry.nationality);
-          const flagUrl =
-            entry.nationality !== "Unknown"
-              ? `https://flagcdn.com/w40/${entry.nationality.toLowerCase()}.png`
-              : "../images/default-flag.png";
-          const avatar = entry.avatarUrl
-            ? entry.avatarUrl
-            : "default-avatar.png";
-
-          const playerRow = document.createElement("div");
-
-          playerRow.className = "leaderboard-row";
-          playerRow.innerHTML = `
-                    <div class="player-info">
-                        <div class="player-pfp" style="background-image: url('${entry.avatarUrl || "../images/default-pfp.png"}')"></div>
-                        <div class="player-flag" style="background-image: url('${flagUrl}')"></div>
-                        <span class="player-name">${entry.username}</span>
-                    </div>
-                    <div class="speedrun-time">${formatSpeedrunTime(entry.speedrunTime)}</div>
-                    <a href="${entry.videoUrl}" target="_blank" class="watch-video-btn">Watch</a>
-                `;
-          leaderboardContainer.appendChild(playerRow);
-        });
-      }
-    } catch (err) {
-      showToast(
-        isHungarian
-          ? "Hiba a ranglista lekérésekor!"
-          : "There was an error while getting the leaderboard!",
-        "error",
-      );
-    }
-  };
 });
-
-/**
- * Enables or disables an anchor element.
- */
-function setAnchorDisabled(a, disabled) {
-  if (!a) return;
-  if (disabled) {
-    if (!a.dataset.originalHref)
-      a.dataset.originalHref = a.getAttribute("href") || "";
-    a.removeAttribute("href");
-    a.setAttribute("aria-disabled", "true");
-    a.setAttribute("tabindex", "-1");
-    a.style.pointerEvents = "none";
-    a.style.cursor = "not-allowed";
-  } else {
-    const href = a.dataset.originalHref || a.getAttribute("href");
-    if (href) a.setAttribute("href", href);
-    a.removeAttribute("aria-disabled");
-    a.removeAttribute("tabindex");
-    a.style.pointerEvents = "";
-    a.style.cursor = "";
-  }
-}
 
 /**
  * Formats milliseconds into a MM:SS.mmm string.

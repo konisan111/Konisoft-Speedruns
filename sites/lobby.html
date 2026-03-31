@@ -48,8 +48,6 @@ user profiles, and provides video upload functionality.
             <div id="nav-buttons">
                 <!-- --- Menu Buttons (Desktop) --- -->
                 <div id="menu-buttons">
-                    <a href="#" class="menu-button" id="nav-upload">Upload your time</a>
-                    <div id="nav-split"></div>
                     <a href="#" class="menu-button" id="nav-home">Leaderboard</a>
                     <div id="nav-split"></div>
                     <a href="#" class="menu-button" id="nav-profile">Profile</a>
@@ -75,7 +73,6 @@ user profiles, and provides video upload functionality.
 
         <!-- --- Dropdown Menus (Mobile) --- -->
         <div id="dropdown-menu">
-            <a href="#" class="dropdown-menu-button" id="nav-upload-mobile">Upload your time</a>
             <a href="#" class="dropdown-menu-button" id="nav-home-mobile">Leaderboard</a>
             <a href="#" class="dropdown-menu-button" id="nav-profile-mobile">Profile</a>
             <a href="https://konisoft.hu" class="dropdown-menu-button" id="nav-home-mobile">Konisoft</a>
@@ -129,75 +126,89 @@ user profiles, and provides video upload functionality.
                 <div id="upload-progress-bar" style="width: 0%; height: 5px; background: cyan; margin-top: 15px; transition: width 0.3s; border-radius: 5px;"></div>
             </div>
         </div>
-
-        <!-- --- Leaderboard Section --- -->
-        <div id="leaderboard-container">
-            <!-- --- Leaderboard Header & Filters --- -->
-            <div id="leaderboard-top-header">
-                <div id="leaderboard-main-title-container">
-                    <h1 id="leaderboard-main-title">Leaderboard</h1>
+        <div id="left-column-wrapper">
+            <!-- --- Welcome Section --- -->
+            <div id="welcome-container">
+                <div id="welcome-text-area">
+                    <h1 id="welcome-title">Welcome</h1>
+                    <h2 id="welcome-subtitle">to Konisoft Speedruns</h2>
                 </div>
-                <div id="leaderboard-filters">
-                    <!-- --- Filter: Nation --- -->
-                    <div class="custom-dropdown">
-                        <button class="custom-dropdown-header">
-                            <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-nation" data-value="Global">by nation</div>
-                        </button>
-                        <div class="custom-dropdown-list" id="nation-dropdown-list">
-                            <div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>
-                        </div>
+                <button id="welcome-upload-btn">Upload Video</button>
+            </div>
+            <!-- --- Leaderboard Section --- -->
+            <div id="leaderboard-container">
+                <div id="leaderboard-top-header">
+                    <div id="leaderboard-main-title-container">
+                        <h1 id="leaderboard-main-title">Leaderboard</h1>
                     </div>
-                    <!-- --- Filter: Upload Date --- -->
-                    <div class="custom-dropdown">
-                        <button class="custom-dropdown-header">
-                            <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-upload">by upload date</div>
-                        </button>
-                        <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-upload-1">Newest</div>
-                            <div class="custom-dropdown-item" id="opt-upload-2">Oldest</div>
+                    <div id="leaderboard-filters">
+                        <div class="custom-dropdown">
+                            <button class="custom-dropdown-header">
+                                <div class="dropdown-icon">▼</div>
+                                <div class="dropdown-text" id="opt-nation" data-value="Global">by nation</div>
+                            </button>
+                            <div class="custom-dropdown-list" id="nation-dropdown-list">
+                                <div class="custom-dropdown-item nation-item" id="opt-nation-1" data-value="Global">Global</div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- --- Filter: Time --- -->
-                    <div class="custom-dropdown">
-                        <button class="custom-dropdown-header">
-                            <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-time">by time</div>
-                        </button>
-                        <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-time-1">Shortest Time</div>
-                            <div class="custom-dropdown-item" id="opt-time-2">Longest Time</div>
+                        <div id="nav-split"></div>
+                        <div class="custom-dropdown">
+                            <button class="custom-dropdown-header">
+                                <div class="dropdown-icon">▼</div>
+                                <div class="dropdown-text" id="opt-upload">by upload date</div>
+                            </button>
+                            <div class="custom-dropdown-list">
+                                <div class="custom-dropdown-item" id="opt-upload-1">Newest</div>
+                                <div class="custom-dropdown-item" id="opt-upload-2">Oldest</div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- --- Filter: Game --- -->
-                    <div class="custom-dropdown">
-                        <button class="custom-dropdown-header">
-                            <div class="dropdown-icon">▼</div>
-                            <div class="dropdown-text" id="opt-game">by game</div>
-                        </button>
-                        <div class="custom-dropdown-list">
-                            <div class="custom-dropdown-item" id="opt-game-1">All Games</div>
-                            <div class="custom-dropdown-item" id="opt-game-2">Lumi Dungeon of Dreadspire</div>
+                        <div id="nav-split"></div>
+                        <div class="custom-dropdown">
+                            <button class="custom-dropdown-header">
+                                <div class="dropdown-icon">▼</div>
+                                <div class="dropdown-text" id="opt-time">by time</div>
+                            </button>
+                            <div class="custom-dropdown-list">
+                                <div class="custom-dropdown-item" id="opt-time-1">Shortest Time</div>
+                                <div class="custom-dropdown-item" id="opt-time-2">Longest Time</div>
+                            </div>
+                        </div>
+                        <div id="nav-split"></div>
+                        <div class="custom-dropdown">
+                            <button class="custom-dropdown-header">
+                                <div class="dropdown-icon">▼</div>
+                                <div class="dropdown-text" id="opt-game">by game</div>
+                            </button>
+                            <div class="custom-dropdown-list">
+                                <div class="custom-dropdown-item" id="opt-game-1">All Games</div>
+                                <div class="custom-dropdown-item" id="opt-game-2">Lumi Dungeon of Dreadspire</div>
+                            </div>
+                        </div>
+                        <div id="nav-split"></div>
+                        <div id="refresh-holder" class="disable-selection">
+                            <img src="../images/reload.png" class="reload-image">
+                            <a href="#" id="refresh-leaderboard">Refresh Leaderboard</a>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- --- Leaderboard Column Headers --- -->
-            <div id="leaderboard-titlebar">
-                <div id="leaderboard-profile-title">Profile</div>
-                <div id="leaderboard-country-title">Country</div>
-                <div id="leaderboard-game-title">Game</div>
-                <div id="leaderboard-date-title">Date</div>
-                <div id="leaderboard-time-title">Time</div>
-                <div id="leaderboard-recordings-title">Recordings</div>
-            </div>
+                <div id="refresh-holder-mobile" class="disable-selection">
+                    <img src="../images/reload.png" class="reload-image">
+                    <a href="#" id="refresh-leaderboard">Refresh Leaderboard</a>
+                </div>
 
-            <!-- --- Container for Dynamic Leaderboard Cards --- -->
-            <div id="leaderboard-card-container">
-            </div>
-        </div>
+                <div id="leaderboard-titlebar">
+                    <div id="leaderboard-profile-title">Profile</div>
+                    <div id="leaderboard-country-title">Country</div>
+                    <div id="leaderboard-game-title">Game</div>
+                    <div id="leaderboard-date-title">Date</div>
+                    <div id="leaderboard-time-title">Time</div>
+                    <div id="leaderboard-recordings-title">Recordings</div>
+                </div>
+
+                <div id="leaderboard-card-container">
+                </div>
+</div>
 
         <!-- --- User Profile Section --- -->
         <div id="profile-container" class="hidden">
@@ -217,7 +228,32 @@ user profiles, and provides video upload functionality.
                 <div id="mini-leaderboard-cards">
                 </div>
                 <button id="profile-logout-button">Logout</button>
+                <button id="profile-edit-button">Edit Profile</button>
             </div>
+        </div>
+
+        
+        <div id="edit-profile-modal" class="modal-overlay">
+            <div class="modal-content">
+                <button id="close-edit-modal">&times;</button>
+                <h2 data-i18n="edit-profile-title">Edit Profile</h2>
+                
+                <div class="edit-input-group">
+                    <label for="edit-username" data-i18n="edit-username-label">Username</label>
+                    <input type="text" id="edit-username">
+                </div>
+                
+                <div class="edit-input-group">
+                    <label for="edit-country" data-i18n="edit-country-label">Country</label>
+                    <select id="edit-country"></select>
+                </div>
+                
+                <div class="modal-buttons">
+                    <input type="file" id="pfp-file-input" accept="image/*" hidden>
+                    <button id="select-pfp-btn" class="upload-submit-btn" data-i18n="select-pfp-btn">Change Profile Picture</button>
+                    <button id="save-profile-btn" class="upload-submit-btn" data-i18n="save-profile-btn">Save Changes</button>
+                </div>
+             </div>
         </div>
     </main>
     

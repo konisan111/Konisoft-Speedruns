@@ -448,6 +448,7 @@ app.post("/complete-google-profile", authenticateToken, async (req, res) => {
   }
 });
 
+
 /**
  * Updates the authenticated user's profile picture.
  */
@@ -484,6 +485,48 @@ app.post("/update-pfp", authenticateToken, async (req, res) => {
   } catch (err) {
     console.error("[SPEEDRUNS]> ", err);
     res.status(500).json({ error: "Failed to update profile picture" });
+  }
+});
+
+app.post("/update-profile", authenticateToken, upload.single("avatar"), async (req, res) => {
+  try {
+    const { username, nationality } = req.body;
+    const user = await User.findOne({ userId: req.user.userId });
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    if (username) user.username = username;
+    if (nationality) user.nationality = nationality;
+
+    if (req.file) {
+      const fileKey = `avatars/${uuidv4()}-${req.file.originalname}`;
+      
+      await s3.send(new PutObjectCommand({
+        Bucket: process.env.R2_BUCKET_NAME,
+        Key: fileKey,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype,
+      }));
+
+      const baseUrl = process.env.R2_PUBLIC_URL.endsWith("/") 
+        ? process.env.R2_PUBLIC_URL 
+        : `${process.env.R2_PUBLIC_URL}/`;
+
+      user.avatarUrl = `${baseUrl}${fileKey}`;
+    }
+
+    await user.save();
+    
+    res.status(200).json({ 
+      message: "Profile updated", 
+      user: { 
+        username: user.username, 
+        nationality: user.nationality, 
+        avatarUrl: user.avatarUrl 
+      } 
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
