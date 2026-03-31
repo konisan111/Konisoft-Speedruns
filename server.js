@@ -544,7 +544,13 @@ app.post("/update-profile", authenticateToken, async (req, res) => {
  */
 app.delete('/delete-account', authenticateToken, async (req, res) => {
     try {
-        const deletedUser = await User.findByIdAndDelete(req.user.userId);
+        console.log("TOKEN TARTALMA:", req.user);
+        
+        const idToUse = req.user.userId || req.user.id || req.user._id;
+        console.log("Ezt az ID-t próbáljuk törölni:", idToUse);
+
+        const deletedUser = await User.findByIdAndDelete(idToUse);
+        
         if (!deletedUser) {
             return res.status(404).send("Felhasználó nem található.");
         }
