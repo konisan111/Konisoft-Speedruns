@@ -544,16 +544,14 @@ app.post("/update-profile", authenticateToken, async (req, res) => {
  */
 app.delete('/delete-account', authenticateToken, async (req, res) => {
     try {
-        const result = await User.findByIdAndDelete(req.user.id);
-        
-        if (!result) {
-            return res.status(404).send("User not found");
+        const deletedUser = await User.findByIdAndDelete(req.user.userId);
+        if (!deletedUser) {
+            return res.status(404).send("Felhasználó nem található.");
         }
-
-        res.status(200).send("Deleted");
+        res.status(200).send("Fiók sikeresen törölve.");
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Server error during deletion");
+        console.error("Delete hiba:", error);
+        res.status(500).send("Hiba történt a törlés során.");
     }
 });
 
