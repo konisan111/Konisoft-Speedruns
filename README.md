@@ -43,6 +43,31 @@ A platform egy központi híd szerepét tölti be a játékok és a játékosok 
 A felhasználók egy regisztráció után feltudják tölteni a felvételt, amelyet a moderátorok fogadhatnak el, vagy utasíthanak el.
 Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rendszeben, névvel és idővel a listára.
 
+### 💡 A Platform és a Játék futtatása
+
+1. A Speedruns futtatásához szükség lesz a `VS Code Live Server` Extension-re.
+   > ⚠️ **Az 5500-as Porton kell futtatni a weboldalt, különben a kérések blokkolva lesznek a szerverek egy részének által.**
+2. Indítsd el a Render REST API-t az alábbi linkkel: [Konisoft Speedruns REST API](https://konisoftspeedruns.onrender.com/)
+   > Fontos hogy megvárd ameddig elindul a szolgáltatás. Akkor lesz kész, miután megjelent egy statisztikai kijelzés a szerver állapotáról.
+3. A Speedruns készen áll a használatra. Regisztrálj egy fiókat!
+   > Mivel van Google Auth támogatása a platformnak, lehet Google fiókot is használni a regisztráláskor!
+4. Csomagold ki a `0.26.3.24.zip`-et, ebben lesz a játék.
+   > A kicsomagolt fájlokat nem szabad átnevezni vagy kitenni a mappájukból!
+5. Töltsd le a LiveSplitet, ez lesz a másodperc számláló a futamodhoz! [👉 Letöltés](https://livesplit.org)
+   > Ez egy ingyenes program, ezt használják hivatalosan időmérésre!
+6. Konfiguráld be a LiveSplitet!
+   > Adni kell egy keybindot amivel elindítani, és megállítani lehet a számlálást!
+7. Töltsd le és telepítsd az OBS-t. [👉 Letöltés](https://obsproject.com/)
+   > Ez lesz a felvételt készítő program, **lehet persze mást is használni.**
+8. Indítsd el a játékot, indítsd el az OBS-t, és a számlálót!
+   > Itt jön a lényeg, vedd fel a legyorsabb idődet!
+9. A kész felvételt a Speedruns oldalán az Upload Video megnyomásával lehet feltenni.
+   > Add meg az időt is manuálisan, ezzel könnyebb dolguk lesz a moderátoroknak.
+10. Várj ameddig elfogadják a moderátorok.
+    > **Mivel még nem éles, és nyilván nem kapunk értesítést róla, itt van a fiókom, ezzel el lehet fogadni: `konisan1111@gmail.com | almafa12A `**
+11. Gratulálok! Megvan a legelső eredményed a táblázatban!
+    > Röviden-Tömören ennyi a lényeg.
+
 ### 👥 Csapatfelépítés
 
 <p align="center">
