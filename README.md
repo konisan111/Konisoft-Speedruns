@@ -142,6 +142,9 @@ A fájlok mérete (3GB) miatt a forráskód külső tárhelyen érhető el.
 ### 📸 Screenshotok a játékról.
 
 <p align="center">
+  <img src="https://i.ibb.co/wNpRf4bb/lumi-live.gif" width="96%">
+</p>
+<p align="center">
   <img src="https://i.ibb.co/JPFz45j/Screenshot-2026-04-01-081213.png" width="48%">
   <img src="https://i.ibb.co/5p43cXp/Screenshot-2026-04-01-081224.png" width="48%">
 </p>
