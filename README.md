@@ -139,7 +139,30 @@ A fájlok mérete (3GB) miatt a forráskód külső tárhelyen érhető el.
 - **Játék letöltése (Build):** [GitHub Releases](https://github.com/konisan111/Konisoft-Speedruns/releases)
 - **Forráskód (3GB):** [Google Drive Link](https://drive.google.com/drive/folders/1nxTFdSdkzDtbkNJnvbn2wdBU1tyzj3o2?usp=sharing)
 
-## 🔵 DOXYGEN, C# kódok, és Diagrammok
+### 📸 Screenshotok a játékról.
+
+<p align="center">
+  <img src="https://i.ibb.co/JPFz45j/Screenshot-2026-04-01-081213.png" width="48%">
+  <img src="https://i.ibb.co/5p43cXp/Screenshot-2026-04-01-081224.png" width="48%">
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/mC00QxzY/Screenshot-2026-04-01-081233.png" width="48%">
+  <img src="https://i.ibb.co/5x5B4Q4m/Screenshot-2026-04-01-081244.png" width="48%">
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/rGsNHT32/Screenshot-2026-04-01-081258.png" width="48%">
+  <img src="https://i.ibb.co/G32SWgLv/Screenshot-2026-04-01-081305.png" width="48%">
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/MyfCf3Kf/Screenshot-2026-04-01-081318.png" width="48%">
+  <img src="https://i.ibb.co/8nHSYRkz/Screenshot-2026-04-01-081332.png" width="48%">
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/rKqxzJsF/Screenshot-2026-04-01-081350.png" width="48%">
+  <img src="https://i.ibb.co/7JvG0Mpt/Screenshot-2026-04-01-081410.png" width="48%">
+</p>
+
+### 🔵 DOXYGEN, C# kódok, és Diagrammok
 
 A repositoryban létrehoztunk egy teljes doxygen diagramm generálást a Lumi Dungeon Of Dreadspire játék forráskódjának scriptjeihez. Ezek a kódok nyersen megtalálhatóak a `.\lumi\scripts` mappán belül!
 
@@ -151,8 +174,6 @@ A repositoryban létrehoztunk egy teljes doxygen diagramm generálást a Lumi Du
   <img src="https://i.ibb.co/HLKpJFby/Screenshot-2026-03-30-143206.png" width="48%">
   <img src="https://i.ibb.co/mFcMyh8J/Screenshot-2026-03-30-143223.png" width="48%">
 </p>
-
----
 
 ### ⚠️ FONTOS MEGJEGYZÉS! ⚠️
 
