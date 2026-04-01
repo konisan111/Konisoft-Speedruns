@@ -177,7 +177,7 @@ Az alábbi képeken látható a traffic a szerveren.
 
 A **Lumi: Dungeon of Dreadspire** a Konisoft Speedruns elsődlegesen támogatott játéka. Egy fokozatosan nehezedő puzzle-platformer, ahol a logikádra és a gyorsaságodra is szükséged lesz.
 
-<sub>Tudtad, hogy a Szekszárdi Neumann versenyenen idén első helyezetett kapott a játék? (ﾉ◕ヮ◕)ﾉ\*:･ﾟ✧</sub>
+<sub>Tudtad, hogy a Szekszárdi Neumann versenyen idén első helyezetett kapott a játék? (ﾉ◕ヮ◕)ﾉ\*:･ﾟ✧</sub>
 
 ### 🎮 Játékmenet & Irányítás
 
