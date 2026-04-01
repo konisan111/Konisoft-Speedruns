@@ -23,37 +23,27 @@
   <img src="https://img.shields.io/github/commit-activity/m/konisan111/Konisoft-Speedruns?label=COMMITS&style=flat-square&color=orange" alt="Commits">
 </p>
 
----
-
 <h1 align="left">Konisoft Speedruns</h1>
 
 <p align="left">
   A <b>Konisoft Speedruns</b> egy dedikált webes platform, ahol a játékosok mérhetik fel ügyességüket és gyorsaságukat a Konisoft által kiadott játékokban.
 </p>
 
----
-
-## 📍 A Platform Funkciói
+### 📍 A Platform Funkciói
 
 - **Globális Ranglisták:** Kövesd nyomon, ki a leggyorsabb a különböző kategóriákban.
 - **Felhasználói és Moderátori nézet** A felvételeket megvizsgálás után a moderátorok elfogadhatják amelyeket a játékosok látni fognak.
 
----
-
 <img src="https://i.ibb.co/jZVbhwHy/68747470733a2f2f692e6962622e636f2f73397a67506458362f706c616e732e706e67.png" width="600"><br>
 
----
-
-## ⚙️ Hogyan működik?
+### ⚙️ Hogyan működik?
 
 A platform egy központi híd szerepét tölti be a játékok és a játékosok között. A Konisoft által kiadott játék(okban) (jelenleg Lumi Dungeon Of Dreadspire) a játékosok idejét fel lehet tölteni a Konisoft Speedruns platformjára videó felvételek formályában, ahol a leaderboardokon lehet versenyezni az első helyezetért.
 
 A felhasználók egy regisztráció után feltudják tölteni a felvételt, amelyet a moderátorok fogadhatnak el, vagy utasíthanak el.
 Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rendszeben, névvel és idővel a listára.
 
----
-
-## 👥 Csapatfelépítés
+### 👥 Csapatfelépítés
 
 <p align="center">
 <img src="https://i.ibb.co/r28zSkJS/profiles.png" width="600">
@@ -68,9 +58,7 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 | **Design és Grafika (Lumi)** | Pixelartok, UI, Grafikai Elemek, Shaderek             | Katona Konstantin              |
 | **Kódolás (Lumi)**           | C# Scripting                                          | Katona Konstantin, Orvos Tamás |
 
----
-
-## 👾 Technológiák & Állapot
+### 👾 Technológiák & Állapot
 
 | Terület                        | Eszközök                                 | Állapot      |
 | :----------------------------- | :--------------------------------------- | :----------- |
@@ -78,10 +66,9 @@ Amennyiben a felvétel hiteles, az eredménye a felhasználónak bekerül a rend
 | **Backend**                    | REST API ☁️ Node.js (tervezett) / Render | ✔ Elkészült! |
 | **Adatbázis**                  | MongoDB 🌐 Cloudflare R2 🟠              | ✔ Elkészült! |
 | **Lumi Dungeon Of Dreadspire** | Unity Engine, Pixilart, Soundtrap        | ✔ Elkészült! |
+| **Diagrammok**                 | Doxygen 🔵, MongoDB 🟢                   | ✔ Elkészült! |
 
----
-
-## 🗺️ Fejlesztési Roadmap
+### 🗺️ Fejlesztési Roadmap
 
 A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táblázat foglalja össze a tervezett mérföldköveket és azok aktuális állapotát.
 
@@ -97,50 +84,39 @@ A Konisoft Speedruns platform folyamatos fejlesztés alatt áll. Az alábbi táb
 |                     | Clean Code felülvizsgálat             | Tiszta, dokumentált kód                |    ✔    |
 |                     | Lumi Technikusi verzió                | Debuggolt, értékelésre elkészített kód |    ✔    |
 | **3. Dokumentálás** | Műszaki és felhasználói leírás        | **Szoftveralkalmazás dokumentációja**  |   ❌    |
-|                     | Adatbázis exportálása                 | **Adatbázis dump (.sql)**              |   ✔    |
+|                     | Adatbázis exportálása                 | **Adatbázis dump (.sql)**              |    ✔    |
 
----
-
-## 📸 Frontend Screenshotok
+### 📸 Frontend Screenshotok
 
 Itt találhatóak a platformról készült screenshotok. Világos és Sötét témában is operál a weboldal, illetve van rajta Magyar, és Angol fordítási lehetőség.
 
 <p align="center">
-  <img src="https://i.ibb.co/7tCYzFzJ/Screenshot-2026-03-30-002820.png" width="48%">
-  <img src="https://i.ibb.co/9HGfBw57/Screenshot-2026-03-30-002849.png" width="48%">
+  <img src="https://i.ibb.co/V037y6tz/lobby.png" width="48%">
+  <img src="https://i.ibb.co/SX6KMXW8/login.png" width="48%">
 </p>
 <p align="center">
-  <img src="https://i.ibb.co/6c3FCMvr/Screenshot-2026-03-30-002936.png" width="48%">
-  <img src="https://i.ibb.co/99tvTjc3/Screenshot-2026-03-30-002432.png" width="48%">
-</p>
-<p align="center">
-  <img src="https://i.ibb.co/DDGdnjRw/Screenshot-2026-03-30-002555.png" width="97%">
+  <img src="https://i.ibb.co/zH5KmmWJ/mod.png" width="48%">
+  <img src="https://i.ibb.co/zhH20kpw/profiles.png" width="48%">
 </p>
 
----
-
-## 🌐 Adatbázis (ER) Diagramm és Architektúra
+### 🌐 Adatbázis (ER) Diagramm és Architektúra
 
 dbDiagram generált képek, egy ER és egy architektúra egészen a böngészőtől az összes szerverig, és hostig.
 
 <p align="center">
-  <img src="https://i.ibb.co/8DnWWHq7/mongodb.png" width="48%">
-  <img src="https://i.ibb.co/pjYGCZ6P/systemarchitecture.png" width="48%">
+  <img src="https://i.ibb.co/8DnWWHq7/mongodb.png" width="20%">
+  <img src="https://i.ibb.co/pjYGCZ6P/systemarchitecture.png" width="20%">
 </p>
 
----
-
-## 🟠 Cloudflare R2
+### 🟠 Cloudflare R2
 
 Cloudflare R2-t használtunk a nagyobb, videó fájlok, illetve a profilképek tárolására.
 Az alábbi képeken látható a traffic a szerveren.
 
 <p align="center">
-  <img src="https://i.ibb.co/v6P1QK52/Screenshot-2026-03-30-141800.png" width="48%">
-  <img src="https://i.ibb.co/vCYdScXV/image.png" width="48%">
+  <img src="https://i.ibb.co/v6P1QK52/Screenshot-2026-03-30-141800.png" width="20%">
+  <img src="https://i.ibb.co/vCYdScXV/image.png" width="20%">
 </p>
-
----
 
 <p align="center">
   <img src="https://i.ibb.co/twNrWB14/lumi-github-banner.png"><br>
