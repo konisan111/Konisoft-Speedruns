@@ -631,11 +631,10 @@ const initLobby = () => {
    * Helper function to handle video approval/rejection API calls.
    */
   const handleVideoVerification = async (e, isApproved) => {
-      const btn = e.target;
+      const btn = e.currentTarget;
       const email = btn.getAttribute('data-email');
       const videoUrl = btn.getAttribute('data-url');
       
-      // Prevent spam clicking
       btn.style.pointerEvents = "none";
       btn.style.opacity = "0.5";
 
@@ -653,7 +652,6 @@ const initLobby = () => {
                       : (isApproved ? "Video approved!" : "Video rejected/deleted!"), 
                   "success"
               );
-              // Reload the leaderboard to reflect changes smoothly
               generateLeaderboard(false);
           } else {
               showToast(isHungarian ? "Hiba a művelet során!" : "Error processing action!", "error");

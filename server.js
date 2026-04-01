@@ -771,14 +771,6 @@ app.get("/mod-leaderboard", async (req, res) => {
   }
 });
 
-if (approved === false) {
-  await User.findOneAndUpdate(
-    { email },
-    { $pull: { videos: { videoUrl: videoUrl } } },
-  );
-  return res.status(200).json({ message: "Video deleted" });
-}
-
 // --- Server Initialization ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
