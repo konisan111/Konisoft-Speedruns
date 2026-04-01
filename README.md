@@ -118,21 +118,21 @@ Az alábbi képeken látható a traffic a szerveren.
   <img src="https://i.ibb.co/vCYdScXV/image.png" width="20%">
 </p>
 
-<p align="center">
-  <img src="https://i.ibb.co/twNrWB14/lumi-github-banner.png"><br>
-</p>
+### 🎮 Lumi Dungeon Of Dreadspire
 
-<h1 align="left">Lumi Dungeon Of Dreadspire</h1>
+<p align="center">
+  <img src="https://i.ibb.co/M5hbCs4R/lumi.png" width="100%"><br>
+</p>
 
 A **Lumi: Dungeon of Dreadspire** a Konisoft Speedruns elsődlegesen támogatott játéka. Egy fokozatosan nehezedő puzzle-platformer, ahol a logikádra és a gyorsaságodra is szükséged lesz.
 
-## 🎮 Játékmenet & Irányítás
+### 🎮 Játékmenet & Irányítás
 
-- **Cél:** Lumi barátainak kiszabadítása a dungeonökből.
+- **Cél:** Lumi, és barátainak kiszabadítása a dungeonökből.
 - **Irányítás:** WASD vagy Nyílbillentyűk.
 - **Controller Support:** Teljes körű kontroller támogatás a még gördülékenyebb élményért.
 
-## 📥 Letöltés és Forráskód
+### 📥 Letöltés és Forráskód
 
 A fájlok mérete (3GB) miatt a forráskód külső tárhelyen érhető el.
 
@@ -154,7 +154,7 @@ A repositoryban létrehoztunk egy teljes doxygen diagramm generálást a Lumi Du
 
 ---
 
-# ⚠️ FONTOS MEGJEGYZÉS!
+### ⚠️ FONTOS MEGJEGYZÉS! ⚠️
 
 Mivel a Unity Engine projektfájlok hatalmasak, **nem lehetséges Githubon nyomonkövetni verziókezeléssel**, ezért csak a böngészős Speedruns Platformot tudtuk itt megjeleníteni!
 **Megértésüket köszönjük!**
