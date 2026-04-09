@@ -241,6 +241,15 @@ A repositoryban létrehoztunk egy teljes doxygen diagramm generálást a Lumi Du
   <img src="https://i.ibb.co/mFcMyh8J/Screenshot-2026-03-30-143223.png" width="48%">
 </p>
 
+### 📈 Gource Gráf
+
+Ebben a YouTube videóban található meg a Gource gráfja a projektnek!
+A repositoriban is elérhető (`.\gource\gource-codebase.mp4`)
+
+<a href="https://youtu.be/-HaoTEvjkh8">
+    <img src="https://img.youtube.com/vi/-HaoTEvjkh8/maxresdefault.jpg" alt="Video Banner" width="48%">
+</a>
+
 ### ⚠️ FONTOS MEGJEGYZÉS! ⚠️
 
 <sub>Ejha, ez fontosnak néz ki!!! （⊙ｏ⊙）</sub>
