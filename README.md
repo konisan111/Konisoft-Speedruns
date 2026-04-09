@@ -196,7 +196,6 @@ A **Lumi: Dungeon of Dreadspire** a Konisoft Speedruns elsődlegesen támogatott
 A fájlok mérete (3GB) miatt a forráskód külső tárhelyen érhető el.
 
 - **Játék letöltése (Build):** [GitHub Releases](https://github.com/konisan111/Konisoft-Speedruns/releases)
-- **Forráskód (3GB):** [Google Drive Link](https://drive.google.com/drive/folders/1nxTFdSdkzDtbkNJnvbn2wdBU1tyzj3o2?usp=sharing)
 
 ### 📸 Screenshotok a játékról.
 
