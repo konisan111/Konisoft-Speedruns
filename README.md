@@ -189,11 +189,7 @@ A **Lumi: Dungeon of Dreadspire** a Konisoft Speedruns elsődlegesen támogatott
 
 <sub>Csak úgy megjegyzem hogy a fejlesztője szívesen szívatja a játékosokat, de nem tőlem tudod! (✿◠‿◠)</sub>
 
-### 📥 Letöltés és Forráskód
-
-<sub>Ez a csúnya Unity... olyan nagyok a fileok hogy sehova sem fér fel ＞︿＜</sub>
-
-A fájlok mérete (3GB) miatt a forráskód külső tárhelyen érhető el.
+### 📥 Letöltés
 
 - **Játék letöltése (Build):** [GitHub Releases](https://github.com/konisan111/Konisoft-Speedruns/releases)
 
@@ -261,7 +257,7 @@ Lumi: https://trello.com/b/rZ2EhQsF/lumi-dungeon-of-dreadspire
 
 <sub>Ejha, ez fontosnak néz ki!!! （⊙ｏ⊙）</sub>
 
-Mivel a Unity Engine projektfájlok hatalmasak, **nem lehetséges Githubon nyomonkövetni verziókezeléssel**, ezért csak a böngészős Speedruns Platformot tudtuk itt megjeleníteni!
+Mivel a játékot ki fogjuk adni Steamen, és más platformokon, ezért a teljes forráskódot nem fogjuk kiadni, csak is a játéknak a kódjait. (`.\lumi\scripts`)
 **Megértésüket köszönjük!**
 Jó szórakozást a játékhoz! 🥳 (meg kitartást, kelleni fog 🥹)
 
