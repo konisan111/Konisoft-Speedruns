@@ -249,6 +249,14 @@ A repositoriban is elérhető (`.\gource\gource-codebase.mp4`)
     <img src="https://img.youtube.com/vi/-HaoTEvjkh8/maxresdefault.jpg" alt="Video Banner" width="48%">
 </a>
 
+### 📘 Trello Táblázat
+
+Az alábbi linkeken megtalálhatóak a projektnek a Trello táblázatai:
+
+Speedruns: https://trello.com/b/SfeDl7XR/konisoft-speedruns
+
+Lumi: https://trello.com/b/rZ2EhQsF/lumi-dungeon-of-dreadspire
+
 ### ⚠️ FONTOS MEGJEGYZÉS! ⚠️
 
 <sub>Ejha, ez fontosnak néz ki!!! （⊙ｏ⊙）</sub>
