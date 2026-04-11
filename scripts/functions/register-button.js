@@ -35,7 +35,6 @@ export function registerButtonFunction(
   isHungarian,
   showToast,
 ) {
-  // If we are not in registration mode, switch to it
   if (!isRegistering) {
     toggleUI();
     return;
@@ -46,55 +45,37 @@ export function registerButtonFunction(
   const password = passwordInput.value;
   const repeatPassword = repeatPasswordInput.value;
 
-  let hasError = false;
-
-  // Reset previous error states
   [usernameInput, emailInput, passwordInput, repeatPasswordInput].forEach(
-    (el) => {
-      el.classList.remove("input-error");
-    },
+    (el) => el.classList.remove("input-error")
   );
 
-  // --- Input Validation ---
-  if (!username) {
+  if (username.length < 3 || username.length > 10) {
     usernameInput.classList.add("input-error");
-    hasError = true;
-  }
-  if (!email) {
-    emailInput.classList.add("input-error");
-    hasError = true;
-  }
-  if (!password) {
-    passwordInput.classList.add("input-error");
-    hasError = true;
-  }
-  if (!repeatPassword) {
-    repeatPasswordInput.classList.add("input-error");
-    hasError = true;
-  }
-
-  if (hasError) {
-    showToast(
-      isHungarian
-        ? "Kérjük, töltsön ki minden mezőt!"
-        : "Please fill in all fields!",
-      "error",
-    );
+    showToast(isHungarian ? "A felhasználónév 3-10 karakter kell legyen!" : "Username must be 3-10 characters!", "error");
     return;
   }
 
-  // --- Password Match Check ---
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emailInput.classList.add("input-error");
+    showToast(isHungarian ? "Érvénytelen email cím!" : "Invalid email address!", "error");
+    return;
+  }
+
+  // Changed from {4,8} to {4,} to allow passwords longer than 8 characters
+  if (!/^(?=.*[A-Z])(?=.*\d).{4,}$/.test(password)) {
+    passwordInput.classList.add("input-error");
+    showToast(isHungarian ? "A jelszó legalább 4 karakter, 1 nagybetű és 1 szám szükséges!" : "Password must be at least 4 characters with 1 capital and 1 number!", "error");
+    return;
+  }
+
   if (password !== repeatPassword) {
     passwordInput.classList.add("input-error");
     repeatPasswordInput.classList.add("input-error");
-    showToast(
-      isHungarian ? "A jelszavak nem egyeznek!" : "Passwords do not match!",
-      "error",
-    );
+    showToast(isHungarian ? "A jelszavak nem egyeznek!" : "Passwords do not match!", "error");
     return;
   }
 
-  // If all validations pass, move to the next screen
+  showToast(isHungarian ? "Sikeres regisztráció!" : "Registration successful!", "success");
   if (typeof window.showPfpUploadScreen === "function") {
     window.showPfpUploadScreen();
   }

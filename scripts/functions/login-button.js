@@ -29,39 +29,25 @@ export function loginButtonFunction(
   isHungarian,
   showToast,
 ) {
-  // If we are in registration mode, the login button should not perform login logic
-  if (isRegistering) {
-    return;
-  }
+  if (isRegistering) return;
 
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
-  let hasError = false;
-
-  // Reset previous error states
   emailInput.classList.remove("input-error");
   passwordInput.classList.remove("input-error");
 
-  // --- Input Validation ---
-  if (!email) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     emailInput.classList.add("input-error");
-    hasError = true;
+    showToast(isHungarian ? "Érvénytelen email cím!" : "Invalid email address!", "error");
+    return;
   }
 
   if (!password) {
     passwordInput.classList.add("input-error");
-    hasError = true;
-  }
-
-  // Display error message if validation fails
-  if (hasError) {
-    showToast(
-      isHungarian
-        ? "Kérjük, töltsön ki minden mezőt!"
-        : "Please fill in all fields!",
-      "error",
-    );
+    showToast(isHungarian ? "Kérjük, adja meg a jelszót!" : "Please enter your password!", "error");
     return;
   }
+
+  showToast(isHungarian ? "Sikeres bejelentkezés!" : "Login successful!", "success");
 }

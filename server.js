@@ -490,52 +490,51 @@ app.post("/update-pfp", authenticateToken, async (req, res) => {
   }
 });
 
-app.post("/update-profile", authenticateToken, async (req, res) => {
+pp.put("/update-profile", authenticateToken, async (req, res) => {
+  const { username, nationality, pfpUrl } = req.body;
+
   try {
-    const { username, nationality, imageData, fileName } = req.body;
-    const userId = req.user.userId;
-    let profileImageUrl = null;
-
-    if (imageData && fileName) {
-      const fileKey = `avatars/${userId}-${Date.now()}-${fileName}`;
-      const uploadParams = {
-        Bucket: process.env.R2_BUCKET,
-        Key: fileKey,
-        Body: Buffer.from(imageData, "base64"),
-        ContentType: "image/png",
-      };
-
-      await s3.send(new PutObjectCommand(uploadParams));
-      
-      const baseUrl = process.env.R2_PUBLIC_URL.endsWith("/") 
-        ? process.env.R2_PUBLIC_URL 
-        : `${process.env.R2_PUBLIC_URL}/`;
-        
-      profileImageUrl = `${baseUrl}${fileKey}`;
+    // Backend validation for username constraints
+    if (username && (username.length < 3 || username.length > 10)) {
+      return res.status(400).json({ error: "Username must be 3-10 characters" });
     }
 
-    const updateData = {};
-    if (username) updateData.username = username;
-    if (nationality) updateData.nationality = nationality;
-    if (profileImageUrl) updateData.avatarUrl = profileImageUrl;
+    // Check if the new username is already taken by another user
+    if (username) {
+      const existingUser = await User.findOne({ 
+        username: username, 
+        _id: { $ne: req.user.userId } 
+      });
+      if (existingUser) {
+        return res.status(400).json({ error: "Username already taken" });
+      }
+    }
 
-    const updatedUser = await User.findOneAndUpdate(
-      { userId: userId },
-      { $set: updateData },
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.userId,
+      { 
+        username, 
+        nationality,
+        avatarUrl: pfpUrl 
+      },
       { new: true }
     );
 
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
     res.json({
-      message: "Profile updated!",
+      message: "Profile updated successfully",
       user: {
         username: updatedUser.username,
         nationality: updatedUser.nationality,
-        avatarUrl: updatedUser.avatarUrl
-      }
+        avatarUrl: updatedUser.avatarUrl,
+      },
     });
   } catch (err) {
-    console.error("[SPEEDRUNS]> ", err);
-    res.status(500).json({ error: "Failed to update profile" });
+    console.error("Update Profile Error:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
