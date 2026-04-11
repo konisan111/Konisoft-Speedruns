@@ -490,7 +490,7 @@ app.post("/update-pfp", authenticateToken, async (req, res) => {
   }
 });
 
-pp.put("/update-profile", authenticateToken, async (req, res) => {
+app.put("/update-profile", authenticateToken, async (req, res) => {
   const { username, nationality, pfpUrl } = req.body;
 
   try {
