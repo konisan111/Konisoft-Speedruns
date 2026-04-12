@@ -118,63 +118,67 @@ editProfileBtn?.addEventListener("click", () => {
 selectPfpBtn?.addEventListener("click", () => pfpFileInput.click());
 
 saveProfileBtn?.addEventListener("click", async () => {
-    const newUsername = editUsernameInput.value.trim();
-    const newNationality = editCountryInput.value; // Get the code from the hidden input
-    
-    editUsernameInput.classList.remove("input-error");
+  const token = localStorage.getItem("token");
+  const username = editUsernameInput.value.trim();
+  const nationality = editCountryDropdown.value;
+  const file = pfpFileInput.files[0];
 
-    if (newUsername.length < 3 || newUsername.length > 10) {
-        editUsernameInput.classList.add("input-error");
-        showToast(
-            isHungarian 
-                ? "A felhasználónév 3-10 karakter kell legyen!" 
-                : "Username must be 3-10 characters!", 
-            "error"
-        );
-        return;
+  // --- Strict Validation ---
+  editUsernameInput.classList.remove("input-error");
+
+  if (username.length < 3 || username.length > 10) {
+    editUsernameInput.classList.add("input-error");
+    showToast(
+      isHungarian 
+        ? "A felhasználónév 3-10 karakter kell legyen!" 
+        : "Username must be 3-10 characters!", 
+      "error"
+    );
+    return;
+  }
+
+  const sendData = {
+    username: username,
+    nationality: nationality
+  };
+
+  const uploadAndSave = async (base64Data = null, fileName = null) => {
+    if (base64Data) {
+      sendData.imageData = base64Data;
+      sendData.fileName = fileName;
     }
-
-    const token = localStorage.getItem("token");
-    saveProfileBtn.disabled = true;
-    const originalText = saveProfileBtn.textContent;
-    saveProfileBtn.textContent = isHungarian ? "Mentés..." : "Saving...";
 
     try {
-        const response = await fetch("https://konisoftspeedruns.onrender.com/update-profile", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                username: newUsername,
-                nationality: newNationality, // Use 'nationality' to match server.js logic
-                pfpUrl: currentProfileData.pfpUrl 
-            })
-        });
+      const response = await fetch("https://konisoftspeedruns.onrender.com/update-profile", {
+        method: "POST",
+        headers: { 
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(sendData),
+      });
 
-        const data = await response.json();
-
-        if (response.ok) {
-            showToast(isHungarian ? "Profil frissítve!" : "Profile updated!", "success");
-            // Update local state
-            currentProfileData.username = data.user.username;
-            currentProfileData.nationality = data.user.nationality;
-            
-            // Refresh UI elements
-            if (welcomeName) welcomeName.textContent = data.user.username;
-            closeModal(editProfileModal);
-        } else {
-            // Show specific error from server (e.g. "Username already taken")
-            showToast(data.error || (isHungarian ? "Hiba a mentés során!" : "Error saving profile!"), "error");
-        }
-    } catch (error) {
-        console.error("Network Error:", error);
-        showToast(isHungarian ? "Hálózati hiba!" : "Network error!", "error");
-    } finally {
-        saveProfileBtn.disabled = false;
-        saveProfileBtn.textContent = originalText;
+      if (response.ok) {
+        showToast(isHungarian ? "Profil frissítve!" : "Profile updated!", "success");
+        setTimeout(() => location.reload(), 1500);
+      } else {
+        showToast(isHungarian ? "Hiba a mentés során!" : "Error while saving!", "error");
+      }
+    } catch (err) {
+      showToast(isHungarian ? "Szerver hiba!" : "Server error!", "error");
     }
+  };
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result.split(",")[1];
+      uploadAndSave(base64String, file.name);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    uploadAndSave();
+  }
 });
 
 // --- Video Upload Logic ---
