@@ -4,7 +4,8 @@
   "description": "<p align=\"center\">\r   <img src=\"https://i.ibb.co/gZ7HPdTS/Konisoft-Speedruns-Outlined-Logo.png\" width=\"600\"><br>",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,9 @@
     "mongoose": "^9.3.0",
     "multer": "^1.4.5-lts.1",
     "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0",
+    "supertest": "^7.2.2"
   }
 }
