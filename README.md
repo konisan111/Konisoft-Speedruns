@@ -175,7 +175,7 @@ A Speedruns Platform teszeléséhez a JS JEST Testing Framework-öt használtuk 
 A futtatáshoz az `npm run test` parancsot kell használni!
 
 <p align="left">
-  <img src="https://i.ibb.co/Q7RWNZkj/2026-04-17-144016.png" width="100%"><br>
+  <img src="https://i.ibb.co/Q7RWNZkj/2026-04-17-144016.png" width="50%"><br>
 </p>
 
 ### 🎮 Lumi Dungeon Of Dreadspire
