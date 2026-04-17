@@ -171,7 +171,7 @@ Az alábbi képeken látható a traffic a szerveren.
 
 ### 🧪 Jest Tesztek
 
-A Speedruns Platform teszeléséhez a JS JEST Testing Framework-öt használtuk fel.
+A Speedruns Platform teszteléséhez a JS JEST Testing Framework-öt használtuk fel.
 
 A futtatáshoz az `npm run test` parancsot kell használni!
 
