@@ -21,6 +21,7 @@
   <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render">
   <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
   <img src="https://img.shields.io/github/commit-activity/m/konisan111/Konisoft-Speedruns?label=COMMITS&style=flat-square&color=orange" alt="Commits">
+  <img src="https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white" alt="Jest">
 </p>
 
 <sub>Szia! Én Simi vagyok! Én foglak körbevezetni a readme-ben! q(≧▽≦q)</sub>
@@ -165,6 +166,16 @@ Az alábbi képeken látható a traffic a szerveren.
 <p align="center">
   <img src="https://i.ibb.co/v6P1QK52/Screenshot-2026-03-30-141800.png" width="20%">
   <img src="https://i.ibb.co/vCYdScXV/image.png" width="20%">
+</p>
+
+### 🧪 Jest Tesztek
+
+A Speedruns Platform teszeléséhez a JS JEST Testing Framework-öt használtuk fel.
+
+A futtatáshoz az `npm run test` parancsot kell használni!
+
+<p align="left">
+  <img src="https://i.ibb.co/Q7RWNZkj/2026-04-17-144016.png" width="100%"><br>
 </p>
 
 ### 🎮 Lumi Dungeon Of Dreadspire
