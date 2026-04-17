@@ -9,7 +9,8 @@
   <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code">
   
   <br>
-
+  
+  <img src="https://img.shields.io/badge/Gource-272727?style=for-the-badge&logo=gource&logoColor=white" alt="Gource">
   <img src="https://img.shields.io/badge/Pixilart-%23FF4D6D?style=for-the-badge&logo=heart&logoColor=white" alt="Pixilart">
   <img src="https://img.shields.io/badge/Doxygen-%234A5568?style=for-the-badge&logo=icloud&logoColor=white" alt="Doxygen">
   <img src="https://img.shields.io/badge/Soundtrap-%239F7AEA?style=for-the-badge&logo=spotify&logoColor=white" alt="Soundtrap">
